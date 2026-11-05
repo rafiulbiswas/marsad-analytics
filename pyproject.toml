@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "marsad-analytics"
+version = "1.4.0"
+description = "Card library behind the MARSAD dashboard: social media dataset analysis for Arabic, English and other languages"
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.0", "numpy", "scipy", "scikit-learn", "plotly>=5", "networkx", "openpyxl", "reportlab",
+                "arabic-reshaper", "python-bidi", "wordfreq>=3", "regex"]
+
+[project.optional-dependencies]
+corpus = ["duckdb>=1.0", "pyarrow"]
+ui = ["ipywidgets>=7.7", "anywidget"]
+export = ["kaleido", "matplotlib"]
+models = ["gensim", "sentence-transformers", "transformers", "torch", "bertopic", "detoxify", "umap-learn", "sentencepiece"]
+
+[tool.setuptools.packages.find]
+include = ["marsad_analytics*"]
+
+[tool.setuptools.package-data]
+marsad_analytics = ["resources/*.json", "resources/fonts/*", "resources/help/*", "lexicons/core/*.json", "lexicons/packs/*/*.json",
+                    "lexicons/packs/*/categories/*.json"]
