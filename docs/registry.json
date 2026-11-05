@@ -1,0 +1,3832 @@
+{
+ "modules": {
+  "DATA": "What is in my data?",
+  "TIME": "When did it happen?",
+  "WHO": "Who is posting?",
+  "WORDS": "Which words, in which contexts?",
+  "TOPIC": "What is it about?",
+  "FRAME": "How is it said?",
+  "REACT": "How did people react?",
+  "SPREAD": "How did it spread, and was it coordinated?",
+  "SOCIETY": "What does it say about society?",
+  "PAPER": "How do I use it in a paper?"
+ },
+ "categories": {
+  "DATA": "Data",
+  "TIME": "Time",
+  "WHO": "Who",
+  "WORDS": "Words",
+  "TOPIC": "Topics",
+  "FRAME": "Framing",
+  "REACT": "Reactions",
+  "SPREAD": "Spread",
+  "SOCIETY": "Society",
+  "PAPER": "Paper"
+ },
+ "language_scopes": {
+  "any": "Any language",
+  "spaced": "Any language written with spaces between words (not Chinese, Japanese or Thai)",
+  "lexicon": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+  "arabic": "Arabic only",
+  "model": "Languages of the model (listed on the card)"
+ },
+ "cards": [
+  {
+   "id": "DATA-1",
+   "name": "Dataset overview",
+   "module": "DATA",
+   "question": "What does this file contain, and which cards can run on it?",
+   "requires": [],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "A1"
+   ],
+   "methods": "Counts of posts, dates, authors and platforms after cleaning. The capability table lists which canonical fields were found; cards that need a missing field are shown as unavailable with the field named. Cleaning removes deleted, removed or withheld content, exact duplicate rows, and rows with neither text nor date.",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": ""
+  },
+  {
+   "id": "DATA-2",
+   "name": "Text statistics",
+   "module": "DATA",
+   "question": "How large and what shape is the text?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "mattr_window": 500
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "A2",
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "F111"
+   ],
+   "methods": "Tokens are letter and digit sequences after Arabic orthographic normalization (alef variants, taa marbuta, alef maqsura, hamza carriers, diacritics, tatweel, character elongation), with links and mentions removed and hashtag underscores split. Lexical diversity is the moving-average type-token ratio (MATTR) over a 500-token window, which, unlike the plain type-token ratio, does not fall as the corpus grows.",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Word counts need spaces between words; character counts work for any language.",
+   "figure_help": "Number of posts by length in words (log scale on the count axis)."
+  },
+  {
+   "id": "DATA-3",
+   "name": "Languages and dialects",
+   "module": "DATA",
+   "question": "Which scripts and dialects are in the data?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "instant",
+   "params": {
+    "by": "none",
+    "min_score": 0.0
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "A5"
+   ],
+   "methods": "Script share per post (Arabic, Latin, mixed), Arabizi markers (whole-word lexicon), the export's language column, and, after dialect enrichment, dialect labels from CAMeLBERT-Mix fine-tuned on MADAR-26 (25 cities and MSA), grouped into MSA, Gulf, Yemen, Iraq, Levant, Egypt-Sudan and Maghreb.",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language. Script and language mix: any language. Dialect labels and Arabizi markers: Arabic only.",
+   "figure_help": "Share of posts by script, or by dialect region when dialect labels exist."
+  },
+  {
+   "id": "DATA-4",
+   "name": "Duplicates",
+   "module": "DATA",
+   "question": "How much of the dataset is repeated text?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "minutes",
+   "params": {
+    "threshold": 0.8,
+    "min_tokens": 5
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "A3",
+    "F106 (replacement)"
+   ],
+   "methods": "Posts with at least five tokens are compared on sets of 3-token shingles. Exact duplicates share a cluster. Near-duplicates are found with MinHash (64 permutations) and locality-sensitive hashing (16 bands), and a candidate pair is accepted when the true Jaccard similarity is at least the threshold. Clusters are the connected components of accepted pairs.",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Repeated text is compared on word sequences.",
+   "figure_help": "How many duplicate clusters have each size (number of near-identical posts)."
+  },
+  {
+   "id": "DATA-5",
+   "name": "Off-topic check",
+   "module": "DATA",
+   "question": "How much of the collected data is actually on topic?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "query_terms": [],
+    "annotated_file": null,
+    "topic": null,
+    "zero_shot_n": 0
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "A4"
+   ],
+   "methods": "Three separate estimates: the share of posts whose own text contains a collection keyword (whole-word matching), the share marked relevant in an annotated sample (Wilson 95% interval), and optionally a zero-shot NLI estimate on a sample. Only the annotated estimate measures relevance.",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Words are split on spaces and punctuation; Arabic gets extra normalization and clitic handling.",
+   "figure_help": "Share of posts whose own text contains each collection keyword."
+  },
+  {
+   "id": "DATA-6",
+   "name": "Compare files",
+   "module": "DATA",
+   "question": "How do two or more datasets differ?",
+   "requires": [
+    "has_multi_datasets"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "lexicons": [
+     "hope",
+     "despair"
+    ]
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "H1",
+    "F120",
+    "F121"
+   ],
+   "methods": "Per dataset: size, authors, dates, engagement, lexicon prevalence; author and hashtag overlap (Jaccard).",
+   "category": "DATA",
+   "category_label": "Data",
+   "badge": "Two or more files",
+   "language_scope": "any",
+   "languages": "Any language. The lexicon comparison inside it uses the Arabic and English lexicons.",
+   "figure_help": "Lexicon prevalence by dataset; click a bar for those posts."
+  },
+  {
+   "id": "TIME-1",
+   "name": "Posts over time",
+   "module": "TIME",
+   "question": "How does activity change over time?",
+   "requires": [
+    "has_date"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "split": "none",
+    "outcome": "interactions"
+   },
+   "param_choices": {
+    "split": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "B1",
+    "F12 (replacement)"
+   ],
+   "methods": "Posts, total and median engagement per period. The period is a day, week or month, chosen from the span of the data unless set. Timestamps are converted to the analysis time zone first.",
+   "category": "TIME",
+   "category_label": "Time",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Posts per period (and per group when split); click a point for that period's posts."
+  },
+  {
+   "id": "TIME-2",
+   "name": "Posting hours and days",
+   "module": "TIME",
+   "question": "At what hours and days do people post, and when do posts get more engagement?",
+   "requires": [
+    "has_date"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "metric": "posts",
+    "outcome": "interactions"
+   },
+   "param_choices": {
+    "metric": [
+     "posts",
+     "median_engagement"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "B2",
+    "F8",
+    "F10",
+    "F13"
+   ],
+   "methods": "Day-of-week by hour matrix of post counts or median engagement, in the analysis time zone. Weekday and weekend are compared with the group comparison engine (median, log mean, within-author z-score, Mann-Whitney test). The weekend follows the dataset setting: Friday-Saturday or Saturday-Sunday, chosen from the posts' countries when available.",
+   "category": "TIME",
+   "category_label": "Time",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Posts (or engagement) by weekday and hour; click a cell for its posts."
+  },
+  {
+   "id": "TIME-3",
+   "name": "Spikes",
+   "module": "TIME",
+   "question": "Which days show unusual spikes?",
+   "requires": [
+    "has_date"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "z_threshold": 3.0,
+    "require_dominant": true
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "B4",
+    "F52",
+    "F89"
+   ],
+   "methods": "A burst day has a post count more than three robust z-scores (median absolute deviation) above its 7-day centred rolling median. With Facebook reactions, the card also reports the daily share of posts whose reactions are above the dataset median and dominated (over 50%) by one reaction type.",
+   "category": "TIME",
+   "category_label": "Time",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Posts per day (or hour); red bars are bursts; click a bar for its posts."
+  },
+  {
+   "id": "TIME-4",
+   "name": "Before and after an event",
+   "module": "TIME",
+   "question": "Did activity or framing change around a known event?",
+   "requires": [
+    "has_date"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "events": [],
+    "window_days": 7,
+    "metric": "posts"
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "B3",
+    "F63 (generic part)",
+    "F113 (generic part)"
+   ],
+   "methods": "For each event, a daily metric (posts, median engagement, share of posts matching a lexicon, or mean reaction sentiment) is compared between the days before and after the event date, either within a window or over the whole dataset. Recurring dates (anniversaries) compare that calendar day each year with all other days. Daily values are compared with a Mann-Whitney test.",
+   "category": "TIME",
+   "category_label": "Time",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language. With a lexicon as the measure: Arabic and English.",
+   "figure_help": "Daily values with each event marked; click a day for its posts."
+  },
+  {
+   "id": "WHO-1",
+   "name": "Top accounts",
+   "module": "WHO",
+   "question": "Who posts most and who gets most engagement?",
+   "requires": [
+    "has_author"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "outcome": "interactions",
+    "top": 25
+   },
+   "param_choices": {
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "C1",
+    "F36"
+   ],
+   "methods": "Per author: posts, total and median engagement, shares of the dataset, first and last post.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Accounts ranked by posts or engagement; click a bar for the account's posts."
+  },
+  {
+   "id": "WHO-2",
+   "name": "Concentration",
+   "module": "WHO",
+   "question": "Is activity or attention concentrated in a few actors, countries or categories?",
+   "requires": [],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "group": "author",
+    "metric": "posts"
+   },
+   "param_choices": {
+    "group": [
+     "author",
+     "country",
+     "fb_category",
+     "source"
+    ],
+    "metric": [
+     "posts",
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "C2",
+    "F21",
+    "F37",
+    "F41"
+   ],
+   "methods": "Gini coefficient, Herfindahl-Hirschman index (sum of squared shares), share held by the top 10 groups and by the top 1% of groups, and the Lorenz curve.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Lorenz curve: share of posts (or engagement) held by the smallest x% of accounts; the further below the diagonal, the more concentrated."
+  },
+  {
+   "id": "WHO-3",
+   "name": "Posting regularity",
+   "module": "WHO",
+   "question": "How regularly do actors post, and how stable is their engagement?",
+   "requires": [
+    "has_author",
+    "has_date"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "outcome": "interactions"
+   },
+   "param_choices": {
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "C3",
+    "F9",
+    "F11",
+    "F45"
+   ],
+   "methods": "Per author: posts, active days, posts per active day, standard deviation of daily total engagement and of the overperforming score. Posting frequency is related to engagement by grouping author-days by posts that day.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Accounts by active days and posts per active day (size = posts); click a point for the account's posts."
+  },
+  {
+   "id": "WHO-4",
+   "name": "Network analyzer",
+   "module": "WHO",
+   "question": "Who interacts with whom, and which communities form?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "minutes",
+   "params": {
+    "kind": "auto",
+    "min_edge": 1,
+    "size_by": "in_degree",
+    "hide_pendants": false,
+    "search": "",
+    "min_degree": 0,
+    "date_from": null,
+    "date_to": null,
+    "toxic_only": false,
+    "toxicity_threshold": 0.7
+   },
+   "param_choices": {
+    "kind": [
+     "auto",
+     "reply",
+     "quote",
+     "mention",
+     "link",
+     "hashtag"
+    ],
+    "size_by": [
+     "in_degree",
+     "out_degree",
+     "pagerank",
+     "degree"
+    ]
+   },
+   "legacy_ids": [
+    "C7"
+   ],
+   "methods": "Network analyzer in the style of Communalytic: reply, quote, mention, link-sharing (author to web domain) or hashtag co-occurrence network, built from the posts so date-range and toxicity filters apply to edges. Louvain communities, weighted in- and out-degree, PageRank, sampled betweenness, modularity and density; ForceAtlas2 layout. Clicking a node opens the posts it sent and received. The full graph downloads as GraphML (Gephi) or as a standalone interactive explorer with search, degree, community, date and toxicity filters.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Network of the most connected accounts, domains or hashtags (size = in-degree or the chosen measure, colour = Louvain community); click a node for the posts it sent and received."
+  },
+  {
+   "id": "WHO-5",
+   "name": "Unusual accounts",
+   "module": "WHO",
+   "question": "Are there accounts with unusual volume, regularity or repetition?",
+   "requires": [
+    "has_author"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "C8"
+   ],
+   "methods": "Per account: posts, active days, maximum posts in one day, entropy of posting hours, median gap between posts and its coefficient of variation, share of posts with links and of duplicated text. Reported as data-quality context, not as bot detection.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Number of accounts by how many posts they made; click a bar for those accounts' posts."
+  },
+  {
+   "id": "WHO-6",
+   "name": "Countries",
+   "module": "WHO",
+   "question": "Where do posts come from?",
+   "requires": [
+    "has_country"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "outcome": "interactions"
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "C5",
+    "F20",
+    "F23"
+   ],
+   "methods": "Posts, engagement and authors per country. The card states whether country is the page admins' or the author's.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "Needs a country column",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Posts by country; click a bar for its posts."
+  },
+  {
+   "id": "WHO-7",
+   "name": "Page categories",
+   "module": "WHO",
+   "question": "Which kinds of Facebook pages drive the conversation?",
+   "requires": [
+    "has_fb_category"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "outcome": "interactions"
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "C4",
+    "F39",
+    "F83"
+   ],
+   "methods": "Facebook page categories are rolled up to Facebook's parent groups with the embedded category taxonomy. Media, public figure and community organization pages are compared with other pages using the group comparison engine.",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "CrowdTangle only",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Share of interactions by Facebook page category group; click a bar for its posts."
+  },
+  {
+   "id": "WHO-8",
+   "name": "Page age",
+   "module": "WHO",
+   "question": "Do older pages get more engagement?",
+   "requires": [
+    "has_page_created",
+    "has_author",
+    "has_engagement"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "C6",
+    "F38"
+   ],
+   "methods": "Page age at each post's date, then the per-page median age against median engagement (Spearman correlation).",
+   "category": "WHO",
+   "category_label": "Who",
+   "badge": "CrowdTangle only",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Page age against median engagement per page (size = posts); click a point for the page's posts."
+  },
+  {
+   "id": "WORDS-1",
+   "name": "Word list",
+   "module": "WORDS",
+   "question": "Which words, phrases, hashtags and mentions are most frequent, and how widely are they spread?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "unit": "word",
+    "top": 40,
+    "stop": true,
+    "with_engagement": true,
+    "dedup": "auto"
+   },
+   "param_choices": {
+    "unit": [
+     "word",
+     "stem",
+     "bigram",
+     "trigram",
+     "hashtag",
+     "mention"
+    ],
+    "dedup": [
+     "auto",
+     true,
+     false
+    ]
+   },
+   "legacy_ids": [
+    "L1",
+    "D1",
+    "Keyword Analysis"
+   ],
+   "methods": "Frequencies of normalized tokens (or light stems, n-grams, hashtags, mentions) after stopword removal, as in AntConc's Word List. Range is the number of posts and accounts using a word; dispersion is Gries' DP across accounts (0 = used by accounts in proportion to how much they write, 1 = used by one account). Optional median engagement of posts with and without each word. When repeated posts are 5% or more of the data, each repeated text is counted once (dedup = auto), as on the keyword, collocate, cluster and word cloud cards.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Stopwords are removed for Arabic, English and French only; light stems are Arabic only.",
+   "figure_help": "Most frequent words (or stems, n-grams, hashtags, mentions); click a bar for posts that use it."
+  },
+  {
+   "id": "WORDS-2",
+   "name": "Word cloud",
+   "module": "WORDS",
+   "question": "What does the vocabulary look like at a glance?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "weight": "freq",
+    "unit": "word",
+    "max_words": 80,
+    "target": "all",
+    "dedup": "auto"
+   },
+   "param_choices": {
+    "weight": [
+     "freq",
+     "keyness"
+    ],
+    "unit": [
+     "word",
+     "stem",
+     "bigram",
+     "trigram",
+     "hashtag",
+     "mention"
+    ],
+    "target": [
+     "all",
+     "each_group",
+     "top_engagement",
+     "group:<value>",
+     "lexicon:<name>",
+     "term:<word>",
+     "time:<start>/<end>",
+     "dataset:<id>"
+    ],
+    "dedup": [
+     "auto",
+     true,
+     false
+    ]
+   },
+   "legacy_ids": [
+    "L8"
+   ],
+   "methods": "Words sized by the square root of frequency, or of keyness against general language. Positions come from a spiral layout and carry no meaning. Each word links to its posts. The table feeds the portal's Word Cloud tab.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Stopwords are removed for Arabic, English and French only.",
+   "figure_help": "Word cloud sized by frequency or keyness; click a word for its posts."
+  },
+  {
+   "id": "WORDS-3",
+   "name": "Keywords",
+   "module": "WORDS",
+   "question": "Which words are unusually frequent here compared with a reference?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "target": "all",
+    "reference": "general",
+    "group": "auto",
+    "unit": "word",
+    "top": 25,
+    "min_freq": 5,
+    "min_posts": 3,
+    "min_authors": 2,
+    "dedup": "auto",
+    "script": "auto"
+   },
+   "param_choices": {
+    "target": [
+     "all",
+     "each_group",
+     "top_engagement",
+     "group:<value>",
+     "lexicon:<name>",
+     "term:<word>",
+     "time:<start>/<end>",
+     "dataset:<id>"
+    ],
+    "reference": [
+     "general",
+     "rest",
+     "dataset:<id>"
+    ],
+    "group": [
+     "auto",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "unit": [
+     "word",
+     "stem",
+     "bigram",
+     "trigram",
+     "hashtag",
+     "mention"
+    ],
+    "dedup": [
+     "auto",
+     true,
+     false
+    ],
+    "script": [
+     "auto",
+     "arabic",
+     "latin",
+     "all"
+    ]
+   },
+   "legacy_ids": [
+    "L2",
+    "D2"
+   ],
+   "methods": "Keyness as in AntConc's Keyword List. Against another part of the data (a group, a period, posts using a lexicon, the most engaged posts, another dataset): log-likelihood G2 (Rayson and Garside 2000) with Log Ratio (Hardie 2014) as effect size, %DIFF (Gabrielatos and Marchi 2012) and Bonferroni-corrected p-values; negative keywords are listed too. Against general language: Kilgarriff's simple maths ratio of frequencies per million with smoothing 1, using wordfreq frequencies (Speer 2022) re-normalized like the posts. Words must occur in a minimum number of posts and accounts.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Against general language: Arabic, English and French. Between two parts of your data: any spaced language.",
+   "figure_help": "Keywords ranked by Log Ratio; green are more frequent in the target, red in the reference; click a word for its posts."
+  },
+  {
+   "id": "WORDS-4",
+   "name": "Concordance (KWIC)",
+   "module": "WORDS",
+   "question": "In what contexts is a word or phrase used?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "query": "",
+    "window": 8,
+    "sort": "after1",
+    "max_lines": 300
+   },
+   "param_choices": {
+    "sort": [
+     "after1",
+     "before1",
+     "date",
+     "engagement",
+     "author"
+    ]
+   },
+   "legacy_ids": [
+    "L3"
+   ],
+   "methods": "Key word in context lines for a word, phrase, wildcard (*) or lexicon (lexicon:name), using the same whole-word matching with Arabic clitics as the lexicon cards. Context is shown from the original post (links and mentions excluded, split words rejoined). Lines sort by the first word after or before the match, date, engagement or account. The chart counts the words immediately before and after the match.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Arabic searches also match clitic forms (و، ال، ب...).",
+   "figure_help": "Words found just before and just after the search term; click a word for those concordance lines."
+  },
+  {
+   "id": "WORDS-5",
+   "name": "Collocates",
+   "module": "WORDS",
+   "question": "Which words keep company with a given word?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "node": "",
+    "span_left": 5,
+    "span_right": 5,
+    "min_freq": 3,
+    "measure": "logdice",
+    "top": 25,
+    "dedup": "auto"
+   },
+   "param_choices": {
+    "measure": [
+     "logdice",
+     "mi",
+     "t_score",
+     "ll"
+    ],
+    "dedup": [
+     "auto",
+     true,
+     false
+    ]
+   },
+   "legacy_ids": [
+    "L4"
+   ],
+   "methods": "Words within a window around each occurrence of the node (default five words each side, within a post). A collocate counts once per node occurrence and each word token is counted for one node only, so co-occurrence never exceeds either word's frequency. Repeated posts are counted once (dedup = auto). For each collocate: co-occurrence frequency, left and right counts, mutual information, t-score, logDice (Rychly 2008) and log-likelihood from the 2x2 window contingency table (Evert 2008).",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Words are split on spaces and punctuation; Arabic gets extra normalization and clitic handling.",
+   "figure_help": "Strongest collocates of the node word; colour shows whether they come before, after or on both sides; click for the posts."
+  },
+  {
+   "id": "WORDS-6",
+   "name": "Phrases around a word",
+   "module": "WORDS",
+   "question": "Which fixed phrases form around a word?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "query": "",
+    "size": 3,
+    "side": "any",
+    "min_freq": 2,
+    "top": 30,
+    "dedup": "auto"
+   },
+   "param_choices": {
+    "side": [
+     "any",
+     "left",
+     "right"
+    ],
+    "dedup": [
+     "auto",
+     true,
+     false
+    ]
+   },
+   "legacy_ids": [
+    "L5"
+   ],
+   "methods": "Word sequences of a given length that begin or end with the search word (AntConc Clusters), with frequency, number of posts and number of accounts.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Words are split on spaces and punctuation; Arabic gets extra normalization and clitic handling.",
+   "figure_help": "Most frequent fixed phrases that start or end with the search word; click a phrase for its posts."
+  },
+  {
+   "id": "WORDS-7",
+   "name": "Term over time",
+   "module": "WORDS",
+   "question": "When, and by how many accounts, is a term used?",
+   "requires": [
+    "has_text",
+    "has_date"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "terms": [],
+    "measure": "per_1k"
+   },
+   "param_choices": {
+    "measure": [
+     "per_1k",
+     "posts_%"
+    ]
+   },
+   "legacy_ids": [
+    "L6",
+    "D3",
+    "F103",
+    "F84 (generic part)",
+    "F117 (generic part)"
+   ],
+   "methods": "Uses per 1,000 words (or share of posts) per period for each term, a dispersion plot with one mark per post (AntConc Plot, with time as the axis), and Gries' DP across periods and across accounts.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Words are split on spaces and punctuation; Arabic gets extra normalization and clitic handling.",
+   "figure_help": "Top: uses per 1,000 words per period; bottom: one mark per post that uses each term; click to open posts."
+  },
+  {
+   "id": "WORDS-8",
+   "name": "Vocabulary variety",
+   "module": "WORDS",
+   "question": "Do groups differ in how varied their vocabulary is?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "group": "auto",
+    "window": 50
+   },
+   "param_choices": {
+    "group": [
+     "auto",
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "L7"
+   ],
+   "methods": "Per group: tokens, types, type-token ratio, moving-average type-token ratio (MATTR, 50-word window, posts in time order) with a bootstrap 95% interval over posts, hapax share, mean word length, post length, content-word share and share of Arabic-script tokens.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Words are split on spaces and punctuation; Arabic gets extra normalization and clitic handling.",
+   "figure_help": "Vocabulary variety (MATTR) per group with 95% intervals; click a point for the group's posts."
+  },
+  {
+   "id": "WORDS-9",
+   "name": "Emoji",
+   "module": "WORDS",
+   "question": "Which emoji are used, and by whom?",
+   "requires": [
+    "has_emoji"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "by": "none"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "D7"
+   ],
+   "methods": "Counts of emoji code points per post, share of posts with emoji, and top emoji per group.",
+   "category": "WORDS",
+   "category_label": "Words",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Emoji cloud: each emoji sized by how often it is used; click an emoji for its posts."
+  },
+  {
+   "id": "TOPIC-1",
+   "name": "Topics",
+   "module": "TOPIC",
+   "question": "What are the main topics, and how do they change?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "minutes",
+   "params": {
+    "method": "hdbscan",
+    "min_cluster_size": "auto",
+    "min_samples": 10,
+    "epsilon": 0.1,
+    "top": 10,
+    "by": "time",
+    "use_run": 0,
+    "rerun": false
+   },
+   "param_choices": {
+    "method": [
+     "hdbscan",
+     "nmf",
+     "bertopic"
+    ],
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "D6"
+   ],
+   "methods": "Topic analyzer in the style of Communalytic: multilingual sentence embeddings (LSA when sentence-transformers is not installed), reduced with UMAP and clustered with HDBSCAN (min_cluster_size, min_samples, cluster_selection_epsilon). The silhouette score rates each run and every run is kept in a history table. Clusters are named by their most distinctive words (class-based TF-IDF) or by a labelling function, and shown as bars, by sentiment, over time and on a 3D similarity map. NMF and BERTopic stay available as methods.",
+   "category": "TOPIC",
+   "category_label": "Topics",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). With multilingual embeddings (Colab, sentence-transformers) about 50 languages; offline method: spaced languages.",
+   "figure_help": "The largest topic clusters by number of posts; click a bar for the cluster's posts."
+  },
+  {
+   "id": "TOPIC-2",
+   "name": "Word similarity map",
+   "module": "TOPIC",
+   "question": "Which words are used in similar contexts?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "minutes",
+   "params": {
+    "words": "",
+    "n_keywords": 80,
+    "n_clusters": 8
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "D4"
+   ],
+   "methods": "FastText embeddings trained on this corpus (100 dimensions, window 5, minimum count 3, 10 epochs), k-means clusters of the most frequent keywords, and a t-SNE projection. Optional nearest neighbours for given words.",
+   "category": "TOPIC",
+   "category_label": "Topics",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Embeddings are trained on your own data, so any spaced language works.",
+   "figure_help": "Map of frequent words placed by similarity of their contexts (FastText, t-SNE); click a word for its posts."
+  },
+  {
+   "id": "TOPIC-3",
+   "name": "Posts close to a concept",
+   "module": "TOPIC",
+   "question": "Which posts are semantically close to a concept?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "concepts": null
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "D5"
+   ],
+   "methods": "Posts and concept seed sentences are embedded with a multilingual sentence-transformer; each post's cosine similarity to the mean seed vector is reported, with the closest posts for reading.",
+   "category": "TOPIC",
+   "category_label": "Topics",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). paraphrase-multilingual-MiniLM-L12-v2: about 50 languages, including Arabic.",
+   "figure_help": "Share of posts semantically close to each concept (cosine similarity above 0.5)."
+  },
+  {
+   "id": "FRAME-1",
+   "name": "Lexicon use over time",
+   "module": "FRAME",
+   "question": "How often does a kind of language appear, and how does that change?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "lexicons": [
+     "hope",
+     "despair"
+    ],
+    "by": "time",
+    "similarity": false
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "E1",
+    "F54",
+    "F58",
+    "F64",
+    "F68",
+    "F70",
+    "F73",
+    "F74",
+    "F77",
+    "F91",
+    "F94",
+    "F95",
+    "F97",
+    "F98",
+    "F100",
+    "F107",
+    "F110",
+    "F115"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "FRAME-2",
+   "name": "Two lexicons compared",
+   "module": "FRAME",
+   "question": "Does one framing dominate another, and does that change over time?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "lex_a": "hope",
+    "lex_b": "despair",
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "E2",
+    "F53",
+    "F56",
+    "F60",
+    "F61",
+    "F66",
+    "F88",
+    "F109"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match. The balance is the share of A in all A and B matches, and the ratio of A to B totals.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of lexicon A in all A and B matches per period; above 50 means A dominates."
+  },
+  {
+   "id": "FRAME-3",
+   "name": "Lexicons in the same post",
+   "module": "FRAME",
+   "question": "Do two or three kinds of language appear in the same posts?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "lexicons": [
+     "hope",
+     "despair"
+    ]
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "E3",
+    "F78",
+    "F101",
+    "F125",
+    "F132"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match. For each pair: the share of A posts that also match B, lift (observed over expected joint share) and Jaccard.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Posts by which combination of the chosen lexicons they contain; click a bar for those posts."
+  },
+  {
+   "id": "FRAME-4",
+   "name": "Pronouns and certainty",
+   "module": "FRAME",
+   "question": "Who is the text about, and how strongly does it commit?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "E4",
+    "F104",
+    "F108"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Pronoun profile, or pronouns per 1,000 words over time; click for the matching posts."
+  },
+  {
+   "id": "FRAME-5",
+   "name": "Language profile by group",
+   "module": "FRAME",
+   "question": "Do groups use different language?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "group": "auto",
+    "lexicons": [
+     "hope",
+     "despair",
+     "emotional",
+     "factual",
+     "victim",
+     "moral"
+    ]
+   },
+   "param_choices": {
+    "group": [
+     "auto",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "E5",
+    "F80",
+    "F119 (generic)",
+    "F122 (generic)",
+    "F123",
+    "F124",
+    "F128"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match. Groups are compared by their vectors of rates (cosine similarity) and by breadth, the number of lexicons used above the median rate.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Lexicon matches per 1,000 words for each group (rows) and lexicon (columns); click a cell for its posts."
+  },
+  {
+   "id": "FRAME-6",
+   "name": "Your own word list",
+   "module": "FRAME",
+   "question": "How often does my own list of terms appear?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "name": "custom",
+    "terms": [],
+    "file": null,
+    "by": "time"
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "E6",
+    "classify_solicitation_language"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match. Custom lists are registered for the session and can be used in every lexicon card.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Your own word list, in any language.",
+   "figure_help": "Share of posts matching your custom lexicon over time; click a point for the matching posts."
+  },
+  {
+   "id": "FRAME-7",
+   "name": "Sentiment",
+   "module": "FRAME",
+   "question": "Is the text positive, negative or neutral (or any other classifier's labels)?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "task": "sentiment",
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "task": [
+     "sentiment",
+     "emotion",
+     "hate",
+     "auto"
+    ],
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "E7"
+   ],
+   "methods": "Each post is routed by its detected language to a sentiment model: by default the multilingual DistilBERT student model (lxyuan/distilbert-base-multilingual-cased-sentiments-student; positive, neutral, negative; 12 languages including Arabic), the model Communalytic uses. Posts in other languages are skipped and counted. The card shows the distribution split, counts over time, shares by language, engagement by label and the most confident examples per label. Any Hugging Face classifier can be used instead (task and model id).",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). Default model: 12 languages (Arabic, Chinese, English, French, German, Hindi, Indonesian, Italian, Japanese, Malay, Portuguese, Spanish).",
+   "figure_help": "Posts per sentiment label over time; click a point for the posts with that label in that period."
+  },
+  {
+   "id": "FRAME-8",
+   "name": "Stance toward a target",
+   "module": "FRAME",
+   "question": "Do posts support or oppose a given target?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "target": "",
+    "labels": [],
+    "n": 2000,
+    "annotated_file": null,
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "E8"
+   ],
+   "methods": "Zero-shot natural language inference (mDeBERTa-v3-base trained on MNLI and XNLI) with one hypothesis per stance label on a random sample; validated against annotated posts when given (macro-F1).",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). mDeBERTa-v3 XNLI: 15 XNLI languages, including Arabic, English and French.",
+   "figure_help": "Share of sampled posts per stance toward the target; click for those posts."
+  },
+  {
+   "id": "FRAME-9",
+   "name": "Toxicity",
+   "module": "FRAME",
+   "question": "How toxic is the language, and how does it change?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "threshold": 0.7,
+    "run_if_missing": true
+   },
+   "param_choices": {},
+   "legacy_ids": [],
+   "methods": "Toxicity scores from 0 to 1. Posts in English, French, Spanish, Italian, Portuguese, Turkish and Russian are scored by Detoxify multilingual (Hanu and Unitary 2020), as in Communalytic: toxicity, severe toxicity, obscene, threat, insult, identity attack and sexual explicit. Arabic, German, Ukrainian, Amharic, Hindi and Chinese posts are scored by the TextDetox XLM-R classifier (textdetox/xlmr-large-toxicity-classifier), which gives overall toxicity only. The card reports the average and highest score per attribute, posts at or above 0.7, average scores over time with the share of posts scored, and the score distribution.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). Detoxify: English, French, Spanish, Italian, Portuguese, Turkish, Russian. TextDetox: Arabic, German, Ukrainian, Amharic, Hindi, Chinese.",
+   "figure_help": "Average toxicity score per attribute over time (lines) and share of posts with scores (grey bars); click a point for that period's posts, most toxic first."
+  },
+  {
+   "id": "FRAME-10",
+   "name": "Emotions",
+   "module": "FRAME",
+   "question": "Which emotions does the text express?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "XLM-EMO (MilaNLProc/xlm-emo-t; Bianchi, Nozza and Hovy 2022): anger, fear, joy and sadness, trained on emotion datasets in 19 languages including Arabic and English. Distribution, counts over time, shares by language, engagement by emotion and the most confident examples.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). XLM-EMO: 19 training languages, including Arabic and English.",
+   "figure_help": "Posts per emotion (anger, fear, joy, sadness) over time; click a point for those posts."
+  },
+  {
+   "id": "FRAME-11",
+   "name": "Hate speech",
+   "module": "FRAME",
+   "question": "Which posts are hate speech?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "DE-LIMIT monolingual BERT hate speech models (Aluru et al. 2020): Hate-speech-CNERG/dehatebert-mono-arabic for Arabic and -mono-english for English (hate / not hate). Posts in other languages are skipped and counted. For a three-way Arabic split (normal, abusive, hate) set the model to wetey/MARBERT-LHSAB.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Model (GPU)",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). Arabic and English.",
+   "figure_help": "Posts labelled hate and not hate over time; click a point for those posts."
+  },
+  {
+   "id": "FRAME-12",
+   "name": "Propaganda",
+   "module": "FRAME",
+   "question": "Which posts use propaganda?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Post-level propaganda labels (propaganda / not propaganda) over time, by language and by engagement. Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "Posts labelled propaganda and not propaganda over time; click a point for those posts."
+  },
+  {
+   "id": "FRAME-13",
+   "name": "Propaganda techniques",
+   "module": "FRAME",
+   "question": "Which propaganda techniques are used?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "top": 20,
+    "run_if_missing": true
+   },
+   "param_choices": {},
+   "legacy_ids": [],
+   "methods": "Multi-label propaganda techniques per post (for example the 20 techniques of the WANLP 2022 Arabic propaganda shared task): posts per technique, posts by number of techniques, techniques over time and examples. Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "Posts using each propaganda technique; click a bar for those posts."
+  },
+  {
+   "id": "FRAME-14",
+   "name": "Political bias",
+   "module": "FRAME",
+   "question": "Which political leaning do the posts show?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Political leaning per post, with the label set the model returns (for example left, center, right). Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "FRAME",
+   "category_label": "Framing",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "Posts per political leaning over time; click a point for those posts."
+  },
+  {
+   "id": "REACT-1",
+   "name": "Engagement overview",
+   "module": "REACT",
+   "question": "How is engagement distributed, and how much do a few posts dominate?",
+   "requires": [
+    "has_engagement"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "R1",
+    "engagement_summary",
+    "outlier_detection",
+    "virality",
+    "correlation_analysis"
+   ],
+   "methods": "Percentiles of each engagement metric, the share of total engagement taken by the top 1% and 10% of posts, high outliers by the IQR rule on log(1 + x), virality (engagement over the dataset median) and Spearman correlations.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Distribution of interactions per post (log scale); click a bar for those posts."
+  },
+  {
+   "id": "REACT-2",
+   "name": "What gets engagement",
+   "module": "REACT",
+   "question": "Which post features go with more engagement?",
+   "requires": [
+    "has_engagement"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "feature": "hashtags",
+    "outcome": "interactions",
+    "normalization": "within_actor_z",
+    "feature2": null
+   },
+   "param_choices": {
+    "feature": [
+     "hashtags",
+     "length",
+     "url",
+     "question",
+     "exclamation",
+     "punctuation",
+     "mentions",
+     "type",
+     "hour",
+     "weekday",
+     "weekend",
+     "fb_category",
+     "country",
+     "source",
+     "video_length",
+     "url_video",
+     "dataset"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ],
+    "normalization": [
+     "within_actor_z",
+     "median",
+     "log_mean",
+     "mean"
+    ]
+   },
+   "legacy_ids": [
+    "R3",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F17",
+    "F25",
+    "F26",
+    "F27",
+    "F28",
+    "F28b",
+    "F29",
+    "F40",
+    "F42",
+    "F43",
+    "hashtag_engagement_analysis",
+    "content_performance_by_type"
+   ],
+   "methods": "Posts are grouped by the feature. For each group: n, mean, median, mean of log(1 + x), and the mean within-author z-score of log(1 + x), which compares each post with its own author's typical post and so removes differences in page size. Two groups are compared with a Mann-Whitney test (rank-biserial effect size); more groups with Kruskal-Wallis (epsilon squared). Groups under the minimum size are flagged.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Engagement by post feature (normalized as chosen); click a bar for the posts in that group."
+  },
+  {
+   "id": "REACT-3",
+   "name": "Lexicon and engagement",
+   "module": "REACT",
+   "question": "Do posts using a kind of language get more engagement?",
+   "requires": [
+    "has_text",
+    "has_engagement"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "lexicon": "moral_emotional",
+    "outcome": "auto",
+    "levels": false
+   },
+   "param_choices": {
+    "outcome": [
+     "auto",
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [
+    "R4",
+    "F57",
+    "F71",
+    "F85",
+    "F93",
+    "F96",
+    "F102",
+    "F116",
+    "F130",
+    "F131",
+    "F136"
+   ],
+   "methods": "Lexicon matches are counted on whole tokens after normalization. Arabic terms of three letters accept the prefixes و and ال (and combinations with ال); terms of four or more letters also accept clitic prefixes and pronoun or plural suffixes. Multi-word terms are matched as sequences. Rates are matches per 1,000 tokens, computed as a ratio of totals; prevalence is the share of posts with at least one match. Posts with and without matches (or with 0, 1, 2+ matches) are compared with the group comparison engine.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Engagement of posts with and without the lexicon; click a bar for those posts."
+  },
+  {
+   "id": "REACT-4",
+   "name": "Engagement mix",
+   "module": "REACT",
+   "question": "What kind of engagement do posts get?",
+   "requires": [
+    "has_engagement"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "by": "none"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "R5",
+    "F1",
+    "F7",
+    "F33",
+    "F72",
+    "F75"
+   ],
+   "methods": "Ratios of shares, comments, likes and reactions, as ratio of totals and as median per post.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Ratios between engagement types over all posts."
+  },
+  {
+   "id": "REACT-5",
+   "name": "Reaction types",
+   "module": "REACT",
+   "question": "Which Facebook reactions do posts get, and how does that change?",
+   "requires": [
+    "has_reactions"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "R6",
+    "F49",
+    "F50",
+    "F138"
+   ],
+   "methods": "Share of each of the six reactions (Likes excluded), high-arousal share, and the negative to surprise/humor ratio.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "Facebook reactions (CrowdTangle, Meta)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Share of each Facebook reaction, overall or over time; click for posts that received that reaction."
+  },
+  {
+   "id": "REACT-6",
+   "name": "Reaction sentiment",
+   "module": "REACT",
+   "question": "Is the audience response positive, divided or unified?",
+   "requires": [
+    "has_reactions"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "by": "none",
+    "include_likes_in_cohesion": true,
+    "sensitivity": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "R7",
+    "sentiment_analysis",
+    "sentiment_sensitivity_analysis",
+    "F24",
+    "F31",
+    "F51",
+    "F86",
+    "F87"
+   ],
+   "methods": "Score = (2 Love - 2 Angry - Sad) / (2 Love + 2 Angry + Sad + Haha + Wow + Care), for posts with at least 10 reactions published after reactions launched (2016-02-24); Positive at 0.3 or more, Negative at -0.3 or less. Polarization = 2 min(p, n) / (p + n) with p = 2 Love and n = 2 Angry + Sad. Cohesion = 1 minus normalized Shannon entropy of the reaction mix. The sensitivity table recomputes the labels under other weights, thresholds and minimums.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "Facebook reactions (CrowdTangle, Meta)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Distribution of the reaction sentiment score of scored posts; dotted lines at -0.3 and 0.3; click a bar for those posts."
+  },
+  {
+   "id": "REACT-7",
+   "name": "Engagement rate",
+   "module": "REACT",
+   "question": "How much engagement relative to audience size?",
+   "requires": [
+    "has_engagement",
+    "has_followers"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "R2",
+    "F32",
+    "calculate_engagement_rate"
+   ],
+   "methods": "Interactions divided by followers (or page likes) at posting, times 100.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "Needs followers (CrowdTangle, some Meltwater)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Distribution of engagement rate (interactions / followers x 100); click a bar for those posts."
+  },
+  {
+   "id": "REACT-8",
+   "name": "Views",
+   "module": "REACT",
+   "question": "How much engagement per view, and how many views per follower?",
+   "requires": [
+    "has_views"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "G1",
+    "F34",
+    "F35"
+   ],
+   "methods": "Interactions per view and views per follower.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "Needs views (CrowdTangle, Meta, X)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Distribution of post views (log10 scale); click a bar for those posts."
+  },
+  {
+   "id": "REACT-9",
+   "name": "Overperforming posts",
+   "module": "REACT",
+   "question": "Which posts did better than their page usually does?",
+   "requires": [
+    "has_overperforming"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "by": "type"
+   },
+   "param_choices": {
+    "by": [
+     "type",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [
+    "R8",
+    "overperforming_analysis",
+    "F19"
+   ],
+   "methods": "Distribution of the CrowdTangle overperforming score and group comparisons on it.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "CrowdTangle only",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Posts per CrowdTangle overperforming score band; click a bar for those posts."
+  },
+  {
+   "id": "REACT-10",
+   "name": "Video performance",
+   "module": "REACT",
+   "question": "How do video length, ownership and share status relate to engagement?",
+   "requires": [
+    "has_video",
+    "has_engagement"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "R9",
+    "F2",
+    "F14",
+    "F15",
+    "F16",
+    "F18",
+    "video_analysis"
+   ],
+   "methods": "Group comparisons by video length band, ownership and share status, and interactions per video minute.",
+   "category": "REACT",
+   "category_label": "Reactions",
+   "badge": "Facebook video (CrowdTangle)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Median engagement by video length; click a bar for those videos."
+  },
+  {
+   "id": "SPREAD-1",
+   "name": "Repeated claims",
+   "module": "SPREAD",
+   "question": "Which wordings spread, how fast, and through how many accounts?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "minutes",
+   "params": {
+    "threshold": 0.8,
+    "paraphrase": false,
+    "paraphrase_sim": 0.85,
+    "min_size": 3
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "G6"
+   ],
+   "methods": "Clusters of near-identical texts (DATA-4), optionally joined with paraphrases (embedding cosine similarity above a threshold). Per cluster: posts, accounts, platforms, first and last seen, posts in the first 24 hours.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "",
+   "language_scope": "spaced",
+   "languages": "Any language written with spaces between words (not Chinese, Japanese or Thai). Repeated wording is compared on word sequences.",
+   "figure_help": "Daily posts in the largest clusters of repeated wording; click a point for those posts."
+  },
+  {
+   "id": "SPREAD-2",
+   "name": "Linked websites",
+   "module": "SPREAD",
+   "question": "Which sources are linked, and how many links are hidden behind shorteners?",
+   "requires": [
+    "has_urls"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "credibility_file": null
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "G5"
+   ],
+   "methods": "Domains from links in the text and the export's link fields, with common aliases merged; share of links via URL shorteners; optional credibility ratings from a user-supplied list.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Most linked domains; click a bar for posts linking there."
+  },
+  {
+   "id": "SPREAD-3",
+   "name": "Coordinated posting",
+   "module": "SPREAD",
+   "question": "Do groups of accounts post the same content at the same moment, repeatedly?",
+   "requires": [
+    "has_author",
+    "has_date",
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "minutes",
+   "params": {
+    "window_seconds": 60,
+    "min_accounts": 3,
+    "min_repeats": 2,
+    "use": "text"
+   },
+   "param_choices": {
+    "use": [
+     "text",
+     "url",
+     "both"
+    ]
+   },
+   "legacy_ids": [
+    "G4",
+    "F133 (replacement)"
+   ],
+   "methods": "An event is one text (or near-duplicate cluster from DATA-4) or one link posted by at least three distinct accounts within 60 seconds. Accounts that share at least two events are linked, and clusters are connected components, following the logic of coordinated link sharing detection (Giglietto et al.).",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Accounts linked by repeatedly posting the same content within seconds of each other; click an account for its posts."
+  },
+  {
+   "id": "SPREAD-4",
+   "name": "Reply threads",
+   "module": "SPREAD",
+   "question": "How deep and how large are reply threads?",
+   "requires": [
+    "has_thread"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "G7"
+   ],
+   "methods": "Reply trees built from parent ids found in the data (or thread ids): replies per root, depth, direct replies, and labels by depth when classifier labels exist.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "Reply data (Reddit, Communalytic)",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Number of threads by size (replies per root post); click a bar for those threads."
+  },
+  {
+   "id": "SPREAD-5",
+   "name": "Crosspost reach",
+   "module": "SPREAD",
+   "question": "How far do views travel beyond the original post?",
+   "requires": [
+    "has_crosspost_views"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "G2",
+    "F46",
+    "F47",
+    "F48",
+    "F127"
+   ],
+   "methods": "Total views (or views across crossposts) divided by the original post's views.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "CrowdTangle only",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Median crosspost amplification (total views / post views) per period; click a point for its posts."
+  },
+  {
+   "id": "SPREAD-6",
+   "name": "Meltwater reach and sources",
+   "module": "SPREAD",
+   "question": "What reach, sources and vendor sentiment does Meltwater report?",
+   "requires": [
+    "has_meltwater"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "G3",
+    "MeltwaterExtras"
+   ],
+   "methods": "Reach and AVE/EMV totals, source, language and platform mix, and Meltwater's sentiment labels over time.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "Meltwater only",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": "Meltwater's own sentiment labels over time, or posts by source; click for those posts."
+  },
+  {
+   "id": "SPREAD-7",
+   "name": "Check-worthy posts",
+   "module": "SPREAD",
+   "question": "Which posts make claims worth fact-checking?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Check-worthiness per post (check-worthy / not check-worthy, as in the CheckThat! lab), with confidence. Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "Check-worthy and other posts over time; click a point for those posts."
+  },
+  {
+   "id": "SPREAD-8",
+   "name": "Claims",
+   "module": "SPREAD",
+   "question": "Which claims are made, and which are repeated most?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "top": 25,
+    "similarity": 0.8,
+    "run_if_missing": true
+   },
+   "param_choices": {},
+   "legacy_ids": [],
+   "methods": "Claims extracted from each post by the connected service, grouped when they say nearly the same thing (character n-gram TF-IDF cosine similarity of at least 0.8), ranked by the number of posts and accounts. Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "The claims made in the most posts (similar wordings grouped); click a bar for those posts."
+  },
+  {
+   "id": "SPREAD-9",
+   "name": "Fact verification",
+   "module": "SPREAD",
+   "question": "Are the claims supported or refuted?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "model",
+   "cost": "gpu",
+   "params": {
+    "by": "time",
+    "outcome": "interactions",
+    "min_score": 0.0,
+    "run_if_missing": true
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ],
+    "outcome": [
+     "interactions",
+     "likes",
+     "comments",
+     "shares",
+     "views",
+     "reach",
+     "overperforming",
+     "engagement_rate"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Verdict and veracity score per post or claim (for example supported, refuted, not enough evidence) with the evidence the service returns, over time and by language. Runs on the model or API you connect: enrich.set_api(task, url) for a REST service (request: task and a list of texts; response: one result per text), run_classifier(session, task, model_id=...) for a Hugging Face model, or label columns already in the file. Posts outside the service's languages are skipped and counted.",
+   "category": "SPREAD",
+   "category_label": "Spread",
+   "badge": "Your model or API",
+   "language_scope": "model",
+   "languages": "Languages of the model (listed on the card). The languages of the model or API you connect.",
+   "figure_help": "Posts per verdict (for example supported, refuted, not enough evidence) over time; click a point for those posts."
+  },
+  {
+   "id": "SOCIETY-1",
+   "name": "Social cohesion",
+   "module": "SOCIETY",
+   "question": "How connected and united is the conversation?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "minutes",
+   "params": {
+    "kind": "auto"
+   },
+   "param_choices": {
+    "kind": [
+     "auto",
+     "reply",
+     "quote",
+     "mention"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Components scored 0 (divided) to 100 (cohesive), each computed only when the data supports it: Connected (share of accounts in the largest connected component of the reply, quote or mention network), Bridging (share of links between different Louvain communities), Shared agenda (mean Jaccard overlap of the top 30 hashtags or words of the eight most active accounts), Us, not them (ingroup hits over ingroup plus outgroup hits), Humanizing (humanizing over humanizing plus dehumanizing hits), Civil tone (share of posts not labelled toxic, or not hate) and Audience agreement (mean of 1 minus normalized reaction entropy, posts with 10 or more reactions). The index is the mean of the available components, or MARSAD's formula when cards.society.COHESION_FORMULA is set.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6). Network, tone and reaction parts work in any language; the language parts use the Arabic and English word lists.",
+   "figure_help": "Each bar is one part of social cohesion, from 0 (divided) to 100 (cohesive), with the index as a dashed line; click a bar for the posts behind it."
+  },
+  {
+   "id": "SOCIETY-2",
+   "name": "Emotional intensity",
+   "module": "SOCIETY",
+   "question": "How heated is the writing?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "by": "time",
+    "top": 10
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Signs of intensity per post: exclamation marks, letters repeated three or more times, Latin words of three or more capital letters, emoji, intensifier and emotion-lexicon matches. Intensity is the number of signs per 10 words; it is shown over time or by group, by sign type, against engagement (median by quarter of intensity), with the most intense posts.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language. Stretched letters, capitals, emoji and exclamation marks work in any language; intensifier and emotion words are Arabic and English.",
+   "figure_help": "Emotional intensity (signs per 10 words) over time or by group; click for the most intense posts of that period or group."
+  },
+  {
+   "id": "SOCIETY-3",
+   "name": "Distress and resilience",
+   "module": "SOCIETY",
+   "question": "Do people express distress, or resilience and hope?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: trauma, burnout, collective grief, resilience, hope and resilience. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-4",
+   "name": "Economic concern",
+   "module": "SOCIETY",
+   "question": "How much do people talk about prices, jobs, poverty and corruption?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: economic conditions, economic justice, corruption. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-5",
+   "name": "Calls to action",
+   "module": "SOCIETY",
+   "question": "Do posts call people to act, join or find solutions?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: collective efficacy, solutions, connective action, protest language. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-6",
+   "name": "Blame and accountability",
+   "module": "SOCIETY",
+   "question": "Who is blamed, and do people ask for accountability?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: blame, injustice, legal accountability. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-7",
+   "name": "Identity and belonging",
+   "module": "SOCIETY",
+   "question": "How do people talk about who they are?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: national identity, ingroup, first person plural, gender. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-8",
+   "name": "Trust in institutions",
+   "module": "SOCIETY",
+   "question": "Do people trust or distrust government, media, courts, health and science?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: trust, distrust, institutions named. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list. The trust share is also given for posts that name an institution.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-9",
+   "name": "Moral values",
+   "module": "SOCIETY",
+   "question": "Which moral values do posts appeal to: care, fairness, loyalty, authority, sanctity?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: virtue and vice lists for the five foundations of Moral Foundations Theory (care/harm, fairness/cheating, loyalty/betrayal, authority/subversion, sanctity/degradation), written for MARSAD in Arabic and English. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-10",
+   "name": "Wellbeing",
+   "module": "SOCIETY",
+   "question": "Do posts show positive feelings, engagement, relationships, meaning and accomplishment?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: the five PERMA parts of wellbeing (positive emotion, engagement, relationships, meaning, accomplishment). Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Group-level signals only; never a judgment about one person.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-11",
+   "name": "Stress and coping",
+   "module": "SOCIETY",
+   "question": "How much stress do people express, and how do they cope?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: stress, coping (including religious coping), exhaustion. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-12",
+   "name": "Certainty and self-focus",
+   "module": "SOCIETY",
+   "question": "Do people write with certainty or doubt, and about 'I' or 'we'?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: certainty, doubt, first person singular, first person plural. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list. Arabic first person suffixes (كتابي, قلت) are not counted, so Arabic 'I' rates are lower bounds.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-13",
+   "name": "Economic mood",
+   "module": "SOCIETY",
+   "question": "Is economic talk about worries and shortages, or good news?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: economic worries, shortages and outages, good economic news. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-14",
+   "name": "Boycotts and buying calls",
+   "module": "SOCIETY",
+   "question": "Do people call to boycott products, or to buy local?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: boycott calls, buy-local calls. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-15",
+   "name": "Health talk",
+   "module": "SOCIETY",
+   "question": "Do people ask for help, and how do they talk about vaccines?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: help seeking, vaccine mentions, pro-vaccine and anti-vaccine phrases. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. Balance: share of side A among posts with side A or side B words (posts with both count on both sides). A word right after a negation is not counted for lists marked negatable, and a word inside a phrase of the opposing list counts only for that list.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-16",
+   "name": "Misinformation signals",
+   "module": "SOCIETY",
+   "question": "How much conspiracy talk and miracle-cure talk is there?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "time"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: conspiracy talk, unproven health claims, accusations of propaganda, debunking. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory. These are signals to read, not a fact check.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "SOCIETY-17",
+   "name": "Issue attention",
+   "module": "SOCIETY",
+   "question": "Which public issues get the most attention?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "lexicon",
+   "cost": "instant",
+   "params": {
+    "by": "none"
+   },
+   "param_choices": {
+    "by": [
+     "none",
+     "time",
+     "author",
+     "source",
+     "country",
+     "fb_category",
+     "owner_type",
+     "language",
+     "dataset",
+     "script",
+     "type",
+     "dialect",
+     "topic"
+    ]
+   },
+   "legacy_ids": [],
+   "methods": "Lexicons: 13 issue lists (economy, health, education, security and war, environment, migration, housing, energy, rights, foreign affairs, technology, food and water, transport), loosely following the Comparative Agendas Project major topics. Share of posts with at least one match, and matches per 1,000 words, for each word list, over time or by group. Whole-word matching after Arabic normalization, with clitic prefixes and suffixes allowed. The lists are MARSAD Arabic and English lists (not yet validated), so results are exploratory.",
+   "category": "SOCIETY",
+   "category_label": "Society",
+   "badge": "",
+   "language_scope": "lexicon",
+   "languages": "Arabic and English (MARSAD lexicons); other languages need your own word list (FRAME-6)",
+   "figure_help": "Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+  },
+  {
+   "id": "PAPER-1",
+   "name": "Report export",
+   "module": "PAPER",
+   "question": "How do I get results into a paper?",
+   "requires": [],
+   "evidence": "",
+   "cost": "instant",
+   "params": {},
+   "param_choices": {},
+   "legacy_ids": [
+    "I1"
+   ],
+   "methods": "PDF, LaTeX tables, CSV and JSON export of the cards in the report basket.",
+   "kind": "action",
+   "category": "PAPER",
+   "category_label": "Paper",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": ""
+  },
+  {
+   "id": "PAPER-2",
+   "name": "Annotation sample",
+   "module": "PAPER",
+   "question": "Which posts should we annotate, and do annotators agree?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "statistical",
+   "cost": "instant",
+   "params": {
+    "n": 500,
+    "strata": [],
+    "labels": [],
+    "annotators": 2,
+    "path": "annotation_sample.xlsx",
+    "prelabel_task": null
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "I2"
+   ],
+   "methods": "Stratified random sample (up to two strata from dialect, topic, source, platform and month, proportional allocation), one sheet per annotator. Agreement after annotation: Cohen's kappa (two annotators), Fleiss' kappa and Krippendorff's alpha (nominal).",
+   "category": "PAPER",
+   "category_label": "Paper",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": ""
+  },
+  {
+   "id": "PAPER-3",
+   "name": "Datasheet",
+   "module": "PAPER",
+   "question": "What goes in the dataset description of the paper?",
+   "requires": [
+    "has_text"
+   ],
+   "evidence": "descriptive",
+   "cost": "instant",
+   "params": {
+    "path": "datasheet.md",
+    "title": "",
+    "creators": "",
+    "funding": "",
+    "collection_query": "",
+    "collection_tool": "",
+    "platform_terms": "",
+    "license": "",
+    "ethics_approval": "",
+    "intended_uses": "",
+    "out_of_scope_uses": "",
+    "maintenance": "",
+    "contact": ""
+   },
+   "param_choices": {},
+   "legacy_ids": [
+    "I3"
+   ],
+   "methods": "A draft datasheet following Datasheets for Datasets (Gebru et al., 2021): composition, time span, platforms, script and dialect mix, duplicates and preprocessing are computed; motivation, collection, licence and maintenance come from the authors.",
+   "category": "PAPER",
+   "category_label": "Paper",
+   "badge": "",
+   "language_scope": "any",
+   "languages": "Any language",
+   "figure_help": ""
+  }
+ ],
+ "packages": {
+  "basic": {
+   "name": "Basic",
+   "for_": "A first look at any file",
+   "cards": [
+    "DATA-1",
+    "DATA-2",
+    "TIME-1",
+    "TIME-2",
+    "WHO-1",
+    "WORDS-1",
+    "WORDS-2",
+    "REACT-1"
+   ]
+  },
+  "narrative": {
+   "name": "Narrative",
+   "for_": "What is said and how: keywords, contexts, framing, topics",
+   "cards": [
+    "WORDS-3",
+    "WORDS-4",
+    "WORDS-5",
+    "WORDS-6",
+    "WORDS-7",
+    "TOPIC-1",
+    "FRAME-1",
+    "FRAME-2",
+    "FRAME-3",
+    "FRAME-4",
+    "FRAME-6",
+    "SPREAD-1"
+   ]
+  },
+  "audience": {
+   "name": "Audience",
+   "for_": "Who posts, where, and how people respond",
+   "cards": [
+    "WHO-2",
+    "WHO-3",
+    "WHO-6",
+    "WHO-7",
+    "WHO-8",
+    "REACT-2",
+    "REACT-3",
+    "REACT-4",
+    "REACT-5",
+    "REACT-6",
+    "REACT-7",
+    "REACT-8",
+    "REACT-9",
+    "REACT-10",
+    "SPREAD-5",
+    "SPREAD-6"
+   ]
+  },
+  "advanced": {
+   "name": "Advanced",
+   "for_": "Data quality, coordination, networks, models and comparisons",
+   "cards": [
+    "DATA-3",
+    "DATA-4",
+    "DATA-5",
+    "DATA-6",
+    "TIME-3",
+    "TIME-4",
+    "WHO-4",
+    "WHO-5",
+    "WORDS-8",
+    "WORDS-9",
+    "TOPIC-2",
+    "TOPIC-3",
+    "FRAME-5",
+    "SPREAD-2",
+    "SPREAD-3",
+    "SPREAD-4",
+    "PAPER-2",
+    "PAPER-3"
+   ]
+  },
+  "models": {
+   "name": "Sentiment, emotion and toxicity",
+   "for_": "Model-based analyzers (GPU helps): sentiment, emotions, toxicity, hate speech, stance",
+   "cards": [
+    "FRAME-7",
+    "FRAME-8",
+    "FRAME-9",
+    "FRAME-10",
+    "FRAME-11"
+   ]
+  },
+  "society": {
+   "name": "Society",
+   "for_": "Social cohesion, emotional intensity, distress, economy, calls to action, blame, identity",
+   "cards": [
+    "SOCIETY-1",
+    "SOCIETY-2",
+    "SOCIETY-3",
+    "SOCIETY-4",
+    "SOCIETY-5",
+    "SOCIETY-6",
+    "SOCIETY-7",
+    "SOCIETY-8",
+    "SOCIETY-9",
+    "SOCIETY-10",
+    "SOCIETY-11",
+    "SOCIETY-12",
+    "SOCIETY-13",
+    "SOCIETY-14",
+    "SOCIETY-15",
+    "SOCIETY-16",
+    "SOCIETY-17"
+   ]
+  },
+  "marsad": {
+   "name": "MARSAD platform analyses",
+   "for_": "Sentiment, propaganda and techniques, political bias, check-worthiness, claims and fact verification (connect the models or APIs)",
+   "cards": [
+    "FRAME-7",
+    "FRAME-12",
+    "FRAME-13",
+    "FRAME-14",
+    "SPREAD-7",
+    "SPREAD-8",
+    "SPREAD-9"
+   ]
+  }
+ },
+ "presets": {
+  "quick_profile": {
+   "name": "Quick profile",
+   "for_": "Any new file",
+   "cards": [
+    "DATA-1",
+    "DATA-2",
+    "TIME-1",
+    "WHO-1",
+    "WORDS-1",
+    "WORDS-2"
+   ]
+  },
+  "dataset_paper": {
+   "name": "Dataset paper descriptives",
+   "for_": "Corpus statistics sections of dataset papers",
+   "cards": [
+    "DATA-1",
+    "DATA-2",
+    "DATA-4",
+    "DATA-5",
+    "DATA-3",
+    "TIME-1",
+    "WHO-2",
+    "WHO-6",
+    "WORDS-1",
+    "WORDS-3",
+    "WORDS-8",
+    "TOPIC-1",
+    "SPREAD-6",
+    "PAPER-3"
+   ],
+   "export": "latex"
+  },
+  "annotation": {
+   "name": "Annotation round",
+   "for_": "Draw a sample, then check agreement",
+   "cards": [
+    "DATA-3",
+    "TOPIC-1",
+    "PAPER-2"
+   ]
+  },
+  "misinformation": {
+   "name": "Misinformation and spread",
+   "for_": "Links, repeated claims, coordination",
+   "cards": [
+    "SPREAD-2",
+    "SPREAD-1",
+    "DATA-4",
+    "SPREAD-3",
+    "WHO-4",
+    "WHO-5"
+   ]
+  },
+  "engagement": {
+   "name": "Engagement study",
+   "for_": "What drives interactions",
+   "cards": [
+    "REACT-1",
+    "REACT-7",
+    "REACT-2",
+    "REACT-4",
+    "TIME-2",
+    "WHO-1"
+   ]
+  },
+  "framing": {
+   "name": "Discourse and framing study",
+   "for_": "Framing, emotion, hope and despair, us versus them",
+   "cards": [
+    "WORDS-3",
+    "WORDS-4",
+    "WORDS-5",
+    "FRAME-1",
+    "FRAME-2",
+    "FRAME-3",
+    "FRAME-4",
+    "FRAME-5",
+    "REACT-3",
+    "WORDS-7"
+   ]
+  },
+  "event": {
+   "name": "Event study",
+   "for_": "Before and after a known event",
+   "cards": [
+    "TIME-1",
+    "TIME-4",
+    "TIME-3",
+    "WORDS-7",
+    "WORDS-3",
+    "FRAME-1"
+   ]
+  },
+  "actors": {
+   "name": "Actor and coordination audit",
+   "for_": "Who dominates, and whether it looks organized",
+   "cards": [
+    "WHO-1",
+    "WHO-2",
+    "WHO-3",
+    "WHO-4",
+    "WHO-5",
+    "DATA-4",
+    "SPREAD-3"
+   ]
+  },
+  "corpus": {
+   "name": "Corpus linguistics (AntConc-style)",
+   "for_": "Word lists, keywords, concordances, collocates",
+   "cards": [
+    "WORDS-1",
+    "WORDS-3",
+    "WORDS-4",
+    "WORDS-5",
+    "WORDS-6",
+    "WORDS-7",
+    "WORDS-8",
+    "WORDS-2"
+   ]
+  },
+  "reactions": {
+   "name": "Reaction study (CrowdTangle, Meta)",
+   "for_": "Facebook reaction data",
+   "cards": [
+    "REACT-5",
+    "REACT-6",
+    "TIME-3"
+   ]
+  }
+ },
+ "packs": [
+  {
+   "name": "palestine_gaza",
+   "title": "Palestine/Gaza discourse",
+   "description": "Lexicons, events and preset cards for Palestine and Gaza discourse. Off by default.",
+   "events": [
+    {
+     "name": "ICJ provisional measures order",
+     "date": "2024-01-26"
+    },
+    {
+     "name": "Nakba Day",
+     "month_day": "05-15",
+     "recurring": true
+    },
+    {
+     "name": "7 October 2023",
+     "date": "2023-10-07"
+    }
+   ],
+   "presets": [
+    {
+     "id": "PG01",
+     "name": "Occupation and resistance language",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "occupation",
+       "resistance"
+      ],
+      "by": "time"
+     },
+     "legacy": "F55"
+    },
+    {
+     "id": "PG02",
+     "name": "Martyrdom vs civilian framing",
+     "card": "FRAME-2",
+     "params": {
+      "lex_a": "martyr+resistance+intifada",
+      "lex_b": "civilian+victim",
+      "by": "time"
+     },
+     "legacy": "F59"
+    },
+    {
+     "id": "PG03",
+     "name": "Reclaimed slogans",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "reclaimed"
+      ],
+      "by": "time"
+     },
+     "legacy": "F62"
+    },
+    {
+     "id": "PG04",
+     "name": "Genocide vocabulary before and after the ICJ order",
+     "card": "TIME-4",
+     "params": {
+      "events": [
+       {
+        "name": "ICJ provisional measures order",
+        "date": "2024-01-26"
+       }
+      ],
+      "window_days": null,
+      "metric": "lexicon:genocide"
+     },
+     "legacy": "F63, F69"
+    },
+    {
+     "id": "PG05",
+     "name": "Ukraine comparison and double standards",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "ukraine"
+      ],
+      "by": "time"
+     },
+     "legacy": "F65"
+    },
+    {
+     "id": "PG06",
+     "name": "Hasbara references",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "hasbara"
+      ],
+      "by": "time"
+     },
+     "legacy": "F67 (now uses the hasbara lexicon itself)"
+    },
+    {
+     "id": "PG07",
+     "name": "Anti-normalization",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "anti_normalization"
+      ],
+      "by": "time"
+     },
+     "legacy": "F79"
+    },
+    {
+     "id": "PG08",
+     "name": "Legal accountability and boycott",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "legal_accountability",
+       "boycott"
+      ],
+      "by": "time"
+     },
+     "legacy": "F81"
+    },
+    {
+     "id": "PG09",
+     "name": "Boycott/BDS posts and shares",
+     "card": "REACT-3",
+     "params": {
+      "lexicon": "boycott",
+      "outcome": "shares"
+     },
+     "legacy": "F82"
+    },
+    {
+     "id": "PG10",
+     "name": "Intifada and resistance language",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "intifada+resistance"
+      ],
+      "by": "time"
+     },
+     "legacy": "F84"
+    },
+    {
+     "id": "PG11",
+     "name": "Intergenerational memory",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "intergenerational",
+       "memory_1948"
+      ],
+      "by": "time"
+     },
+     "legacy": "F92, F114"
+    },
+    {
+     "id": "PG12",
+     "name": "Nakba memory persistence",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "memory_1948",
+       "trauma"
+      ],
+      "by": "time"
+     },
+     "legacy": "F112"
+    },
+    {
+     "id": "PG13",
+     "name": "Nakba Day engagement",
+     "card": "TIME-4",
+     "params": {
+      "events": [
+       {
+        "name": "Nakba Day",
+        "month_day": "05-15"
+       }
+      ],
+      "metric": "interactions"
+     },
+     "legacy": "F113"
+    },
+    {
+     "id": "PG14",
+     "name": "Martyr commemoration",
+     "card": "FRAME-1",
+     "params": {
+      "lexicons": [
+       "digital_martyr+martyr"
+      ],
+      "by": "time"
+     },
+     "legacy": "F117"
+    },
+    {
+     "id": "PG15",
+     "name": "1948 memory vs recent events",
+     "card": "FRAME-2",
+     "params": {
+      "lex_a": "memory_1948",
+      "lex_b": "recent_events",
+      "by": "time"
+     },
+     "legacy": "F118"
+    },
+    {
+     "id": "PG16",
+     "name": "Countries using resistance and boycott language",
+     "card": "FRAME-5",
+     "params": {
+      "group": "country",
+      "lexicons": [
+       "resistance",
+       "boycott"
+      ]
+     },
+     "legacy": "F119, F129"
+    },
+    {
+     "id": "PG17",
+     "name": "Pages using resistance, victim, genocide language",
+     "card": "FRAME-5",
+     "params": {
+      "group": "author",
+      "lexicons": [
+       "resistance",
+       "victim",
+       "genocide"
+      ]
+     },
+     "legacy": "F122"
+    },
+    {
+     "id": "PG18",
+     "name": "Anti-colonial language and overperformance",
+     "card": "REACT-3",
+     "params": {
+      "lexicon": "occupation+resistance+anti_normalization",
+      "outcome": "overperforming"
+     },
+     "legacy": "F134, F137"
+    }
+   ]
+  }
+ ],
+ "aliases": {
+  "A1": "DATA-1",
+  "A2": "DATA-2",
+  "A5": "DATA-3",
+  "A3": "DATA-4",
+  "A4": "DATA-5",
+  "H1": "DATA-6",
+  "B1": "TIME-1",
+  "B2": "TIME-2",
+  "B4": "TIME-3",
+  "B3": "TIME-4",
+  "C1": "WHO-1",
+  "C2": "WHO-2",
+  "C3": "WHO-3",
+  "C7": "WHO-4",
+  "C8": "WHO-5",
+  "C5": "WHO-6",
+  "C4": "WHO-7",
+  "C6": "WHO-8",
+  "L1": "WORDS-1",
+  "L8": "WORDS-2",
+  "L2": "WORDS-3",
+  "L3": "WORDS-4",
+  "L4": "WORDS-5",
+  "L5": "WORDS-6",
+  "L6": "WORDS-7",
+  "L7": "WORDS-8",
+  "D7": "WORDS-9",
+  "D6": "TOPIC-1",
+  "D4": "TOPIC-2",
+  "D5": "TOPIC-3",
+  "E1": "FRAME-1",
+  "E2": "FRAME-2",
+  "E3": "FRAME-3",
+  "E4": "FRAME-4",
+  "E5": "FRAME-5",
+  "E6": "FRAME-6",
+  "E7": "FRAME-7",
+  "E8": "FRAME-8",
+  "R1": "REACT-1",
+  "R3": "REACT-2",
+  "R4": "REACT-3",
+  "R5": "REACT-4",
+  "R6": "REACT-5",
+  "R7": "REACT-6",
+  "R2": "REACT-7",
+  "G1": "REACT-8",
+  "R8": "REACT-9",
+  "R9": "REACT-10",
+  "G6": "SPREAD-1",
+  "G5": "SPREAD-2",
+  "G4": "SPREAD-3",
+  "G7": "SPREAD-4",
+  "G2": "SPREAD-5",
+  "G3": "SPREAD-6",
+  "I1": "PAPER-1",
+  "I2": "PAPER-2",
+  "I3": "PAPER-3",
+  "D1": "WORDS-1",
+  "D2": "WORDS-3",
+  "D3": "WORDS-7"
+ }
+}

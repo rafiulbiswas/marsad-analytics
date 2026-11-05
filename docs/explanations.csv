@@ -1,0 +1,1206 @@
+﻿card,kind,table,name,label,sentence
+DATA-1,table,overview,overview,Overview,Headline counts for the cleaned dataset.
+DATA-1,table,fields,fields,Fields,Which canonical fields were found and how complete they are.
+DATA-1,table,capabilities,capabilities,Capabilities,Which kinds of analysis the data supports; cards needing a missing field are greyed out.
+DATA-1,table,cleaning,cleaning,Cleaning,What was removed or changed while loading the file.
+DATA-1,column,,filled_%,Filled (%),Percentage of posts with a non-empty value in this field.
+DATA-1,column,,meaning,Meaning,What the field holds.
+DATA-1,column,,available,Available,True when the data has what this capability needs.
+DATA-1,column,,means,Means,What the capability requires from the data.
+DATA-1,column,,step,Step,One cleaning step and how many rows it affected.
+DATA-1,summary,,posts,Posts,Posts left after cleaning.
+DATA-1,summary,,packs_suggested,Packs suggested,Topic packs whose trigger terms appear in enough posts to be worth switching on.
+DATA-2,figure,,figure,Chart,Number of posts by length in words (log scale on the count axis).
+DATA-2,table,corpus,corpus,Corpus,Size and shape of the text after normalization.
+DATA-2,table,length_distribution,length_distribution,Length distribution,Distribution of post length in words (tokens).
+DATA-2,table,script_mix,script_mix,Script mix,Posts by writing system.
+DATA-2,table,type_mix,type_mix,Type mix,Posts by post type.
+DATA-2,table,language_mix,language_mix,Language mix,Posts by the export's language code.
+DATA-2,table,platform_mix,platform_mix,Platform mix,Posts by platform.
+DATA-2,table,source_mix,source_mix,Source mix,Posts by source.
+DATA-2,column,,script,Script,"Writing system of the post: arabic (80%+ Arabic letters), latin (80%+ Latin letters) or mixed."
+DATA-2,summary,,posts,Posts,Posts with text.
+DATA-2,summary,,tokens,Tokens,Words (letter and digit sequences after normalization) across all posts.
+DATA-4,figure,,figure,Chart,How many duplicate clusters have each size (number of near-identical posts).
+DATA-4,table,summary,summary,Summary,How much of the dataset is repeated text.
+DATA-4,table,clusters,clusters,Clusters,The largest clusters of identical or near-identical posts.
+DATA-4,column,clusters,posts,Posts,Posts in this cluster.
+DATA-4,column,clusters,authors,Authors,Accounts that posted text from this cluster.
+DATA-4,column,clusters,interactions,Interactions,Interactions summed over the cluster's posts.
+DATA-4,column,,cluster,Cluster,Cluster number.
+DATA-4,summary,,eligible_posts,Eligible posts,Posts long enough to compare (at least the minimum number of words).
+DATA-4,summary,,posts_in_exact_duplicates,Posts in exact duplicates,Posts whose normalized text is identical to another post.
+DATA-4,summary,,posts_in_any_cluster,Posts in any cluster,"Posts that are exact or near duplicates (3-word shingle Jaccard similarity of at least the threshold, estimated with MinHash)."
+DATA-4,summary,,share_in_clusters_%,Share in clusters (%),Posts in any duplicate cluster as a percentage of eligible posts.
+DATA-4,summary,,clusters,Clusters,Number of duplicate clusters.
+DATA-5,figure,,figure,Chart,Share of posts whose own text contains each collection keyword.
+DATA-5,table,summary,summary,Summary,Estimates of how much of the collected data is on topic.
+DATA-5,table,export_match_type,export_match_type,Export match type,"Where the platform says the query matched (post text, comments, attachment and so on)."
+DATA-5,column,,match_type,Match type,Part of the post the export says the query matched.
+DATA-5,summary,,matched_on_post_text_%,Matched on post text (%),Percentage of posts the export says matched the query on the post text itself.
+DATA-3,figure,,figure,Chart,"Share of posts by script, or by dialect region when dialect labels exist."
+DATA-3,table,script,script,Script,Writing system and Arabizi measures.
+DATA-3,table,dialect_region,dialect_region,Dialect region,Posts per dialect region from the dialect model.
+DATA-3,table,dialect_label,dialect_label,Dialect label,Posts per fine-grained dialect label (city or MSA).
+DATA-3,table,confidence,confidence,Confidence,Distribution of the dialect model's confidence scores.
+DATA-3,table,export_language,export_language,Export language,Posts per language code in the export.
+DATA-3,table,language_check,language_check,Language check,Examples of posts the export tags as Arabic but that are written in Latin script.
+DATA-3,column,,region,Region,"Dialect region (MSA, Gulf, Yemen, Iraq, Levant, Egypt-Sudan, Maghreb)."
+DATA-3,column,,score,Score,Dialect model confidence.
+DATA-3,summary,,arabic_script_%,Arabic script (%),Posts written mostly (80%+) in Arabic letters.
+DATA-3,summary,,latin_script_%,Latin script (%),Posts written mostly (80%+) in Latin letters.
+DATA-3,summary,,mixed_script_%,Mixed script (%),Posts mixing Arabic and Latin letters.
+DATA-3,summary,,arabizi_marker_%,Arabizi marker (%),Posts containing common Arabizi words (Arabic written in Latin letters).
+DATA-3,summary,,export_language_vs_script_mismatch_%,Export language vs script mismatch (%),Posts the export tags as Arabic that are written mostly in Latin script.
+DATA-3,summary,,posts,Posts,Posts profiled.
+TIME-1,figure,,figure,Chart,Posts per period (and per group when split); click a point for that period's posts.
+TIME-1,table,by_period,by_period,By period,Volume and engagement per time period.
+TIME-1,column,by_period,total,Total,Engagement summed over the period's posts.
+TIME-1,column,by_period,median,Median,Median engagement per post in the period.
+TIME-1,summary,,bucket,Bucket,"Length of each period (h = hour, D = day, W = week, M = month)."
+TIME-1,summary,,periods,Periods,Number of periods.
+TIME-2,figure,,figure,Chart,Posts (or engagement) by weekday and hour; click a cell for its posts.
+TIME-2,table,day_x_hour,day_x_hour,Day x hour,Posts per weekday (rows) and hour of day (columns 0-23) in the analysis time zone.
+TIME-2,table,by_hour,by_hour,By hour,Posts per hour of the day.
+TIME-2,table,weekend_vs_weekday,weekend_vs_weekday,Weekend vs weekday,Engagement on weekend days compared with weekdays.
+TIME-2,table,engagement_by_hour,engagement_by_hour,Engagement by hour,Engagement of posts by hour of posting.
+TIME-2,column,,day type,Day type,"Weekend or weekday, using the weekend days chosen for the data's countries."
+TIME-2,summary,,peak_hour_posts,Peak hour posts,Hour of the day with the most posts.
+TIME-2,summary,,weekend_test,Weekend test,Statistical test used for weekend versus weekday engagement.
+TIME-2,summary,,weekend_p_value,Weekend p value,p-value of the weekend versus weekday test.
+TIME-2,summary,,weekend_rank_biserial,Weekend rank biserial,"Effect size of the weekend difference, from -1 to 1 (0 = no difference)."
+TIME-4,figure,,figure,Chart,Daily values with each event marked; click a day for its posts.
+TIME-4,table,comparison,comparison,Comparison,Daily averages before and after each event.
+TIME-4,table,daily,daily,Daily,The daily series the comparison uses.
+TIME-4,column,,event,Event,Event name.
+TIME-4,column,,comparison,Comparison,Which days are compared.
+TIME-4,column,,days_before,Days before,Days in the before window.
+TIME-4,column,,days_after,Days after,Days in the after window.
+TIME-4,column,,before_mean,Before mean,Average daily value before the event.
+TIME-4,column,,after_mean,After mean,Average daily value from the event onwards.
+TIME-4,column,,change_%,Change (%),Relative change from before to after.
+TIME-4,column,,p_value,P value,Mann-Whitney p-value comparing daily values before and after (assumes days are independent).
+TIME-4,column,,days_event,Days event,Days that fall on the recurring date.
+TIME-4,column,,days_other,Days other,All other days.
+TIME-4,column,,event_mean,Event mean,Average daily value on the recurring date.
+TIME-4,column,,other_mean,Other mean,Average daily value on all other days.
+TIME-4,column,daily,value,Value,Value for that day.
+TIME-3,figure,,figure,Chart,Posts per day (or hour); red bars are bursts; click a bar for its posts.
+TIME-3,table,daily,daily,Daily,Posts per period with the rolling median and burst score.
+TIME-3,table,burst_days,burst_days,Burst days,Periods flagged as bursts.
+TIME-3,table,reaction_bursts,reaction_bursts,Reaction bursts,"Per period, posts with an unusually one-sided reaction pattern."
+TIME-3,column,,rolling_median,Rolling median,Median posts per period over the surrounding seven periods.
+TIME-3,column,,z,Z,Robust z-score: (posts - rolling median) / (1.4826 x rolling median absolute deviation).
+TIME-3,column,,burst,Burst,True when the robust z-score is above the threshold (default 3).
+TIME-3,column,,flagged,Flagged,Posts with above-median reactions where one reaction type is over half of all reactions.
+TIME-3,column,reaction_bursts,share_%,Share (%),Flagged posts as a percentage of the period's posts.
+TIME-3,column,,posts,Posts,Posts in the period.
+TIME-3,summary,,burst_days,Burst days,Days flagged as bursts.
+TIME-3,summary,,burst_hours,Burst hours,Hours flagged as bursts.
+TIME-3,summary,,days,Days,Days in the series.
+TIME-3,summary,,hours,Hours,Hours in the series.
+TIME-3,summary,,reaction_rule,Reaction rule,Rule used to flag one-sided reaction patterns.
+WHO-1,figure,,figure,Chart,Accounts ranked by posts or engagement; click a bar for the account's posts.
+WHO-1,table,authors,authors,Authors,Posts and engagement per account.
+WHO-1,table,top_posts,top_posts,Top posts,Posts with the most engagement.
+WHO-1,column,,share_of_posts_%,Share of posts (%),This account's posts as a percentage of all posts.
+WHO-1,column,,first_post,First post,Time of the account's first post in the data.
+WHO-1,column,,last_post,Last post,Time of the account's last post in the data.
+WHO-1,column,,mean_overperforming,Mean overperforming,Average CrowdTangle overperforming score of the account's posts.
+WHO-1,column,,virality,Virality,Post engagement divided by the median engagement of all posts.
+WHO-1,summary,,authors,Authors,Distinct accounts.
+WHO-2,figure,,figure,Chart,"Lorenz curve: share of posts (or engagement) held by the smallest x% of accounts; the further below the diagonal, the more concentrated."
+WHO-2,table,concentration,concentration,Concentration,Concentration measures.
+WHO-2,table,top_groups,top_groups,Top groups,The 25 accounts (or groups) with the largest totals.
+WHO-2,summary,,groups,Groups,Number of accounts or groups.
+WHO-2,summary,,gini,Gini,Gini coefficient from 0 (all equal) to 1 (one account has everything).
+WHO-2,summary,,hhi,Hhi,"Herfindahl-Hirschman index: sum of squared shares; 1 = one account, close to 0 = many small accounts."
+WHO-2,summary,,top_10_share_%,Top 10 share (%),Share of the total held by the 10 largest accounts or groups.
+WHO-2,summary,,top_1pct_share_%,Top 1pct share (%),Share of the total held by the largest 1% of accounts or groups.
+WHO-3,figure,,figure,Chart,Accounts by active days and posts per active day (size = posts); click a point for the account's posts.
+WHO-3,table,authors,authors,Authors,Posting regularity per account.
+WHO-3,table,frequency_vs_engagement,frequency_vs_engagement,Frequency vs engagement,"Median engagement on days when an account posted 1, 2, 3-4, 5-9 or 10+ times."
+WHO-3,column,,active_days,Active days,Days on which the account posted at least once.
+WHO-3,column,,posts_per_active_day,Posts per active day,Posts divided by active days.
+WHO-3,column,,daily_total_std,Daily total std,Standard deviation of the account's daily engagement total (higher = more volatile).
+WHO-3,column,,overperforming_std,Overperforming std,Standard deviation of the account's overperforming scores.
+WHO-3,column,,posts_that_day,Posts that day,How many posts the account made that day.
+WHO-3,column,,author_days,Author days,Number of account-days in this bin.
+WHO-3,column,,median_engagement,Median engagement,Median engagement of posts made on those account-days.
+WHO-3,summary,,median_posts_per_author,Median posts per author,Median number of posts per account.
+WHO-7,figure,,figure,Chart,Share of interactions by Facebook page category group; click a bar for its posts.
+WHO-7,table,by_group,by_group,By group,"Posts, pages and engagement per page category group."
+WHO-7,table,by_subcategory,by_subcategory,By subcategory,The same per detailed page category.
+WHO-7,table,institutional_vs_other,institutional_vs_other,Institutional vs other,"Engagement of media, public figure and organization pages compared with other pages."
+WHO-7,table,group_x_type,group_x_type,Group x type,Posts per category group (rows) and post type (columns).
+WHO-7,column,,category_group,Category group,Group of Facebook page categories (MARSAD taxonomy).
+WHO-7,column,,category_sub,Category sub,Facebook page category.
+WHO-7,column,,pages,Pages,Distinct pages.
+WHO-7,column,,institutional,Institutional,"Whether the page is a media outlet, public figure or organization."
+WHO-7,summary,,posts_mapped_%,Posts mapped (%),Posts whose page category is in the MARSAD taxonomy.
+WHO-6,figure,,figure,Chart,Posts by country; click a bar for its posts.
+WHO-6,table,by_country,by_country,By country,"Posts, accounts and engagement per country."
+WHO-6,summary,,countries,Countries,Distinct countries.
+WHO-8,figure,,figure,Chart,Page age against median engagement per page (size = posts); click a point for the page's posts.
+WHO-8,table,pages,pages,Pages,Age and engagement per page.
+WHO-8,column,,age_years,Age years,"Page age at the time of its posts, in years."
+WHO-8,column,,median_engagement,Median engagement,Median engagement of the page's posts.
+WHO-8,summary,,spearman_rho,Spearman rho,Rank correlation between page age and median engagement (-1 to 1).
+WHO-8,summary,,p_value,P value,p-value of the correlation.
+WHO-8,summary,,n,N,Pages in the correlation.
+WHO-4,figure,,figure,Chart,"Network of the most connected accounts, domains or hashtags (size = in-degree or the chosen measure, colour = Louvain community); click a node for the posts it sent and received."
+WHO-4,figure,,figure:communities,Communities,Number of nodes in each community; click a bar for the posts of its most central nodes.
+WHO-4,figure,,figure:degree_distribution,Degree distribution,How many nodes have each number of connections (log scale); click a bar for those nodes' posts.
+WHO-4,table,summary,summary,Summary,Network statistics.
+WHO-4,table,nodes,nodes,Nodes,Every node with its community and centrality.
+WHO-4,table,top_nodes,top_nodes,Top nodes,Most central nodes by PageRank.
+WHO-4,table,communities,communities,Communities,"Communities found by Louvain, largest first."
+WHO-4,table,edges,edges,Edges,Every link with its weight and dates.
+WHO-4,column,,node,Node,"Account, domain or hashtag."
+WHO-4,column,,pagerank,Pagerank,PageRank centrality (share of attention flowing to the node).
+WHO-4,column,,betweenness,Betweenness,How often the node lies on shortest paths between others (estimated from a sample).
+WHO-4,column,,in_degree,In degree,"Replies, quotes, mentions or links received, weighted by how often."
+WHO-4,column,,out_degree,Out degree,"Replies, quotes, mentions or links sent, weighted by how often."
+WHO-4,column,,degree,Degree,Number of different nodes this node is linked to.
+WHO-4,column,,weighted_degree,Weighted degree,"Co-occurrences with other hashtags, weighted by how often."
+WHO-4,column,,community,Community,Community the node belongs to (Louvain).
+WHO-4,column,,communities_reached,Communities reached,Number of different communities the node's neighbours belong to.
+WHO-4,column,,nodes,Nodes,Nodes in the community.
+WHO-4,column,,edges_inside,Edges inside,Links between members of the community.
+WHO-4,column,,top_nodes,Top nodes,Highest-PageRank nodes in the community.
+WHO-4,column,,source,Source,"Node the link starts from (the author, or the first hashtag)."
+WHO-4,column,,target,Target,Node the link points to.
+WHO-4,column,,weight,Weight,Number of posts that created this link.
+WHO-4,column,,first,First,Date of the first post behind the link.
+WHO-4,column,,last,Last,Date of the last post behind the link.
+WHO-4,column,,toxicity,Toxicity,Average toxicity score of the posts behind the link.
+WHO-4,summary,,nodes,Nodes,Nodes in the network.
+WHO-4,summary,,edges,Edges,Links in the network.
+WHO-4,summary,,density,Density,Share of possible links that exist.
+WHO-4,summary,,communities,Communities,Number of Louvain communities.
+WHO-4,summary,,largest_community_share_%,Largest community share (%),Nodes in the largest community as a share of all nodes.
+WHO-4,summary,,modularity,Modularity,How strongly the network splits into communities (0 to 1; above 0.3 is a clear split).
+WHO-4,summary,,pendant_nodes,Pendant nodes,Nodes with a single connection.
+WHO-4,summary,,nodes_shown,Nodes shown,Nodes drawn in the figure after the view filters.
+WHO-4,summary,,directed,Directed,Whether links have a direction (who replies to or mentions whom).
+WHO-4,summary,,available_kinds,Available kinds,Network types this dataset supports.
+WHO-4,summary,,kind,Kind,"Network type: reply, quote, mention, link or hashtag co-occurrence."
+WHO-5,figure,,figure,Chart,Number of accounts by how many posts they made; click a bar for those accounts' posts.
+WHO-5,table,summary,summary,Summary,Signals about unusual accounts.
+WHO-5,table,accounts,accounts,Accounts,Per-account activity signals.
+WHO-5,column,,max_posts_one_day,Max posts one day,Most posts the account made in a single day.
+WHO-5,column,,hour_entropy_bits,Hour entropy bits,"Spread of posting over the 24 hours (0 = always the same hour, 4.6 = evenly spread)."
+WHO-5,column,,median_gap_minutes,Median gap minutes,Median time between the account's consecutive posts.
+WHO-5,column,,gap_cv,Gap cv,Variation of the gaps between posts (standard deviation / mean); below 0.3 means very regular posting.
+WHO-5,column,,link_share_%,Link share (%),Share of the account's posts with a link.
+WHO-5,column,,duplicate_text_share_%,Duplicate text share (%),Share of the account's posts in a duplicate cluster (DATA-4).
+WHO-5,summary,,accounts,Accounts,Distinct accounts.
+WHO-5,summary,,posts_from_top_1pct_accounts_%,Posts from top 1pct accounts (%),Posts made by the most active 1% of accounts.
+WHO-5,summary,,accounts_with_one_post_%,Accounts with one post (%),Accounts with a single post.
+WHO-5,summary,,accounts_over_50_posts_in_a_day,Accounts over 50 posts in a day,Accounts that posted more than 50 times in one day.
+WHO-5,summary,,very_regular_accounts,Very regular accounts,Accounts with 20+ posts and very regular gaps (gap variation below 0.3).
+TOPIC-2,figure,,figure,Chart,"Map of frequent words placed by similarity of their contexts (FastText, t-SNE); click a word for its posts."
+TOPIC-2,table,clusters,clusters,Clusters,Words grouped by similar contexts (k-means).
+TOPIC-2,column,,keyword,Keyword,Word in the cluster.
+TOPIC-3,figure,,figure,Chart,Share of posts semantically close to each concept (cosine similarity above 0.5).
+TOPIC-1,figure,,figure,Chart,The largest topic clusters by number of posts; click a bar for the cluster's posts.
+TOPIC-1,figure,,figure:sentiment,Sentiment,Sentiment of the posts in each cluster (needs sentiment labels); click a segment for those posts.
+TOPIC-1,figure,,figure:map_3d,Map 3d,"Each dot is a post placed by meaning (UMAP of the embeddings); nearby dots are similar posts, grey dots are outliers; click a dot to open the post."
+TOPIC-1,figure,,figure:over_time,Over time,Share of each period's posts in each of the largest clusters; click a point for those posts.
+TOPIC-1,table,clusters,clusters,Clusters,"Topic clusters with their keywords, size and example posts."
+TOPIC-1,table,topics,topics,Topics,Topics with their size and example posts.
+TOPIC-1,table,history,history,History,Every clustering run with its parameters and silhouette score; pass use_run to restore one.
+TOPIC-1,table,topics_by_time,topics_by_time,Topics by time,Share of each period's posts in each topic (one column per topic).
+TOPIC-1,table,engagement_by_topic,engagement_by_topic,Engagement by topic,Engagement of posts by topic.
+TOPIC-1,column,,topic,Topic,Topic number.
+TOPIC-1,column,,cluster,Cluster,Cluster number (1 = largest).
+TOPIC-1,column,,examples,Examples,Example posts from the topic.
+TOPIC-1,column,,keywords,Keywords,Words most typical of this cluster compared with the others (class-based TF-IDF).
+TOPIC-1,column,,run,Run,Run number.
+TOPIC-1,column,,date,Date,When the run was made.
+TOPIC-1,column,,silhouette,Silhouette,Silhouette score of the run (-1 to 1; above 0.5 is good).
+TOPIC-1,column,,clusters,Clusters,Clusters found.
+TOPIC-1,column,,outliers,Outliers,Posts that fit no cluster.
+TOPIC-1,column,,min_cluster_size,Min cluster size,Smallest group HDBSCAN accepts as a cluster.
+TOPIC-1,column,,min_samples,Min samples,How conservative HDBSCAN is (higher = more posts left as outliers).
+TOPIC-1,column,,epsilon,Epsilon,"Cluster selection epsilon: clusters closer than this are merged (higher = fewer, larger clusters)."
+TOPIC-1,column,,embeddings,Embeddings,Embedding model used.
+TOPIC-1,summary,,method,Method,Topic method used.
+TOPIC-1,summary,,topics,Topics,Number of topics.
+TOPIC-1,summary,,posts,Posts,Posts with text used for topics.
+TOPIC-1,summary,,reconstruction_error,Reconstruction error,NMF fit error (lower = topics describe the texts better).
+TOPIC-1,summary,,embeddings,Embeddings,"Embedding model used (sentence-transformers, or LSA offline)."
+TOPIC-1,summary,,posts_clustered,Posts clustered,Posts given to the clustering.
+TOPIC-1,summary,,clusters,Clusters,Clusters found (outliers excluded).
+TOPIC-1,summary,,outliers,Outliers,Posts that fit no cluster.
+TOPIC-1,summary,,silhouette,Silhouette,How much closer posts are to their own cluster than to the nearest other cluster (-1 to 1; above 0.5 is good).
+TOPIC-1,summary,,quality,Quality,"Silhouette verdict: good above 0.5, fair 0.25 to 0.5, weak below."
+TOPIC-1,summary,,min_cluster_size,Min cluster size,Smallest group accepted as a cluster.
+TOPIC-1,summary,,min_samples,Min samples,HDBSCAN conservativeness.
+TOPIC-1,summary,,epsilon,Epsilon,Cluster selection epsilon.
+WORDS-9,figure,,figure,Chart,Emoji cloud: each emoji sized by how often it is used; click an emoji for its posts.
+WORDS-9,figure,,figure:bar,Bar,Most used emoji as bars; click a bar for posts with that emoji.
+WORDS-9,figure,,figure:cloud,Cloud,Emoji cloud: each emoji sized by how often it is used; click an emoji for its posts.
+WORDS-9,table,emoji,emoji,Emoji,Emoji counts.
+WORDS-9,column,,count,Count,Times the emoji is used.
+WORDS-9,column,,emoji,Emoji,Emoji (flags are kept whole).
+WORDS-9,summary,,distinct_emoji,Distinct emoji,Different emoji used.
+WORDS-9,summary,,posts_with_emoji_%,Posts with emoji (%),Posts containing at least one emoji.
+FRAME-1,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+FRAME-1,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+FRAME-2,figure,,figure,Chart,Share of lexicon A in all A and B matches per period; above 50 means A dominates.
+FRAME-2,table,overall,overall,Overall,Balance of the two lexicons over the whole dataset.
+FRAME-2,column,,ratio_a_over_b,Ratio a over b,Matches of A divided by matches of B (ratio of totals).
+FRAME-2,column,,share_a_%,Share a (%),A matches as a share of A + B matches.
+FRAME-2,column,,change_in_share_pts,Change in share pts,"Change in A's share from the previous period, in percentage points."
+FRAME-2,summary,,ratio_a_over_b,Ratio a over b,Matches of A divided by matches of B over the whole dataset.
+FRAME-2,summary,,share_a_%,Share a (%),A matches as a share of A + B matches.
+FRAME-2,summary,,n_posts,N posts,Posts with text.
+FRAME-3,figure,,figure,Chart,Posts by which combination of the chosen lexicons they contain; click a bar for those posts.
+FRAME-3,table,combinations,combinations,Combinations,Posts per combination of lexicons.
+FRAME-3,table,pairs,pairs,Pairs,How often each pair of lexicons appears in the same post.
+FRAME-3,column,,combination,Combination,Lexicons present in the post (others absent).
+FRAME-3,column,,a,A,First lexicon of the pair.
+FRAME-3,column,,b,B,Second lexicon of the pair.
+FRAME-3,column,,posts_a,Posts a,Posts matching the first lexicon.
+FRAME-3,column,,posts_b,Posts b,Posts matching the second lexicon.
+FRAME-3,column,,posts_both,Posts both,Posts matching both.
+FRAME-3,column,,pct_of_a_with_b,Pct of a with b,"Of posts with A, the percentage that also have B."
+FRAME-3,column,,pct_of_b_with_a,Pct of b with a,"Of posts with B, the percentage that also have A."
+FRAME-3,column,,lift,Lift,How much more often A and B occur together than if they were independent (1 = chance).
+FRAME-3,column,,jaccard,Jaccard,Posts with both divided by posts with either (0 to 1).
+FRAME-4,figure,,figure,Chart,"Pronoun profile, or pronouns per 1,000 words over time; click for the matching posts."
+FRAME-4,table,pronouns,pronouns,Pronouns,Share of each pronoun type among all pronoun matches.
+FRAME-4,table,rates,rates,Rates,"Pronoun and modal matches per post and per 1,000 words."
+FRAME-4,table,modality,modality,Modality,"Strong modals (must, will) against weak modals (may, perhaps)."
+FRAME-4,column,,pronoun,Pronoun,"Pronoun type: first person plural (we), second person (you) or third person (they)."
+FRAME-4,column,,share_of_pronoun_matches_%,Share of pronoun matches (%),This pronoun type's share of all pronoun matches.
+FRAME-4,column,,ratio_a_over_b,Ratio a over b,Strong modal matches divided by weak modal matches.
+FRAME-4,column,,share_a_%,Share a (%),Strong modals as a share of all modal matches.
+FRAME-5,figure,,figure,Chart,"Lexicon matches per 1,000 words for each group (rows) and lexicon (columns); click a cell for its posts."
+FRAME-5,table,rates,rates,Rates,"Matches per 1,000 words of each lexicon (columns) for each group (rows)."
+FRAME-5,table,similarity,similarity,Similarity,Cosine similarity of the groups' lexicon profiles (1 = identical mix of language).
+FRAME-5,table,breadth,breadth,Breadth,How many lexicons each group (first column) uses.
+FRAME-5,column,,lexicons_used,Lexicons used,Lexicons the group uses at least once.
+FRAME-5,column,,lexicons_above_median,Lexicons above median,Lexicons the group uses above the median rate across groups.
+FRAME-5,summary,,group_by,Group by,Variable the groups come from.
+FRAME-6,figure,,figure,Chart,Share of posts matching your custom lexicon over time; click a point for the matching posts.
+FRAME-6,table,overall,overall,Overall,Prevalence of the custom lexicon.
+FRAME-7,figure,,figure,Chart,Posts per sentiment label over time; click a point for the posts with that label in that period.
+FRAME-7,figure,,figure:distribution,Distribution,"Share of analysed posts that are positive, neutral or negative; click a segment for those posts."
+FRAME-7,figure,,figure:by_language,By language,Sentiment mix within each language; click a segment for those posts.
+FRAME-7,table,labels,labels,Labels,Posts per label.
+FRAME-7,table,examples,examples,Examples,Most confident examples per label.
+FRAME-7,table,coverage,coverage,Coverage,Posts per language and how many the model labelled.
+FRAME-7,table,by_time,by_time,By time,Posts per label in each period (one column per label).
+FRAME-7,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by label.
+FRAME-7,summary,,labelled,Labelled,Posts with a label.
+FRAME-10,figure,,figure,Chart,"Posts per emotion (anger, fear, joy, sadness) over time; click a point for those posts."
+FRAME-10,figure,,figure:distribution,Distribution,Share of analysed posts per emotion; click a segment for those posts.
+FRAME-10,figure,,figure:by_language,By language,Emotion mix within each language; click a segment for those posts.
+FRAME-10,table,labels,labels,Labels,Posts per emotion.
+FRAME-10,table,examples,examples,Examples,Most confident examples per emotion.
+FRAME-10,table,coverage,coverage,Coverage,Posts per language and how many the model labelled.
+FRAME-10,table,by_time,by_time,By time,Posts per emotion in each period (one column per emotion).
+FRAME-10,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by emotion.
+FRAME-10,summary,,labelled,Labelled,Posts with an emotion label.
+FRAME-11,figure,,figure,Chart,Posts labelled hate and not hate over time; click a point for those posts.
+FRAME-11,figure,,figure:distribution,Distribution,Share of analysed posts labelled hate; click a segment for those posts.
+FRAME-11,figure,,figure:by_language,By language,Hate share within each language (only Arabic and English are covered); click a segment for those posts.
+FRAME-11,table,labels,labels,Labels,Posts per label.
+FRAME-11,table,examples,examples,Examples,Most confident examples per label.
+FRAME-11,table,coverage,coverage,Coverage,Posts per language and how many the model labelled.
+FRAME-11,table,by_time,by_time,By time,Posts per label in each period (one column per label).
+FRAME-11,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by label.
+FRAME-11,summary,,labelled,Labelled,Posts with a label.
+FRAME-9,figure,,figure,Chart,"Average toxicity score per attribute over time (lines) and share of posts with scores (grey bars); click a point for that period's posts, most toxic first."
+FRAME-9,figure,,figure:above_threshold,Above threshold,Posts scoring at or above the threshold on each attribute; click a bar for those posts.
+FRAME-9,figure,,figure:distribution,Distribution,"Spread of scores per attribute (box = middle half of posts, line = median)."
+FRAME-9,table,summary,summary,Summary,"Average, highest and above-threshold counts per toxicity attribute."
+FRAME-9,table,highest_posts,highest_posts,Highest posts,The single highest-scoring post for each attribute.
+FRAME-9,table,coverage,coverage,Coverage,Posts per language and how many the models scored.
+FRAME-9,table,by_time,by_time,By time,Average score per attribute in each period (one column per attribute).
+FRAME-9,column,,attribute,Attribute,"Toxicity attribute (Detoxify: toxicity, severe toxicity, obscene, threat, insult, identity attack, sexual explicit; TextDetox gives toxicity only)."
+FRAME-9,column,,posts_scored,Posts scored,Posts with a score for this attribute.
+FRAME-9,column,,average,Average,Mean score (0 to 1) over scored posts.
+FRAME-9,column,,highest,Highest,Highest score (0 to 1) of any post.
+FRAME-9,column,,score,Score,Score of this post (0 to 1).
+FRAME-9,column,,share_at_or_above_%,Share at or above (%),Share of scored posts at or above the threshold.
+FRAME-9,summary,,average_toxicity,Average toxicity,Mean toxicity score over scored posts (0 to 1).
+FRAME-9,summary,,posts_scored,Posts scored,Posts with a toxicity score.
+FRAME-9,summary,,threshold,Threshold,Score at or above which a post counts as toxic.
+FRAME-9,summary,,share_at_or_above_%,Share at or above (%),Share of scored posts at or above the threshold.
+FRAME-9,summary,,attribute,Attribute,Toxicity attribute.
+FRAME-9,summary,,average,Average,Mean score.
+FRAME-9,summary,,highest,Highest,Highest score.
+FRAME-12,figure,,figure,Chart,Posts labelled propaganda and not propaganda over time; click a point for those posts.
+FRAME-12,figure,,figure:distribution,Distribution,Share of analysed posts labelled propaganda; click a segment for those posts.
+FRAME-12,figure,,figure:by_language,By language,Propaganda share within each language; click a segment for those posts.
+FRAME-12,table,labels,labels,Labels,Posts per label.
+FRAME-12,table,examples,examples,Examples,Most confident examples per label.
+FRAME-12,table,coverage,coverage,Coverage,Posts per language and how many were labelled.
+FRAME-12,table,by_time,by_time,By time,Posts per label in each period (one column per label).
+FRAME-12,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by label.
+FRAME-13,figure,,figure,Chart,Posts using each propaganda technique; click a bar for those posts.
+FRAME-13,figure,,figure:per_post,Per post,Posts by how many techniques they use; click a bar for those posts.
+FRAME-13,figure,,figure:over_time,Over time,Posts using the most common techniques in each period; click a point for those posts.
+FRAME-13,table,techniques,techniques,Techniques,Posts per technique (a post can use several).
+FRAME-13,table,by_time,by_time,By time,Posts per technique in each period (one column per technique).
+FRAME-13,table,examples,examples,Examples,Example posts for each technique.
+FRAME-13,table,coverage,coverage,Coverage,Posts per language and how many were labelled.
+FRAME-13,column,,technique,Technique,Propaganda technique.
+FRAME-13,column,,share_of_analysed_%,Share of analysed (%),Posts using the technique as a share of analysed posts.
+FRAME-13,summary,,posts_with_a_technique,Posts with a technique,Analysed posts with at least one technique.
+FRAME-13,summary,,techniques_found,Techniques found,Different techniques found.
+FRAME-13,summary,,mean_techniques_per_post,Mean techniques per post,Average number of techniques per analysed post.
+FRAME-14,figure,,figure,Chart,Posts per political leaning over time; click a point for those posts.
+FRAME-14,figure,,figure:distribution,Distribution,Share of analysed posts per leaning; click a segment for those posts.
+FRAME-14,figure,,figure:by_language,By language,Leaning mix within each language; click a segment for those posts.
+FRAME-14,table,labels,labels,Labels,Posts per leaning.
+FRAME-14,table,examples,examples,Examples,Most confident examples per leaning.
+FRAME-14,table,coverage,coverage,Coverage,Posts per language and how many were labelled.
+FRAME-14,table,by_time,by_time,By time,Posts per leaning in each period (one column per label).
+FRAME-14,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by leaning.
+SPREAD-7,figure,,figure,Chart,Check-worthy and other posts over time; click a point for those posts.
+SPREAD-7,figure,,figure:distribution,Distribution,Share of analysed posts that are check-worthy; click a segment for those posts.
+SPREAD-7,figure,,figure:by_language,By language,Check-worthy share within each language; click a segment for those posts.
+SPREAD-7,table,labels,labels,Labels,Posts per label.
+SPREAD-7,table,examples,examples,Examples,Most confident examples per label.
+SPREAD-7,table,coverage,coverage,Coverage,Posts per language and how many were labelled.
+SPREAD-7,table,by_time,by_time,By time,Posts per label in each period (one column per label).
+SPREAD-7,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by label.
+SPREAD-8,figure,,figure,Chart,The claims made in the most posts (similar wordings grouped); click a bar for those posts.
+SPREAD-8,figure,,figure:over_time,Over time,Posts with at least one extracted claim in each period; click a point for those posts.
+SPREAD-8,table,claims,claims,Claims,"Claims grouped by similar wording, with posts, accounts and first and last date."
+SPREAD-8,table,coverage,coverage,Coverage,Posts per language and how many were analysed.
+SPREAD-8,column,,claim,Claim,The most common wording of the claim.
+SPREAD-8,column,,variants,Variants,Different wordings grouped under this claim.
+SPREAD-8,column,,first_seen,First seen,Date of the first post making the claim.
+SPREAD-8,column,,last_seen,Last seen,Date of the last post making the claim.
+SPREAD-8,summary,,posts_with_claims,Posts with claims,Analysed posts with at least one claim.
+SPREAD-8,summary,,claims_extracted,Claims extracted,Claims extracted (a post can make several).
+SPREAD-8,summary,,distinct_claims,Distinct claims,Claims left after grouping similar wordings.
+SPREAD-9,figure,,figure,Chart,"Posts per verdict (for example supported, refuted, not enough evidence) over time; click a point for those posts."
+SPREAD-9,figure,,figure:distribution,Distribution,Share of checked posts per verdict; click a segment for those posts.
+SPREAD-9,figure,,figure:by_language,By language,Verdict mix within each language; click a segment for those posts.
+SPREAD-9,table,labels,labels,Labels,Posts per verdict.
+SPREAD-9,table,examples,examples,Examples,"Most confident examples per verdict, with the claim and evidence."
+SPREAD-9,table,coverage,coverage,Coverage,Posts per language and how many were checked.
+SPREAD-9,table,by_time,by_time,By time,Posts per verdict in each period (one column per verdict).
+SPREAD-9,table,engagement_by_label,engagement_by_label,Engagement by label,Engagement of posts by verdict.
+SPREAD-9,column,,evidence,Evidence,Evidence the service returned for the verdict.
+SPREAD-9,column,,claim,Claim,The claim that was checked.
+FRAME-8,figure,,figure,Chart,Share of sampled posts per stance toward the target; click for those posts.
+FRAME-8,table,stance,stance,Stance,Posts per stance.
+FRAME-8,table,examples,examples,Examples,Most confident examples per stance.
+FRAME-8,table,by_time,by_time,By time,Share of each period's sampled posts per stance (one column per stance).
+FRAME-8,column,,stance,Stance,Stance label from zero-shot inference.
+FRAME-8,column,,stance_score,Stance score,Model confidence for the stance (0 to 1).
+FRAME-8,summary,,target,Target,Target the stance is about.
+FRAME-8,summary,,sample,Sample,Posts in the random sample that was classified.
+REACT-8,figure,,figure,Chart,Distribution of post views (log10 scale); click a bar for those posts.
+REACT-8,table,interactions_per_view,interactions_per_view,Interactions per view,Distribution of interactions divided by views per post.
+REACT-8,table,views_per_follower,views_per_follower,Views per follower,Distribution of views divided by followers at posting.
+REACT-8,table,by_type,by_type,By type,Interactions per view by post type.
+REACT-8,summary,,interactions_per_view_ratio_of_totals,Interactions per view ratio of totals,All interactions divided by all views.
+SPREAD-5,figure,,figure,Chart,Median crosspost amplification (total views / post views) per period; click a point for its posts.
+SPREAD-5,table,distribution,distribution,Distribution,Distribution of total views divided by the original post's views.
+SPREAD-5,table,by_period,by_period,By period,Median amplification per period.
+SPREAD-5,column,,median_ratio,Median ratio,Median of total views divided by the post's own views.
+SPREAD-5,summary,,median_ratio,Median ratio,Median amplification over all posts.
+SPREAD-6,figure,,figure,Chart,"Meltwater's own sentiment labels over time, or posts by source; click for those posts."
+SPREAD-6,table,reach,reach,Reach,Distribution of Meltwater reach per post.
+SPREAD-6,table,sources,sources,Sources,Posts per source.
+SPREAD-6,table,languages,languages,Languages,Posts per language.
+SPREAD-6,table,platforms,platforms,Platforms,Posts per platform.
+SPREAD-6,table,native_sentiment,native_sentiment,Native sentiment,Posts per Meltwater sentiment label.
+SPREAD-6,table,native_sentiment_by_period,native_sentiment_by_period,Native sentiment by period,Share of each period's posts per Meltwater sentiment label (one column per label).
+SPREAD-6,summary,,total_reach,Total reach,"Sum of Meltwater reach (potential audience, not people reached)."
+SPREAD-6,summary,,total_ave,Total ave,Sum of Meltwater advertising value equivalent.
+SPREAD-3,figure,,figure,Chart,Accounts linked by repeatedly posting the same content within seconds of each other; click an account for its posts.
+SPREAD-3,table,clusters,clusters,Clusters,Groups of linked accounts.
+SPREAD-3,table,events,events,Events,Single moments when several accounts posted the same content.
+SPREAD-3,column,,members,Members,Accounts in the cluster.
+SPREAD-3,column,,edges,Edges,Linked account pairs in the cluster.
+SPREAD-3,column,,max_pair_repeats,Max pair repeats,Most co-posting events shared by one pair of accounts.
+SPREAD-3,column,,item,Item,Shared text or link.
+SPREAD-3,column,,start,Start,Time of the first post in the event.
+SPREAD-3,column,,span_seconds,Span seconds,Seconds between the first and last post in the event.
+SPREAD-3,column,events,posts,Posts,Posts in the event.
+SPREAD-3,column,events,accounts,Accounts,Accounts in the event.
+SPREAD-3,summary,,events,Events,Co-posting events found.
+SPREAD-3,summary,,linked_accounts,Linked accounts,Accounts linked by repeated events.
+SPREAD-3,summary,,clusters,Clusters,Groups of linked accounts.
+SPREAD-2,figure,,figure,Chart,Most linked domains; click a bar for posts linking there.
+SPREAD-2,table,domains,domains,Domains,Links per domain.
+SPREAD-2,table,top_domains_over_time,top_domains_over_time,Top domains over time,Links to the top domains per period.
+SPREAD-2,column,,domain,Domain,Web domain of the link (common aliases merged).
+SPREAD-2,column,,links,Links,Links to this domain.
+SPREAD-2,column,,shortener,Shortener,True when the domain is a URL shortener that hides the real destination.
+SPREAD-2,column,,domains,Domains,Domain.
+SPREAD-2,summary,,distinct_domains,Distinct domains,Different domains linked.
+SPREAD-2,summary,,posts_with_link_%,Posts with link (%),Posts containing at least one link.
+SPREAD-2,summary,,links_via_shortener_%,Links via shortener (%),Links that go through a URL shortener.
+SPREAD-1,figure,,figure,Chart,Daily posts in the largest clusters of repeated wording; click a point for those posts.
+SPREAD-1,table,clusters,clusters,Clusters,Clusters of identical or near-identical wording and how they spread.
+SPREAD-1,column,,c,C,Cluster number.
+SPREAD-1,column,,platforms,Platforms,Platforms the wording appeared on.
+SPREAD-1,column,,span_hours,Span hours,Hours between the first and last post.
+SPREAD-1,column,,posts_first_24h,Posts first 24h,Posts in the first 24 hours after the first one.
+SPREAD-1,column,clusters,interactions,Interactions,Interactions summed over the cluster.
+SPREAD-1,summary,,clusters,Clusters,Clusters with at least the minimum size.
+SPREAD-1,summary,,posts_in_clusters,Posts in clusters,Posts in those clusters.
+SPREAD-4,figure,,figure,Chart,Number of threads by size (replies per root post); click a bar for those threads.
+SPREAD-4,table,threads,threads,Threads,Largest reply threads.
+SPREAD-4,table,label_sentiment_by_depth,label_sentiment_by_depth,Label sentiment by depth,Share of each label at each reply depth (columns are labels).
+SPREAD-4,column,,root,Root,Post that starts the thread.
+SPREAD-4,column,,replies,Replies,Replies below the root (all levels).
+SPREAD-4,column,,depth,Depth,Longest reply chain below the root.
+SPREAD-4,column,,direct_replies,Direct replies,Replies directly to the root.
+SPREAD-4,column,,root_text,Root text,Text of the root post.
+SPREAD-4,summary,,threads,Threads,Threads with at least one reply.
+SPREAD-4,summary,,median_thread_size,Median thread size,Median replies per thread.
+SPREAD-4,summary,,max_depth,Max depth,Deepest reply chain.
+SPREAD-4,summary,,posts_that_are_replies_%,Posts that are replies (%),Posts that reply to another post.
+SPREAD-4,summary,,replies_with_parent_in_data_%,Replies with parent in data (%),Replies whose parent post is in the dataset.
+DATA-6,figure,,figure,Chart,Lexicon prevalence by dataset; click a bar for those posts.
+DATA-6,table,datasets,datasets,Datasets,Size and shape of each dataset.
+DATA-6,table,lexicons,lexicons,Lexicons,Lexicon prevalence per dataset.
+DATA-6,table,author_overlap,author_overlap,Author overlap,Accounts shared between datasets.
+DATA-6,table,hashtag_overlap,hashtag_overlap,Hashtag overlap,Hashtags shared between datasets.
+DATA-6,column,,median_tokens,Median tokens,Median post length in words.
+DATA-6,column,,median_interactions,Median interactions,Median interactions per post.
+DATA-6,column,,a,A,First dataset.
+DATA-6,column,,b,B,Second dataset.
+DATA-6,column,,shared_authors,Shared authors,Accounts present in both datasets.
+DATA-6,column,,shared_hashtags,Shared hashtags,Hashtags used in both datasets.
+DATA-6,column,,jaccard,Jaccard,Shared items divided by all items in either dataset (0 to 1).
+PAPER-2,table,sample,sample,Sample,Posts drawn for annotation.
+PAPER-2,table,strata,strata,Strata,Share of each stratum in the data and in the sample.
+PAPER-2,column,,population_%,Population (%),Share of all posts in this stratum.
+PAPER-2,column,,sample_%,Sample (%),Share of the sample in this stratum.
+PAPER-2,summary,,n,N,Posts in the sample.
+PAPER-2,summary,,strata,Strata,Variables used to stratify the sample.
+PAPER-2,summary,,files,Files,Annotation files written.
+PAPER-3,table,fields_needed,fields_needed,Fields needed,Datasheet fields the authors still need to fill in.
+PAPER-3,summary,,files,Files,Files written.
+PAPER-3,summary,,markdown,Markdown,Datasheet draft text.
+PAPER-3,summary,,missing_fields,Missing fields,Fields not yet provided.
+WORDS-1,figure,,figure,Chart,"Most frequent words (or stems, n-grams, hashtags, mentions); click a bar for posts that use it."
+WORDS-1,table,word_list,word_list,Word list,"Frequency list as in AntConc's Word List, with range and dispersion."
+WORDS-1,table,hashtags,hashtags,Hashtags,Most used hashtags.
+WORDS-1,table,mentions,mentions,Mentions,Most mentioned accounts.
+WORDS-1,table,word_engagement,word_engagement,Word engagement,Median engagement of posts with and without each frequent word.
+WORDS-1,column,,per_10k,"Per 10,000 words","Occurrences per 10,000 counted words, so lists of different sizes can be compared."
+WORDS-1,column,word_list,posts,Posts,Posts that use the word at least once (range).
+WORDS-1,column,,posts_%,Posts (%),"Posts that use the word, as a percentage of all posts."
+WORDS-1,column,word_list,authors,Authors,Accounts that use the word at least once.
+WORDS-1,column,,dp_authors,Dp authors,"Gries' DP across accounts: 0 = accounts use the word in proportion to how much they write, 1 = one account uses it all."
+WORDS-1,column,,median_with,Median with,Median engagement of posts containing the word.
+WORDS-1,column,,median_without,Median without,Median engagement of posts without it.
+WORDS-1,summary,,tokens,Tokens,Words counted after stopword removal.
+WORDS-1,summary,,types,Types,Distinct words.
+WORDS-1,summary,,hapax,Hapax,Words that occur only once.
+WORDS-3,figure,,figure,Chart,"Keywords ranked by Log Ratio; green are more frequent in the target, red in the reference; click a word for its posts."
+WORDS-3,table,keywords,keywords,Keywords,Words much more frequent here than in general language.
+WORDS-3,table,positive,positive,Positive,Words more frequent in the target than in the reference.
+WORDS-3,table,negative,negative,Negative,Words less frequent in the target than in the reference.
+WORDS-3,table,by_group,by_group,By group,Keywords of each group against all other posts.
+WORDS-3,column,,freq_target,Freq target,Occurrences in the target posts.
+WORDS-3,column,,freq_ref,Freq ref,Occurrences in the reference posts.
+WORDS-3,column,,per_10k_target,"Per 10,000 words target","Occurrences per 10,000 words in the target."
+WORDS-3,column,,per_10k_ref,"Per 10,000 words ref","Occurrences per 10,000 words in the reference."
+WORDS-3,column,,ll,Ll,Log-likelihood keyness (G2); above 3.84 is p < 0.05 and above 15.13 is p < 0.0001 for one word; negative values mark negative keywords.
+WORDS-3,column,,p_value,P value,"Chance probability of a difference this large for this word, from the log-likelihood."
+WORDS-3,column,,significant_bonferroni,Significant bonferroni,True when p is below 0.05 divided by the number of words tested.
+WORDS-3,column,,log_ratio,Log ratio,"Log Ratio effect size: log2 of how many times more frequent the word is in the target (1 = twice, 2 = four times)."
+WORDS-3,column,,pct_diff,Pct diff,%DIFF: percentage difference in normalized frequency between target and reference.
+WORDS-3,column,,per_million,Per million,Occurrences per million words in the posts.
+WORDS-3,column,,ref_per_million,Ref per million,Frequency per million words in general language (wordfreq).
+WORDS-3,column,,simple_maths,Simple maths,Simple maths keyness: (per million here + 1) / (per million in general language + 1).
+WORDS-3,column,,in_reference,In reference,"False when the word is not in the general-language list (dialect spelling, typo or new name)."
+WORDS-3,column,,posts,Posts,Target posts that use the word.
+WORDS-3,column,,authors,Authors,Target accounts that use the word.
+WORDS-3,column,,dp_authors,Dp authors,"Gries' DP across accounts (0 = spread evenly, 1 = one account)."
+WORDS-3,column,,freq,Freq,Occurrences in the posts.
+WORDS-3,summary,,target,Target,Posts being described.
+WORDS-3,summary,,reference,Reference,What the target is compared with.
+WORDS-3,summary,,words_tested,Words tested,Words that reached the minimum frequency.
+WORDS-3,summary,,significant_words,Significant words,Words significant after Bonferroni correction.
+WORDS-3,summary,,group_by,Group by,Variable the groups come from.
+WORDS-3,summary,,groups,Groups,Groups compared.
+WORDS-4,figure,,figure,Chart,Words found just before and just after the search term; click a word for those concordance lines.
+WORDS-4,table,kwic,kwic,Kwic,"Key word in context lines, one per match."
+WORDS-4,table,neighbours,neighbours,Neighbours,Most common words immediately before and after the match.
+WORDS-4,column,,before,Before,Text before the match in reading order (to the right in Arabic).
+WORDS-4,column,,node,Node,The matched word or phrase as written in the post.
+WORDS-4,column,,after,After,Text after the match in reading order (to the left in Arabic).
+WORDS-4,column,,before1,Before1,The single word immediately before the match (normalized).
+WORDS-4,column,,after1,After1,The single word immediately after the match (normalized).
+WORDS-4,column,,node_norm,Node norm,The match after normalization.
+WORDS-4,column,,before_n,Before n,Lines with this word immediately before the match.
+WORDS-4,column,,after_n,After n,Lines with this word immediately after the match.
+WORDS-4,summary,,query,Query,"Search word, phrase, wildcard or lexicon."
+WORDS-4,summary,,hits,Hits,Matches found.
+WORDS-4,summary,,posts,Posts,Posts with at least one match.
+WORDS-4,summary,,authors,Authors,Accounts with at least one match.
+WORDS-4,summary,,sorted_by,Sorted by,Sort order of the lines.
+WORDS-5,figure,,figure,Chart,"Strongest collocates of the node word; colour shows whether they come before, after or on both sides; click for the posts."
+WORDS-5,table,collocates,collocates,Collocates,"Words that occur near the node word, with association scores."
+WORDS-5,column,,collocate,Collocate,Word found within the window around the node.
+WORDS-5,column,,freq_window,Freq window,Times the collocate occurs inside the window.
+WORDS-5,column,,left,Left,Times it occurs before the node.
+WORDS-5,column,,right,Right,Times it occurs after the node.
+WORDS-5,column,,freq_total,Freq total,Times the collocate occurs in the whole corpus.
+WORDS-5,column,,mi,Mi,"Mutual information: log2 of observed over expected co-occurrence; favours rare, exclusive pairs (3+ is strong)."
+WORDS-5,column,,t_score,T score,t-score: (observed - expected) / sqrt(observed); favours frequent pairs (2+ is reliable).
+WORDS-5,column,,logdice,Logdice,"logDice: 14 + log2(2 x co-occurrence / (node frequency + collocate frequency)); stable across corpus sizes, maximum 14."
+WORDS-5,column,,ll,Ll,Log-likelihood of the co-occurrence from the 2x2 window table (above 10.83 is p < 0.001).
+WORDS-5,column,,posts,Posts,Posts in which they occur together.
+WORDS-5,column,,position,Position,"Whether the collocate comes mostly before, mostly after, or on both sides."
+WORDS-5,summary,,node,Node,Word whose collocates are listed.
+WORDS-5,summary,,node_freq,Node freq,Occurrences of the node word.
+WORDS-5,summary,,corpus_tokens,Corpus tokens,Words in the corpus.
+WORDS-6,figure,,figure,Chart,Most frequent fixed phrases that start or end with the search word; click a phrase for its posts.
+WORDS-6,table,clusters,clusters,Clusters,Word clusters (n-grams) containing the search word.
+WORDS-6,column,,cluster,Cluster,Word sequence starting or ending with the search word.
+WORDS-6,column,,freq,Freq,Occurrences of the cluster.
+WORDS-6,column,,posts,Posts,Posts containing the cluster.
+WORDS-6,column,,authors,Authors,Accounts using the cluster.
+WORDS-6,summary,,query,Query,Search word.
+WORDS-6,summary,,size,Size,Cluster length in words.
+WORDS-7,figure,,figure,Chart,"Top: uses per 1,000 words per period; bottom: one mark per post that uses each term; click to open posts."
+WORDS-7,table,dispersion,dispersion,Dispersion,"Frequency, range and dispersion per term."
+WORDS-7,table,by_period,by_period,By period,Rate per period for each term.
+WORDS-7,column,,per_1k_tokens,"Per 1,000 words tokens","Uses per 1,000 words in the period."
+WORDS-7,column,,posts_%,Posts (%),Share of the period's posts that use the term.
+WORDS-7,column,,peak_period,Peak period,Period with the most uses.
+WORDS-7,column,,dp_time,Dp time,"Gries' DP across periods: 0 = used in proportion to each period's volume, 1 = all in one period."
+WORDS-7,column,,dp_authors,Dp authors,"Gries' DP across accounts: 0 = spread like the corpus, 1 = one account."
+WORDS-7,summary,,terms,Terms,Terms tracked.
+WORDS-8,figure,,figure,Chart,Vocabulary variety (MATTR) per group with 95% intervals; click a point for the group's posts.
+WORDS-8,table,diversity,diversity,Diversity,Lexical diversity and text shape per group.
+WORDS-8,column,,tokens,Tokens,Words in the group's posts.
+WORDS-8,column,,types,Types,Distinct words.
+WORDS-8,column,,ttr,Ttr,"Type-token ratio: distinct words / words; falls as texts get longer, so compare with care."
+WORDS-8,column,,mattr,Mattr,"Moving-average type-token ratio over 50-word windows, which does not depend on corpus size."
+WORDS-8,column,,mattr_ci_low,Mattr ci low,Lower bound of the 95% interval for MATTR (posts resampled).
+WORDS-8,column,,mattr_ci_high,Mattr ci high,Upper bound of the 95% interval for MATTR.
+WORDS-8,column,,hapax_%,Hapax (%),Share of distinct words that occur only once.
+WORDS-8,column,,mean_word_length,Mean word length,Average word length in letters.
+WORDS-8,column,,mean_tokens_per_post,Mean tokens per post,Average post length in words.
+WORDS-8,column,,median_tokens_per_post,Median tokens per post,Median post length in words.
+WORDS-8,column,,content_word_%,Content word (%),Share of words that are not stopwords (a proxy for lexical density).
+WORDS-8,column,,arabic_token_%,Arabic token (%),Share of words written in Arabic script.
+WORDS-8,summary,,group_by,Group by,Variable the groups come from.
+WORDS-2,figure,,figure,Chart,Word cloud sized by frequency or keyness; click a word for its posts.
+WORDS-2,table,wordcloud,wordcloud,Wordcloud,"Words, weights and layout for the word cloud tab."
+WORDS-2,column,,weight,Weight,"Value that sets the word size (frequency, or keyness against general language)."
+WORDS-2,column,,font_size,Font size,Font size in pixels.
+WORDS-2,column,,x,X,Horizontal position in the layout.
+WORDS-2,column,,y,Y,Vertical position in the layout.
+WORDS-2,column,,placed,Placed,False when the word did not fit in the cloud.
+WORDS-2,column,,posts,Posts,Posts that use the word.
+WORDS-2,column,,freq,Freq,Occurrences of the word.
+WORDS-2,summary,,weight,Weight,Weighting used.
+WORDS-2,summary,,words,Words,Words in the cloud.
+REACT-1,figure,,figure,Chart,Distribution of interactions per post (log scale); click a bar for those posts.
+REACT-1,table,distribution,distribution,Distribution,Distribution of each engagement measure.
+REACT-1,table,concentration,concentration,Concentration,How much engagement a few posts take.
+REACT-1,table,top_posts,top_posts,Top posts,Posts with the most engagement.
+REACT-1,table,spearman_correlations,spearman_correlations,Spearman correlations,Rank correlations between engagement measures (rows and columns are measures).
+REACT-1,column,,metric,Metric,Engagement measure.
+REACT-1,column,,virality,Virality,Post engagement divided by the median engagement of all posts.
+REACT-1,column,,top_1pct_posts_share_%,Top 1pct posts share (%),Share of all interactions earned by the top 1% of posts.
+REACT-1,column,,top_10pct_posts_share_%,Top 10pct posts share (%),Share of all interactions earned by the top 10% of posts.
+REACT-1,column,,posts_with_zero_%,Posts with zero (%),Posts with no interactions.
+REACT-1,column,,high_outliers_log_scale,High outliers log scale,Posts above the upper Tukey fence (Q3 + 1.5 IQR) on the log scale.
+REACT-1,summary,,top_1pct_posts_share_%,Top 1pct posts share (%),Share of all interactions earned by the top 1% of posts.
+REACT-1,summary,,top_10pct_posts_share_%,Top 10pct posts share (%),Share of all interactions earned by the top 10% of posts.
+REACT-1,summary,,posts_with_zero_%,Posts with zero (%),Posts with no interactions.
+REACT-1,summary,,high_outliers_log_scale,High outliers log scale,Posts above the upper Tukey fence on the log scale.
+REACT-7,figure,,figure,Chart,Distribution of engagement rate (interactions / followers x 100); click a bar for those posts.
+REACT-7,table,distribution,distribution,Distribution,Distribution of engagement rate.
+REACT-7,table,by_author,by_author,By author,Median engagement rate per account.
+REACT-7,column,,median_rate,Median rate,Median engagement rate of the account's posts.
+REACT-2,figure,,figure,Chart,Engagement by post feature (normalized as chosen); click a bar for the posts in that group.
+REACT-2,table,comparison,comparison,Comparison,"Engagement per feature value, with several normalizations."
+REACT-2,summary,,test,Test,Statistical test across groups.
+REACT-2,summary,,p_value,P value,p-value of the test.
+REACT-2,summary,,rank_biserial,Rank biserial,"Effect size for two groups, from -1 to 1 (0 = no difference)."
+REACT-2,summary,,epsilon_squared,Epsilon squared,"Effect size for three or more groups, from 0 to 1 (0.01 small, 0.08 medium, 0.26 large)."
+REACT-3,figure,,figure,Chart,Engagement of posts with and without the lexicon; click a bar for those posts.
+REACT-3,table,comparison,comparison,Comparison,Engagement with and without the lexicon.
+REACT-3,table,top_terms,top_terms,Top terms,Lexicon terms that matched most often.
+REACT-3,summary,,test,Test,Statistical test.
+REACT-3,summary,,p_value,P value,p-value of the test.
+REACT-3,summary,,rank_biserial,Rank biserial,Effect size from -1 to 1 (0 = no difference).
+REACT-4,figure,,figure,Chart,Ratios between engagement types over all posts.
+REACT-4,table,ratios,ratios,Ratios,Engagement mix ratios.
+REACT-4,column,,ratio,Ratio,Which ratio (for example shares per like).
+REACT-4,column,,ratio_of_totals,Ratio of totals,Total of the first measure divided by total of the second.
+REACT-4,column,,median_per_post,Median per post,Median of the ratio computed per post.
+REACT-4,column,,posts_used,Posts used,Posts where the ratio could be computed.
+REACT-5,figure,,figure,Chart,"Share of each Facebook reaction, overall or over time; click for posts that received that reaction."
+REACT-5,table,overall,overall,Overall,Share of each reaction among the six reactions (Likes excluded).
+REACT-5,table,by_time,by_time,By time,Share of each reaction per period (one column per reaction).
+REACT-5,table,by_type,by_type,By type,Share of each reaction per post type.
+REACT-5,column,,reaction,Reaction,Facebook reaction.
+REACT-5,summary,,high_arousal_share_median,High arousal share median,Median per post of (Angry + Wow + Haha) / six reactions.
+REACT-5,summary,,high_arousal_share_of_totals,High arousal share of totals,(Angry + Wow + Haha) / six reactions over all posts.
+REACT-5,summary,,negative_vs_surprise_humor_ratio_of_totals,Negative vs surprise humor ratio of totals,(Sad + Angry) / (Wow + Haha) over all posts.
+REACT-5,summary,,arousal_vs_overperforming_spearman_rho,Arousal vs overperforming spearman rho,Rank correlation of high-arousal share with the overperforming score.
+REACT-5,summary,,arousal_vs_overperforming_p_value,Arousal vs overperforming p value,p-value of that correlation.
+REACT-5,summary,,arousal_vs_overperforming_n,Arousal vs overperforming n,Posts in that correlation.
+REACT-6,figure,,figure,Chart,Distribution of the reaction sentiment score of scored posts; dotted lines at -0.3 and 0.3; click a bar for those posts.
+REACT-6,table,sentiment,sentiment,Sentiment,Posts per reaction sentiment label.
+REACT-6,table,polarization,polarization,Polarization,Posts per polarization level.
+REACT-6,table,cohesion,cohesion,Cohesion,Posts per cohesion level.
+REACT-6,table,sensitivity,sensitivity,Sensitivity,How the shares change under other weights and thresholds.
+REACT-6,column,,share_of_scored_%,Share of scored (%),Share of posts with enough reactions to score.
+REACT-6,column,,mean_sentiment,Mean sentiment,Average reaction sentiment score (-1 to 1).
+REACT-6,column,,sentiment_dispersion,Sentiment dispersion,Standard deviation of the score.
+REACT-6,column,,mean_polarization,Mean polarization,"Average polarization (0 = one-sided, 1 = evenly split between positive and negative)."
+REACT-6,column,,mean_cohesion,Mean cohesion,"Average cohesion (1 = one reaction type, 0 = all types equally)."
+REACT-6,column,,scheme,Scheme,Weighting scheme.
+REACT-6,column,,scored_posts,Scored posts,Posts with enough reactions under this scheme.
+REACT-6,column,,positive_%,Positive (%),Scored posts labelled positive.
+REACT-6,column,,neutral_%,Neutral (%),Scored posts labelled neutral.
+REACT-6,column,,negative_%,Negative (%),Scored posts labelled negative.
+REACT-6,summary,,scored_posts,Scored posts,Posts with at least 10 reactions after 24 Feb 2016.
+REACT-6,summary,,insufficient,Insufficient,Posts with too few reactions to score.
+REACT-9,figure,,figure,Chart,Posts per CrowdTangle overperforming score band; click a bar for those posts.
+REACT-9,table,distribution,distribution,Distribution,Distribution of the overperforming score.
+REACT-9,table,categories,categories,Categories,Posts per score band.
+REACT-9,table,by_type,by_type,By type,Score by post type.
+REACT-9,column,,score,Score,Score band (1 = performed as the page usually does).
+REACT-9,summary,,share_above_1_%,Share above 1 (%),Posts that did better than their page's expected level.
+REACT-9,summary,,test,Test,Statistical test across groups.
+REACT-9,summary,,p_value,P value,p-value of the test.
+REACT-9,summary,,epsilon_squared,Epsilon squared,Effect size from 0 to 1.
+REACT-9,summary,,video_length_spearman_rho,Video length spearman rho,Rank correlation of video length with the score.
+REACT-9,summary,,video_length_p_value,Video length p value,p-value of that correlation.
+REACT-9,summary,,video_length_n,Video length n,Videos in that correlation.
+REACT-10,figure,,figure,Chart,Median engagement by video length; click a bar for those videos.
+REACT-10,table,per_minute,per_minute,Per minute,Distribution of interactions per minute of video.
+REACT-10,column,,length_bin,Length bin,Video length band.
+REACT-10,column,,video_owner,Video owner,Whether the page owns the video.
+REACT-10,column,,video_share_status,Video share status,Whether the video was shared from elsewhere.
+REACT-10,summary,,video_posts,Video posts,Posts with a video length.
+SOCIETY-1,figure,,figure,Chart,"Each bar is one part of social cohesion, from 0 (divided) to 100 (cohesive), with the index as a dashed line; click a bar for the posts behind it."
+SOCIETY-1,figure,,figure:over_time,Over time,Cohesion parts in each period; click a point for that period's posts.
+SOCIETY-1,table,components,components,Components,"The parts of social cohesion this file supports, with what each measures and the data used."
+SOCIETY-1,column,,component,Component,Part of social cohesion.
+SOCIETY-1,column,,score,Score,Score from 0 (divided) to 100 (cohesive).
+SOCIETY-1,column,,measures,Measures,What this part measures.
+SOCIETY-1,column,,based_on,Based on,Data used for this part.
+SOCIETY-1,summary,,cohesion_index,Cohesion index,"Average of the parts, from 0 (divided) to 100 (cohesive)."
+SOCIETY-1,summary,,components_used,Components used,Number of parts used.
+SOCIETY-1,summary,,formula,Formula,How the index is computed.
+SOCIETY-1,summary,,network,Network,Network used for the connection parts.
+SOCIETY-2,figure,,figure,Chart,Emotional intensity (signs per 10 words) over time or by group; click for the most intense posts of that period or group.
+SOCIETY-2,figure,,figure:signs,Signs,Share of posts with each sign of intensity; click a bar for those posts.
+SOCIETY-2,table,signs,signs,Signs,"Share of posts with each sign, and the average count per post."
+SOCIETY-2,table,engagement,engagement,Engagement,Typical engagement for the calmest to the most intense quarter of posts.
+SOCIETY-2,table,most_intense,most_intense,Most intense,The posts with the highest intensity.
+SOCIETY-2,column,,sign,Sign,Sign of intensity.
+SOCIETY-2,column,,posts_%,Posts (%),Share of posts with this sign.
+SOCIETY-2,column,,per_post,Per post,Average number of this sign per post.
+SOCIETY-2,column,,intensity,Intensity,Signs of intensity per 10 words.
+SOCIETY-2,column,,median_engagement,Median engagement,"Median likes, comments and shares."
+SOCIETY-2,column,,group,Group,Quarter of posts by intensity.
+SOCIETY-2,summary,,mean_intensity,Mean intensity,Average signs of intensity per 10 words.
+SOCIETY-2,summary,,posts_with_any_sign_%,Posts with any sign (%),Share of posts with at least one sign.
+SOCIETY-3,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-3,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-3,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-3,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-3,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-3,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-3,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-3,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-3,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-3,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-3,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-3,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-3,column,,group,Group,Period or group.
+SOCIETY-3,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-3,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-3,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-3,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-3,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-3,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-3,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-3,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-3,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-3,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-3,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-3,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-3,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-3,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-4,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-4,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-4,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-4,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-4,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-4,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-4,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-4,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-4,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-4,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-4,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-4,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-4,column,,group,Group,Period or group.
+SOCIETY-4,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-4,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-4,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-4,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-4,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-4,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-4,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-4,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-4,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-4,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-4,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-4,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-4,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-4,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-5,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-5,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-5,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-5,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-5,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-5,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-5,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-5,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-5,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-5,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-5,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-5,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-5,column,,group,Group,Period or group.
+SOCIETY-5,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-5,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-5,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-5,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-5,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-5,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-5,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-5,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-5,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-5,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-5,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-5,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-5,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-5,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-6,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-6,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-6,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-6,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-6,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-6,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-6,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-6,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-6,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-6,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-6,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-6,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-6,column,,group,Group,Period or group.
+SOCIETY-6,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-6,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-6,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-6,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-6,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-6,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-6,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-6,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-6,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-6,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-6,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-6,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-6,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-6,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-7,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-7,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-7,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-7,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-7,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-7,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-7,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-7,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-7,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-7,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-7,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-7,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-7,column,,group,Group,Period or group.
+SOCIETY-7,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-7,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-7,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-7,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-7,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-7,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-7,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-7,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-7,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-7,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-7,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-7,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-7,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-7,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-8,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-8,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-8,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-8,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-8,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-8,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-8,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-8,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-8,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-8,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-8,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-8,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-8,column,,group,Group,Period or group.
+SOCIETY-8,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-8,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-8,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-8,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-8,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-8,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-8,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-8,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-8,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-8,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-8,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-8,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-8,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-8,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-9,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-9,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-9,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-9,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-9,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-9,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-9,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-9,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-9,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-9,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-9,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-9,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-9,column,,group,Group,Period or group.
+SOCIETY-9,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-9,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-9,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-9,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-9,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-9,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-9,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-9,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-9,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-9,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-9,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-9,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-9,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-9,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-10,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-10,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-10,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-10,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-10,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-10,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-10,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-10,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-10,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-10,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-10,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-10,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-10,column,,group,Group,Period or group.
+SOCIETY-10,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-10,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-10,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-10,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-10,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-10,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-10,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-10,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-10,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-10,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-10,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-10,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-10,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-10,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-11,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-11,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-11,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-11,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-11,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-11,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-11,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-11,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-11,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-11,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-11,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-11,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-11,column,,group,Group,Period or group.
+SOCIETY-11,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-11,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-11,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-11,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-11,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-11,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-11,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-11,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-11,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-11,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-11,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-11,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-11,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-11,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-12,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-12,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-12,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-12,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-12,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-12,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-12,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-12,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-12,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-12,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-12,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-12,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-12,column,,group,Group,Period or group.
+SOCIETY-12,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-12,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-12,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-12,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-12,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-12,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-12,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-12,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-12,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-12,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-12,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-12,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-12,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-12,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-13,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-13,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-13,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-13,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-13,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-13,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-13,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-13,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-13,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-13,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-13,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-13,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-13,column,,group,Group,Period or group.
+SOCIETY-13,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-13,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-13,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-13,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-13,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-13,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-13,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-13,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-13,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-13,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-13,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-13,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-13,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-13,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-14,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-14,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-14,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-14,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-14,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-14,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-14,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-14,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-14,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-14,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-14,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-14,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-14,column,,group,Group,Period or group.
+SOCIETY-14,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-14,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-14,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-14,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-14,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-14,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-14,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-14,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-14,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-14,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-14,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-14,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-14,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-14,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-15,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-15,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-15,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-15,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-15,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-15,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-15,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-15,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-15,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-15,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-15,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-15,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-15,column,,group,Group,Period or group.
+SOCIETY-15,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-15,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-15,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-15,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-15,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-15,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-15,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-15,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-15,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-15,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-15,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-15,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-15,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-15,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-16,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-16,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-16,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-16,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-16,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-16,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-16,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-16,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-16,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-16,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-16,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-16,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-16,column,,group,Group,Period or group.
+SOCIETY-16,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-16,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-16,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-16,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-16,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-16,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-16,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-16,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-16,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-16,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-16,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-16,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-16,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-16,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+SOCIETY-17,figure,,figure,Chart,"Share of posts matching each lexicon, over time or by group; click a point for the matching posts."
+SOCIETY-17,table,overall,overall,Overall,Lexicon prevalence over the whole dataset.
+SOCIETY-17,table,balance,balance,Balance,"For each pair of opposite word lists, how many posts use each side and the share of the first side."
+SOCIETY-17,table,balance_by_group,balance_by_group,Balance by group,The same balance for each period or group.
+SOCIETY-17,column,,measure,Measure,What is being balanced (the first side's name).
+SOCIETY-17,column,,scope,Scope,"All posts, or only posts naming an institution."
+SOCIETY-17,column,,side_a,Side a,Word lists on the first side.
+SOCIETY-17,column,,side_b,Side b,Word lists on the second side.
+SOCIETY-17,column,,posts_a,Posts a,Posts with first-side words.
+SOCIETY-17,column,,posts_b,Posts b,Posts with second-side words.
+SOCIETY-17,column,,posts_both,Posts both,Posts with words from both sides.
+SOCIETY-17,column,,share_a_posts_%,Share a posts (%),Posts with first-side words as a share of posts with either side; above 50 means the first side is more common.
+SOCIETY-17,column,,group,Group,Period or group.
+SOCIETY-17,summary,,posts_with_any_%,Posts with any (%),Share of posts matching at least one of the card's word lists.
+SOCIETY-17,summary,,most_common,Most common,The word list matched by the most posts.
+SOCIETY-17,summary,,trust_share_%,Trust share (%),"Of posts with trust or distrust words, the share with trust words."
+SOCIETY-17,summary,,trust_share_institutions_%,Trust share institutions (%),Trust share among posts that name an institution.
+SOCIETY-17,summary,,care_share_%,Care share (%),"Of posts with care or harm words, the share with care words."
+SOCIETY-17,summary,,fairness_share_%,Fairness share (%),"Of posts with fairness or cheating words, the share with fairness words."
+SOCIETY-17,summary,,loyalty_share_%,Loyalty share (%),"Of posts with loyalty or betrayal words, the share with loyalty words."
+SOCIETY-17,summary,,authority_share_%,Authority share (%),"Of posts with authority or subversion words, the share with authority words."
+SOCIETY-17,summary,,sanctity_share_%,Sanctity share (%),"Of posts with sanctity or degradation words, the share with sanctity words."
+SOCIETY-17,summary,,coping_share_%,Coping share (%),"Of posts with coping, stress or exhaustion words, the share with coping words."
+SOCIETY-17,summary,,certainty_share_%,Certainty share (%),"Of posts with certainty or doubt words, the share with certainty words."
+SOCIETY-17,summary,,i_share_%,I share (%),"Of posts with 'I' or 'we' words, the share with 'I' words."
+SOCIETY-17,summary,,good_news_share_%,Good news share (%),"Of posts with good news, worry or shortage words, the share with good news."
+SOCIETY-17,summary,,pro_vaccine_share_%,Pro vaccine share (%),"Of posts with pro- or anti-vaccine phrases, the share with pro-vaccine phrases."
+*,column,,posts_analysed,Posts analysed,Posts the model labelled (posts in languages it covers).
+*,column,,posts_with_text,Posts with text,Posts with at least one word of text.
+*,column,,posts_in_dataset,Posts in dataset,All posts in the dataset or current subset.
+*,column,,posts_skipped,Posts skipped,Posts with text that were not labelled because the model does not cover their language.
+*,column,,model,Model,Model or models that produced the labels or scores.
+*,column,,lang,Lang,Language guessed from the post's script and common words (und = undetermined).
+*,column,,lang_code,Lang code,Language code guessed from the post's script and common words (und = undetermined).
+*,column,,language,Language,Language code given by the export (not detected by MARSAD).
+*,column,,analysed,Analysed,Posts in this language that the model labelled.
+*,column,,confidence,Confidence,Model probability for the chosen label (0 to 1).
+*,column,,median_confidence,Median confidence,Median model probability for posts with this label (0 to 1).
+*,column,,task,Task,Classification task.
+*,column,,posts,Posts,Number of posts in this row.
+*,column,,n_posts,N posts,Number of posts in this row (posts with a missing outcome are left out).
+*,column,,share_%,Share (%),This row's posts as a percentage of all posts in the table.
+*,column,,posts_%,Posts (%),Percentage of all posts that contain this item.
+*,column,,authors,Authors,Number of distinct accounts behind the posts in this row.
+*,column,,accounts,Accounts,Number of distinct accounts in this row.
+*,column,,count,Count,Number of non-empty values the statistics in this row are based on.
+*,column,,mean,Mean,Arithmetic mean; pulled up strongly by a few very large values in engagement data.
+*,column,,median,Median,Middle value when posts are sorted; half the posts are above it and half below.
+*,column,,std,Std,"Standard deviation, the typical distance of a value from the mean."
+*,column,,min,Min,Smallest value.
+*,column,,max,Max,Largest value.
+*,column,,10%,10%,10th percentile: 10% of values are at or below this.
+*,column,,25%,25%,25th percentile (first quartile): a quarter of values are at or below this.
+*,column,,50%,50%,"50th percentile, the median."
+*,column,,75%,75%,75th percentile (third quartile): three quarters of values are at or below this.
+*,column,,90%,90%,90th percentile: only 10% of values are above this.
+*,column,,99%,99%,99th percentile: only 1% of values are above this.
+*,column,,log_mean,Log mean,"Mean of log(1 + value), which keeps a handful of viral posts from dominating the comparison."
+*,column,,within_actor_z,Within actor z,"Average of each post's score relative to its own account's usual level (log scale, z-score), so big accounts do not dominate."
+*,column,,n_with_z,N with z,"Posts whose account has at least three posts, the minimum needed for the within-account score."
+*,column,,small_group,Small group,"True when the group has fewer posts than the minimum group size, so its numbers are unstable."
+*,column,,share_of_total_%,Share of total (%),This group's share of the total engagement summed over all posts.
+*,column,,total,Total,Sum of the engagement measure over the posts in this row.
+*,column,,interactions,Interactions,"Total interactions (reactions, comments and shares as reported by the platform export)."
+*,column,,author,Author,"Account, page or channel that published the post."
+*,column,,text,Text,Post text as exported (shortened for display).
+*,column,,created_local,Created local,Posting time converted to the analysis time zone.
+*,column,,post_id,Post id,Platform identifier of the post; click to open it.
+*,column,,url,Url,Link to the post on the platform.
+*,column,,bucket,Bucket,"Start of the time period (hour, day, week or month, chosen from the data's time span)."
+*,column,,group,Group,Value of the grouping variable for this row.
+*,column,,label,Label,Category name for this row.
+*,column,,measure,Measure,Name of the statistic.
+*,column,,value,Value,Value of the statistic named in this row.
+*,column,,statistic,Statistic,Name of the statistic.
+*,column,,index,Index,"Row label: the item, group or measure this row describes."
+*,column,,term,Term,"Word, phrase, hashtag or mention as normalized for counting (Arabic letter variants unified, diacritics removed)."
+*,column,,freq,Freq,Number of times the item occurs in the posts.
+*,column,,lexicon,Lexicon,Name of the lexicon (word list) for this row.
+*,column,,hits,Hits,"Number of lexicon matches (whole words, Arabic clitics allowed), counting every occurrence."
+*,column,,hits_per_1k_tokens,"Hits per 1,000 words tokens","Lexicon matches per 1,000 words, computed as total matches divided by total words (ratio of sums)."
+*,column,,posts_with_hit_%,Posts with hit (%),Percentage of posts with at least one match of the lexicon.
+*,column,,matches,Matches,Number of times this lexicon term matched in the posts.
+*,column,,first_seen,First seen,Time of the earliest post in this row.
+*,column,,last_seen,Last seen,Time of the latest post in this row.
+*,column,,p_value,P value,Probability of a difference at least this large if there were no real difference; small values (below 0.05) suggest a real difference.
+*,column,,example,Example,Text of one post from this row.
+*,column,,type,Type,"Post type from the export (photo, video, link, status and so on)."
+*,column,,platform,Platform,Platform the post comes from.
+*,column,,source,Source,Source or outlet given in the export.
+*,column,,country,Country,"Country given in the export (page admin country for CrowdTangle, author country where the vendor provides it)."
+*,column,,dataset,Dataset,Uploaded file or corpus query the row belongs to.
+*,column,,dir,Dir,"Text direction for display: rtl for mostly Arabic-script posts, ltr otherwise."
+*,column,,topic_label,Topic label,Topic name made of its most typical words.
+*,column,,dialect_region,Dialect region,Dialect region predicted by the dialect model.
+*,column,,note,Note,Free column for annotators.
+*,column,,field,Field,Canonical MARSAD field name.
+*,column,,item,Item,What the value in this row describes.
+*,column,,cluster,Cluster,Identifier of the cluster.
+*,column,,date,Date,Calendar day in the analysis time zone.
+*,column,,hour,Hour,Hour of the day (0-23) in the analysis time zone.
+*,column,,rank,Rank,"Position in the list, 1 = most frequent."
+*,column,,share_of_posts_%,Share of posts (%),This row's posts as a percentage of all posts.
+*,column,,active_days,Active days,Days on which the account posted at least once.
+*,column,,posts_per_active_day,Posts per active day,Posts divided by active days.
+*,pattern,,^posts_at_or_above_(.+)$,,Posts scoring {0} or more.
+*,pattern,,^month$,,Calendar month of the post.
+*,pattern,,^(.+)_hits$,,Matches of the {0} lexicon (every occurrence counted).
+*,pattern,,^(.+)_per_1k$,,"Matches of the {0} lexicon per 1,000 words (total matches / total words)."
+*,pattern,,^(.+)s_using$,,Number of {0} groups in which this lexicon appears at least once.
+*,pattern,,^(.+)s_using_each_lexicon$,,Number of {0} groups using each lexicon.
+*,pattern,,^top_terms_(.+)$,,Lexicon terms of {0} that matched most often.
+*,pattern,,^by_(.+)$,,The same measures split by {0}.
+*,pattern,,^label_(.+)$,,Label from the {0} classifier.
+*,pattern,,^score_(.+)$,,Confidence of the {0} classifier (0 to 1).

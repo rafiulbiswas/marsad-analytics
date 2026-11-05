@@ -1,0 +1,10 @@
+feature,status_in_1.4,card,how_to_connect
+Sentiment Analysis,runs (default model),FRAME-7 Sentiment,"DistilBERT multilingual by default; to use the MARSAD model: enrich.set_api('sentiment', url) or run_classifier(model_id=...)"
+Propaganda Analysis,card ready; connect a model or API,FRAME-12 Propaganda,"enrich.set_api('propaganda', url); service returns {label, score} per text"
+Propaganda Technique,card ready; connect a model or API,FRAME-13 Propaganda techniques,"enrich.set_api('propaganda_technique', url); service returns {labels: [...], scores: {...}} per text"
+Political Bias,card ready; connect a model or API,FRAME-14 Political bias,"enrich.set_api('political_bias', url); service returns {label, score} per text, any label set"
+Checkworthiness Analysis,card ready; connect a model or API,SPREAD-7 Check-worthy posts,"enrich.set_api('checkworthiness', url); service returns {label, score} per text"
+Claim Extraction,card ready; connect a model or API,SPREAD-8 Claims,"enrich.set_api('claims', url); service returns {claims: [...]} per text; the card groups similar claims"
+Fact Analysis (fact verification and veracity),card ready; connect a model or API,SPREAD-9 Fact verification,"enrich.set_api('fact', url); service returns {label, score, evidence, claim} per text"
+Topic Modeling,runs,TOPIC-1 Topics,"embeddings + UMAP + HDBSCAN; NMF and BERTopic as options"
+Word Cloud,runs,WORDS-2 Word cloud (and WORDS-9 Emoji cloud),

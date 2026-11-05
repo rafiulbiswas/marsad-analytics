@@ -1,0 +1,53 @@
+﻿category,term,change
+blame,occupation,moved to pack extends
+blame,احتلال,moved to pack extends
+solution,liberation,moved to pack extends
+solution,resistance,moved to pack extends
+solution,return,moved to pack extends
+solution,تحرير,moved to pack extends
+solution,عوده,moved to pack extends
+solution,لازم نقاوم,moved to pack extends
+solution,مقاومه,moved to pack extends
+solution,منرجع,moved to pack extends
+solution,نرجع,moved to pack extends
+solution,نقاوم,moved to pack extends
+victim,martyr,moved to pack extends
+victim,nakba,moved to pack extends
+victim,شهيد,moved to pack extends
+victim,نكبه,moved to pack extends
+occupation,(whole category),moved to pack as category
+resistance,(whole category),moved to pack as category
+outgroup,colonizer,moved to pack extends
+outgroup,occupier,moved to pack extends
+outgroup,settler,moved to pack extends
+outgroup,usurper,moved to pack extends
+outgroup,zionist,moved to pack extends
+outgroup,صهيوني,moved to pack extends
+outgroup,غاصب,moved to pack extends
+outgroup,محتل,moved to pack extends
+outgroup,مستوطن,moved to pack extends
+blame_verbs,occupy,moved to pack extends
+martyr,(whole category),moved to pack as category
+anti_normalization,(whole category),moved to pack as category
+boycott,(whole category),moved to pack as category
+intifada,(whole category),moved to pack as category
+hope,liberation,moved to pack extends
+hope,return,moved to pack extends
+hope,تحرير,moved to pack extends
+hope,عوده,moved to pack extends
+intergenerational,1948,moved to pack extends
+intergenerational,nakba,moved to pack extends
+intergenerational,right of return,moved to pack extends
+intergenerational,حق العوده,moved to pack extends
+intergenerational,نكبه,moved to pack extends
+resilience,resistance,moved to pack extends
+resilience,مقاومه,moved to pack extends
+propaganda,hasbara,moved to pack extends
+ukraine,(whole category),moved to pack as category
+hasbara,(whole category),moved to pack as category
+reclaimed,(whole category),moved to pack as category
+memory_1948,(whole category),moved to pack as category
+recent_events,(whole category),moved to pack as category
+digital_martyr,(whole category),moved to pack as category
+protest_language,intifada,moved to pack extends
+protest_language,انتفاضه,moved to pack extends

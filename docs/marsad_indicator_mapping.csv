@@ -1,0 +1,172 @@
+﻿old_id,old_name,decision,new_card,old_card_v1_2,reason
+F1,Share to Like Ratio,MERGE,REACT-4 Engagement mix,R5,Same as ContentAnalyzer share_to_like and structural F1
+F2,Video Engagement Efficiency,MERGE,REACT-10 Video performance,R9,CrowdTangle video columns only
+F3,Hashtag Density Impact,MERGE,REACT-2 What gets engagement,R3,Feature = hashtag bin
+F4,Message Length Engagement Curve,MERGE,REACT-2 What gets engagement,R3,Feature = length bin; same as plot_engagement_vs_length
+F5,URL Presence Lift,MERGE,REACT-2 What gets engagement,R3,Feature = has URL; same as plot_url_impact
+F6,Hashtag Count Curve,ALIAS,REACT-2 What gets engagement,R3,Function returns F3
+F7,Reaction to Share Conversion,MERGE,REACT-4 Engagement mix,R5,Ratio card
+F8,Hour x Day Sweet Spot,KEEP,TIME-2 Posting hours and days,B2,Needs timezone setting
+F9,Daily Engagement Volatility,MERGE,WHO-3 Posting regularity,C3,
+F10,Weekend vs Weekday,MERGE,TIME-2 Posting hours and days,B2,Weekend hardcoded Sat-Sun; must be configurable
+F11,Posting Frequency vs Engagement,MERGE,WHO-3 Posting regularity,C3,
+F12,Engagement Decay Rate,DROP,TIME-1 Posts over time,B1,"Linear slope of engagement vs time since first post; not decay, confounded by post age at collection"
+F13,Hourly Engagement Curve,MERGE,TIME-2 Posting hours and days,B2,Marginal of F8
+F14,Video Ownership Premium,MERGE,REACT-10 Video performance,R9,CrowdTangle only
+F15,Video Length Category,MERGE,REACT-10 Video performance,R9,Same as video_analysis
+F16,Video Share Status,MERGE,REACT-10 Video performance,R9,CrowdTangle only
+F17,URL + Video Synergy,MERGE,REACT-2 What gets engagement,R3,Structural F17 computes a different thing under the same ID
+F18,Video Length x Ownership,MERGE,REACT-10 Video performance,R9,Crosstab of F14 and F15
+F19,Overperforming x Video Length,MERGE,REACT-10 Video performance,R9,CrowdTangle only
+F20,Country Engagement Premium,MERGE,WHO-6 Countries,C5,Same as geographic_engagement
+F21,Country Gini,MERGE,WHO-2 Concentration,C2,Group = country
+F22,Country x Video Length,DROP,,,"Sparse crosstab, few cells with enough posts"
+F23,Country Engagement Rank,ALIAS,WHO-6 Countries,C5,F20 plus a rank column
+F24,Country Reaction Entropy,MERGE,REACT-6 Reaction sentiment,R7,Entropy grouped by country; cohesion = 1 - normalized entropy
+F25,Urgency Score,DROP,,,"Multiplies punctuation rate by interactions, so it mostly measures engagement"
+F26,Question Mark Impact,MERGE,REACT-2 What gets engagement,R3,
+F27,Exclamation Mark Impact,MERGE,REACT-2 What gets engagement,R3,
+F28,Length x Hashtag,MERGE,REACT-2 What gets engagement,R3,Optional two-feature view
+F28b,Hashtag Engagement Analysis,MERGE,REACT-2 What gets engagement,R3,Identical to FacebookDataAnalyzer.hashtag_engagement_analysis
+F29,Urgency Multiplier,MERGE,REACT-2 What gets engagement,R3,Overlaps F26/F27
+F30,Structural Composite Score,DROP,,,"Unweighted sum of length/500, counts and URL flag with no rationale"
+F31,Reaction Diversity Entropy,MERGE,REACT-6 Reaction sentiment,R7,Entropy grouped by page
+F32,Follower-Normalized Engagement,MERGE,REACT-7 Engagement rate,R2,Same as calculate_engagement_rate
+F33,Reaction to Comment Conversion,MERGE,REACT-4 Engagement mix,R5,
+F34,Views/Interactions Efficiency,KEEP,REACT-8 Views,G1,
+F35,Views per Follower,MERGE,REACT-8 Views,G1,
+F36,Page Deep Dive,KEEP,WHO-1 Top accounts,C1,With top_performers
+F37,Page Category Gini,MERGE,WHO-2 Concentration,C2,Group = category
+F38,Page Age vs Engagement,KEEP,WHO-8 Page age,C6,CrowdTangle only
+F39,Page Category x Type,MERGE,WHO-7 Page categories,C4,
+F40,Overperforming by Page Category,MERGE,REACT-2 What gets engagement,R3,"Outcome = overperforming, group = category"
+F41,Page Category HHI,MERGE,WHO-2 Concentration,C2,Metric = HHI
+F42,Overperformance Predictors,MERGE,REACT-2 What gets engagement,R3,Pearson on hour of day (circular) and binary flags; replace by grouped comparison
+F43,Overperforming by Content Type,MERGE,REACT-2 What gets engagement,R3,"Outcome = overperforming, group = type"
+F44,Follower-Adjusted Overperforming,DROP,,,Overperforming is already baseline-adjusted; multiplying by followers puts page size back in
+F45,Overperforming Volatility,MERGE,WHO-3 Posting regularity,C3,Metric selector
+F46,Crosspost Amplification,KEEP,SPREAD-5 Crosspost reach,G2,
+F47,Cumulative View Growth,ALIAS,SPREAD-5 Crosspost reach,G2,Equals F46 minus 1
+F48,Post Views to Total,ALIAS,SPREAD-5 Crosspost reach,G2,Equals 1/F46
+F49,High Arousal Ratio,MERGE,REACT-5 Reaction types,R6,
+F50,Fear vs Anger Dominance,MERGE,REACT-5 Reaction types,R6,Misnamed: formula is (Sad+Angry)/(Wow+Haha)
+F51,Outrage Entropy,MERGE,REACT-6 Reaction sentiment,R7,Entropy by month; not outrage
+F52,Collective Effervescence,KEEP,TIME-3 Spikes,B4,
+F53,Diagnostic vs Prognostic Framing,MERGE,FRAME-2 Two lexicons compared,E2,"Blame lexicon is conflict-heavy (ابادة, احتلال, تهجير); needs a generic version"
+F54,Care/Harm Foundation,MERGE,FRAME-1 Lexicon use over time,E1,Victim + genocide lexicons; not a moral foundations measure
+F55,Authority Subversion,PACK,Palestine/Gaza topic pack,,Occupation/resistance lexicons
+F56,Ingroup/Outgroup Ratio,MERGE,FRAME-2 Two lexicons compared,E2,"Outgroup lexicon mixes generic and conflict terms (صهيوني, مستوطن)"
+F57,Blame Density x Angry,MERGE,REACT-3 Lexicon and engagement,R4,Multiplies a rate by raw Angry count
+F58,Victimhood Framing Intensity,MERGE,FRAME-1 Lexicon use over time,E1,"Same lexicon as F54, other normalization"
+F59,Heroism/Martyrdom Ratio,PACK,Palestine/Gaza topic pack,,
+F60,Framing Velocity,MERGE,FRAME-2 Two lexicons compared,E2,First difference of F53
+F61,Fact vs Emotion Ratio,MERGE,FRAME-2 Two lexicons compared,E2,
+F62,Post-Colonial Reclamation,PACK,Palestine/Gaza topic pack,,Lexicon is Palestine slogans
+F63,Genocide Recognition Pre/Post ICJ,PACK,Palestine/Gaza topic pack,,Hardcoded 2024-01-26 pivot; generic part moves to B3 Event window comparison
+F64,Moral Exceptionalism,MERGE,FRAME-1 Lexicon use over time,E1,
+F65,Nakba-Ukraine Parallel,PACK,Palestine/Gaza topic pack,,
+F66,Dehumanization Index,MERGE,FRAME-2 Two lexicons compared,E2,"Dehumanizing minus humanizing; relevant to hate speech work, lexicon needs review"
+F67,Hasbara Adaptation,PACK,Palestine/Gaza topic pack,,Formula is (victim+moral_exceptional)/2; hasbara lexicon itself is never used
+F68,Game Framing,MERGE,FRAME-1 Lexicon use over time,E1,
+F69,Genocide Recognition AR,ALIAS,Palestine/Gaza topic pack,,Returns F63
+F70,Moral Exceptionalism v2,ALIAS,FRAME-1 Lexicon use over time,E1,Returns F64
+F71,Asymmetric Conflict Virality,MERGE,REACT-3 Lexicon and engagement,R4,
+F72,Mobilization Quotient,DROP,,,(Comments+Shares)/Likes times Overperforming; mixes two scales
+F73,Connective Action Density,MERGE,FRAME-1 Lexicon use over time,E1,
+F74,CTA Urgency,MERGE,FRAME-1 Lexicon use over time,E1,Depends on Exclamation_Count that the lexicon class never creates
+F75,Latent Mobilization Potential,DROP,,,"Moral density is per character (~0.001), so result is just (C+S)/L, already in F5"
+F76,LMP v2,ALIAS,,,Returns F75
+F77,Economic Justice Framing,MERGE,FRAME-1 Lexicon use over time,E1,
+F78,Intersectional Identity Layering,MERGE,FRAME-3 Lexicons in the same post,E3,
+F79,Anti-Normalization Strength,PACK,Palestine/Gaza topic pack,,
+F80,Elite vs Grassroots Framing,MERGE,FRAME-5 Language profile by group,E5,Elite rule uses Facebook category names; on Meltwater almost all posts become grassroots
+F81,Legal Accountability,PACK,Palestine/Gaza topic pack,,ICC/ICJ/BDS terms
+F82,Boycott Campaign Strength,PACK,Palestine/Gaza topic pack,,BDS
+F83,Elite Capture Narrative,MERGE,WHO-7 Page categories,C4,Engagement share by category group; same Meltwater issue as F80
+F84,Digital Intifada Evolution,PACK,Palestine/Gaza topic pack,,
+F85,Moral Contagion,MERGE,REACT-3 Lexicon and engagement,R4,Multiplies rate by raw Angry+Sad count; moral contagion is about diffusion (shares)
+F86,Affective Polarization Proxy,MERGE,REACT-6 Reaction sentiment,R7,Std of reaction sentiment; rename Sentiment dispersion
+F87,Affective Publics Trajectory,MERGE,REACT-6 Reaction sentiment,R7,"Weekly entropy, same as F31/F51"
+F88,Hope/Despair Oscillations,MERGE,FRAME-2 Two lexicons compared,E2,Core for hope speech work
+F89,Emotional Mobilization Burst,MERGE,TIME-3 Spikes,B4,F52 without the dominant-reaction condition
+F90,Moral Licensing Detection,DROP,,,Victim AND martyr co-occurrence; does not measure moral licensing
+F91,Burnout Early Warning,MERGE,FRAME-1 Lexicon use over time,E1,Two trend lines; becomes prevalence with engagement overlay
+F92,Intergenerational Trauma Proxy,PACK,Palestine/Gaza topic pack,,1948/grandfather terms
+F93,Collective Grief Index,MERGE,REACT-3 Lexicon and engagement,R4,Hits times (1+Sad count)
+F94,Hope/Resilience Index,MERGE,FRAME-1 Lexicon use over time,E1,
+F95,Moral Injury Score,MERGE,FRAME-1 Lexicon use over time,E1,Betrayal lexicon
+F96,Post-Truth Emotional Validation,MERGE,REACT-3 Lexicon and engagement,R4,
+F97,Burnout v2,MERGE,FRAME-1 Lexicon use over time,E1,
+F98,Collective Efficacy,MERGE,FRAME-1 Lexicon use over time,E1,
+F99,Emotional Labor Proxy,DROP,,,"(Sad+Angry) x length/1000; no lexicon, no clear construct"
+F100,Activist Burnout Markers,MERGE,FRAME-1 Lexicon use over time,E1,Same lexicon as F91/F97
+F101,Hope Anchoring in Despair,MERGE,FRAME-3 Lexicons in the same post,E3,
+F102,Compassion Fatigue Warning,MERGE,REACT-3 Lexicon and engagement,R4,
+F103,Keyword Evolution Timeseries,MERGE,WORDS-7 Term over time,L6,Default terms nakba/resistance/genocide; let user pick
+F104,Pronoun Framing Signature,KEEP,FRAME-4 Pronouns and certainty,E4,Generic
+F105,Cognitive Complexity,DROP,,,"Length x unique words, so roughly length squared; use type-token ratio in A2 instead"
+F106,Repetition/Echo Score,DROP,,,"Mean of three lexicon rates, not repetition; real repetition = A3 duplicates"
+F107,Narrative Consistency,MERGE,FRAME-1 Lexicon use over time,E1,"Week-to-week cosine of lexicon vector; option in prevalence card, exploratory"
+F108,Modal Verb Commitment,MERGE,FRAME-4 Pronouns and certainty,E4,
+F109,Dehumanization v2,ALIAS,FRAME-2 Two lexicons compared,E2,Returns F66
+F110,Over-Lexicalization,DROP,,,"Sum of lexicon hits, not a synonym count"
+F111,Intertextuality Density,MERGE,DATA-2 Text statistics,A2,Just share of posts with >2 hashtags
+F112,Collective Trauma Persistence,PACK,Palestine/Gaza topic pack,,Nakba stems
+F113,Anniversary Amplification,PACK,Palestine/Gaza topic pack,,Hardcoded May 15; generic part moves to B3 Event window comparison
+F114,Intergenerational Trauma v2,ALIAS,Palestine/Gaza topic pack,,Returns F92
+F115,Digital Mourning Ritual Cycle,MERGE,FRAME-1 Lexicon use over time,E1,
+F116,Digital Archiving Proxy,MERGE,REACT-3 Lexicon and engagement,R4,Archive terms x high shares
+F117,Digital Martyr Commemoration,PACK,Palestine/Gaza topic pack,,
+F118,Long-term vs Short-term Memory,PACK,Palestine/Gaza topic pack,,1948 vs Gaza 2023 events
+F119,Global Solidarity Density,PACK,Palestine/Gaza topic pack,,Also needs page country
+F120,Cross-Dataset Comparator,KEEP,DATA-6 Compare files,H1,Keyword density part hardcoded to resistance/victim
+F121,Jaccard Page Overlap,MERGE,DATA-6 Compare files,H1,
+F122,Cross-Page Amplification,PACK,Palestine/Gaza topic pack,,
+F123,Cross-Page Narrative Convergence,MERGE,FRAME-5 Language profile by group,E5,
+F124,Narrative Bridge Centrality,MERGE,FRAME-5 Language profile by group,E5,"Count of lexicons above median per page; not centrality, rename Topic breadth"
+F125,Echo Chamber Permeability,DROP,,,Victim AND game-framing co-occurrence; does not measure echo chambers
+F126,Bridge Page Detection,DROP,,,"Admin country is constant per page, so the count is 1 for every page and the output is empty"
+F127,Amplification Cascade Depth,ALIAS,SPREAD-5 Crosspost reach,G2,Same as F46 by month
+F128,Narrative Bridge v2,ALIAS,FRAME-5 Language profile by group,E5,Returns F124
+F129,Global Solidarity v2,ALIAS,Palestine/Gaza topic pack,,Returns F119
+F130,Propaganda Density,MERGE,REACT-3 Lexicon and engagement,R4,Emotional/factual split vs overperforming; drop the propaganda label
+F131,Algorithmic Trauma Amplification,MERGE,REACT-3 Lexicon and engagement,R4,Correlation only; label implies an algorithmic mechanism
+F132,Counter-Narrative Hijacking,MERGE,FRAME-3 Lexicons in the same post,E3,
+F133,Coordinated Inauthentic Behavior,DROP,SPREAD-3 Coordinated posting,G4,Counts pages where >50% of weekly posts hit resistance/genocide terms; replace with a real coordination method
+F134,Overperformance Penalty Dissent,PACK,Palestine/Gaza topic pack,,Generic form is F4 Lexicon x engagement
+F135,Shadowban Resilience,DROP,,,Weekly engagement drop >25% cannot show shadowbanning
+F136,Moderation Blindspots,DROP,,,High engagement AND dehumanizing hit; label overclaims
+F137,Algorithmic Visibility Penalty,ALIAS,Palestine/Gaza topic pack,,Returns F134
+F138,Algorithmic Outrage Optimization,MERGE,REACT-5 Reaction types,R6,Correlation of F49 with overperforming; uses a different Total_Reactions than F49
+T1,Message length distribution,MERGE,DATA-2 Text statistics,A2,Same as ContentAnalyzer.analyze_message_features
+T2,URL frequency,MERGE,DATA-2 Text statistics,A2,Same as ContentAnalyzer.analyze_message_features
+T3,Hashtag frequency,MERGE,DATA-2 Text statistics,A2,Same as ContentAnalyzer.analyze_message_features
+T4,Punctuation profile,MERGE,DATA-2 Text statistics,A2,Same as ContentAnalyzer.analyze_message_features
+Structural F1-F30 (16),GenericStructuralIndicators re-implementations,ALIAS,(registry),,Second copy of 16 advanced indicators; keep only the requirement map
+Primary,overview + view columns + capabilities,KEEP,DATA-1 Dataset overview,A1,
+Primary,analyze_message_features,KEEP,DATA-2 Text statistics,A2,
+Primary,engagement_summary,KEEP,REACT-1 Engagement overview,R1,
+Primary,outlier_detection,MERGE,REACT-1 Engagement overview,R1,IQR rule flags most posts on heavy-tailed data; use log scale
+Primary,calculate_virality_score,MERGE,REACT-1 Engagement overview,R1,
+Primary,correlation_analysis,MERGE,REACT-1 Engagement overview,R1,Use Spearman
+Primary,top_performers,MERGE,WHO-1 Top accounts,C1,Also shown as top posts in F1
+Primary,calculate_engagement_rate,KEEP,REACT-7 Engagement rate,R2,
+Primary,controlled_engagement_analysis,KEEP,REACT-2 What gets engagement,R3,Promote to default normalization for all group comparisons
+Primary,content_performance_by_type,MERGE,REACT-2 What gets engagement,R3,
+Primary,hashtag_engagement_analysis,ALIAS,REACT-2 What gets engagement,R3,Identical to F28b
+Primary,overperforming_analysis,KEEP,REACT-9 Overperforming posts,R8,CrowdTangle legacy exports
+Primary,"sentiment_analysis (sentiment, polarization, cohesion)",KEEP,REACT-6 Reaction sentiment,R7,Overwrites Total_Reactions with a weighted sum
+Primary,sentiment_sensitivity_analysis,DROP,REACT-6 Reaction sentiment,R7,Written for one paper; its default scheme is not the score sentiment_analysis computes. Rewrite to perturb the real formula
+Primary,temporal_analysis + plot_time_series,KEEP,TIME-1 Posts over time,B1,
+Primary,video_analysis,MERGE,REACT-10 Video performance,R9,
+Primary,page_category_analysis,MERGE,WHO-7 Page categories,C4,
+Primary,geographic_engagement + page counts,KEEP,WHO-6 Countries,C5,Label country source: page admin (CT) vs author (Meltwater)
+Primary,classify_solicitation_language,DROP,FRAME-6 Your own word list,E6,Hardcoded تابعني/followme for one paper; becomes a custom term group
+Primary,"MeltwaterExtras (sentiment labels, language mix, hashtags, reach vs engagement, geo, AVE, sources, sentiment over time)",KEEP,SPREAD-6 Meltwater reach and sources,G3,Language mix and sources also feed A2
+Primary,"Keyword extraction, n-grams, TF-IDF, word clouds",KEEP,WORDS-1 Word list,L1,
+Primary,extract_keywords_by_category,KEEP,WORDS-3 Keywords,L2,
+Primary,extract_keywords_with_engagement,MERGE,WORDS-1 Word list,L1,Option
+Primary,FastTextAnalyzer,KEEP,TOPIC-2 Word similarity map,D4,Analogies option can go
+Primary,EmbeddingHybridLayer (BERT),KEEP,TOPIC-3 Posts close to a concept,D5,"Optional, GPU; seeds include Palestine-specific categories"
+Primary,page_category_report (category groups),KEEP,WHO-7 Page categories,C4,"CrowdTangle/Meta only, already skips Meltwater"
+Primary,"Report exporter, PDF report, methods paragraphs",KEEP,I Export and report,,
