@@ -241,13 +241,33 @@ body.bigtext .crumbs{font-size:18px}
 body.bigtext .post .t{font-size:18.5px}
 body.bigtext .explore-label{font-size:19px}
 @media(max-width:900px){.filebtn .fn{display:none}.modes{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.sizebtn{padding:5px 9px}}
+.chatbtn{background:#e9a03b;color:#18354c;border:0;font-weight:700}
+.chatbtn:hover{background:#f2b45a}
+#chat{position:fixed;top:0;right:0;height:100vh;width:min(440px,100vw);background:#fff;box-shadow:-6px 0 24px rgba(19,45,62,.22);z-index:60;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .2s}
+#chat.open{transform:none}
+#chat .ch-head{background:var(--navy);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}
+#chat .ch-head b{flex:1;font-size:17px}
+#chat .ch-head button{background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:8px;padding:4px 10px;cursor:pointer}
+#chat .ch-note{font-size:12.5px;color:var(--muted);background:#fff8e6;border-bottom:1px solid var(--border);padding:8px 14px}
+#chat .ch-log{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+#chat .m{max-width:92%;padding:9px 12px;border-radius:12px;line-height:1.45;font-size:14.5px;white-space:normal;word-wrap:break-word}
+#chat .m.u{align-self:flex-end;background:var(--teal);color:#fff;border-bottom-right-radius:3px}
+#chat .m.a{align-self:flex-start;background:var(--teal-light);color:var(--ink);border-bottom-left-radius:3px}
+#chat .m.a .tools{font-size:12px;color:var(--muted);margin-top:6px}
+#chat .m a.cid,#chat .m button.cid{background:none;border:0;padding:0;color:var(--teal-dark);text-decoration:underline;cursor:pointer;font:inherit}
+#chat .ch-sugg{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 8px}
+#chat .ch-sugg button{border:1px solid var(--border);background:#fff;border-radius:14px;padding:4px 10px;font-size:13px;cursor:pointer}
+#chat form{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--border)}
+#chat textarea{flex:1;resize:none;border:1px solid var(--border);border-radius:10px;padding:9px;font:inherit;min-height:42px;max-height:140px}
+#chat form button{background:var(--teal);color:#fff;border:0;border-radius:10px;padding:0 16px;font-weight:700;cursor:pointer}
+#chat form button:disabled{opacity:.5;cursor:default}
 </style>
 <link rel="stylesheet" href="help.css">
 </head>
 <body>
 <header class="appbar">
   <div class="branding"><div class="brand-mark" aria-hidden="true"></div><div><div class="brand">MARSAD Analytics</div></div></div>
-  <div class="top-right"><span id="filebar"></span><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="sizebtn" aria-pressed="false" title="Make the text larger or smaller">A+ Larger text</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
+  <div class="top-right"><span id="filebar"></span><button class="sizebtn chatbtn" id="chatbtn" title="Ask a question about your results">Ask MARSAD</button><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="sizebtn" aria-pressed="false" title="Make the text larger or smaller">A+ Larger text</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
 </header>
 <nav class="mobile-nav" id="mobileNav" aria-label="Sections"></nav>
 <div class="shell">
@@ -255,6 +275,13 @@ body.bigtext .explore-label{font-size:19px}
   <main class="content" id="main" tabindex="-1"></main>
 </div>
 <div id="tip" role="tooltip"></div>
+<aside id="chat" aria-label="Ask MARSAD" aria-hidden="true">
+  <div class="ch-head"><b>Ask MARSAD</b><button id="chatnew" title="Start a new conversation">New</button><button id="chatclose" aria-label="Close">&#x2715;</button></div>
+  <div class="ch-note" id="chatnote">Loading&hellip;</div>
+  <div class="ch-log" id="chatlog" aria-live="polite"></div>
+  <div class="ch-sugg" id="chatsugg"></div>
+  <form id="chatform"><textarea id="chatin" rows="1" placeholder="Ask about your results, in Arabic or English" dir="auto"></textarea><button id="chatsend">Send</button></form>
+</aside>
 <div id="busy"><div class="in"><span class="spin"></span><span id="busytxt">Working</span></div></div>
 <div class="modal-scrim" id="modal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle"></h2><button aria-label="Close" class="close-modal" id="closeModal">×</button></div><div id="modalBody"></div></section></div>
 <input type="file" id="file" multiple accept=".csv,.tsv,.txt,.xlsx,.xls,.json,.jsonl,.ndjson" hidden>
@@ -274,7 +301,7 @@ body.bigtext .explore-label{font-size:19px}
 
 const SITE = "/home/pyodide/site";
 const PKGS = ["numpy", "pandas", "scipy", "scikit-learn", "regex", "msgpack", "tzdata", "packaging"];
-let py = null, W = null, REG = null, PL = null, SCAN = null, LEX = [], dl = null, wordfreq = false;
+let CH = null, SAMPLE = null, py = null, W = null, REG = null, PL = null, SCAN = null, LEX = [], dl = null, wordfreq = false;
 const files = [], results = {}, params = {}, saved = new Set(), fileSel = {};
 let loadMode = "combine";
 // one colour per section, used on the menu, tiles, page headers and analysis pages
@@ -329,11 +356,12 @@ async function boot() {
     for (const z of ["bundle_py.zip", "marsad.zip"]) py.unpackArchive(await bytes(z), "zip", {extractDir: SITE});
     py.FS.writeFile(SITE + "/plotly/package_data/plotly.min.js", await (await fetch("plotly.min.js")).text());
     py.FS.mkdirTree("/data");
-    await py.runPythonAsync(`import sys, warnings\nwarnings.filterwarnings("ignore")\nsys.path.insert(0, "${SITE}")\nfrom marsad_analytics import webapp as W`);
-    W = py.globals.get("W");
+    await py.runPythonAsync(`import sys, warnings\nwarnings.filterwarnings("ignore")\nsys.path.insert(0, "${SITE}")\nfrom marsad_analytics import webapp as W\nfrom marsad_analytics import chat as CH`);
+    W = py.globals.get("W"); CH = py.globals.get("CH");
     REG = JSON.parse(W.registry_json()); PL = REG.plain;
     engine("Ready", "ready");
     try { dl = await window.claude?.use?.("downloads"); } catch (e) { dl = null; }
+    chatReady();
     render();
   } catch (e) {
     console.error(e);
@@ -602,6 +630,7 @@ function overviewPage() {
      <div class="metric"><div class="metric-label">Main language${iMark("Guessed for each post from its letters and common short words.")}</div><div class="metric-value">${main ? Math.round(main.share * 100) + " %" : "-"}</div><div class="metric-small">${main ? esc(main.name) : ""}</div></div>
      <div class="metric"><div class="metric-label">Dates${iMark("First and last post, in the time zone you chose.")}</div><div class="metric-value date-value">${esc(dateV)}</div><div class="metric-small">${esc(dateS)}</div></div>
    </div>
+   ${noticesPanel()}
    ${filesPanel()}
    <div class="cards-2" style="margin-top:18px">
      <article class="panel"><h3 class="panel-title">Key facts</h3><ul class="summary-list">${bullets.map(b => `<li><span class="dot"></span><span>${b}</span></li>`).join("")}</ul></article>
@@ -610,6 +639,10 @@ function overviewPage() {
      ${panel("WHO-2", "Few voices or many?", `<div id="ov-voices"></div>`)}
    </div>
    <h2 class="section-heading">Explore</h2><div class="explore-grid">${exploreCards()}</div>`;
+}
+function noticesPanel() {
+  const n = SCAN.notices || []; if (!n.length) return "";
+  return `<article class="panel" style="margin-top:18px;border-left:5px solid #c98a00;background:#fff8e6"><h3 class="panel-title">Read before using the numbers</h3><ul class="summary-list">${n.map(t => `<li><span class="dot" style="background:#c98a00"></span><span>${esc(t)}</span></li>`).join("")}</ul></article>`;
 }
 function filesPanel() {
   const ds = SCAN.datasets || []; if (ds.length < 2) return "";
@@ -919,6 +952,91 @@ fetch("docs.json").then(r => r.json()).then(d => {
 view = fromHash();
 render();
 boot();
+
+// ------------------------------------------------------------------ Ask MARSAD (chat)
+const CHAT = {history: [], busy: false, abort: null, mode: "local"};
+const CHAT_SUGG = ["What are the main findings?", "Who are the most active accounts?", "Why was there a spike?",
+                   "Is the sentiment positive or negative?", "Which news frames dominate?", "ما أكثر الكلمات استخداما؟"];
+function chatOpen(on) {
+  const c = $("#chat"); c.classList.toggle("open", on); c.setAttribute("aria-hidden", on ? "false" : "true");
+  if (on) { chatNote(); if (!CHAT.history.length) chatWelcome(); setTimeout(() => $("#chatin").focus(), 50); }
+}
+async function chatReady() {
+  try { SAMPLE = await window.claude?.use?.("sample"); } catch (e) { SAMPLE = null; }
+  CHAT.mode = SAMPLE ? "claude" : "local"; chatNote();
+}
+function chatNote() {
+  const n = $("#chatnote"); if (!n) return;
+  n.innerHTML = CHAT.mode === "claude"
+    ? "Answers are written by Claude from MARSAD's results for your file. Your question, the results it looks up and up to 8 quoted posts are sent to Claude; your file itself is not uploaded. Check important numbers in the analysis it names."
+    : "Simple answers: Ask MARSAD points you to the analyses that answer your question and shows their key numbers. Full written answers are available when MARSAD is opened in Claude.";
+}
+function chatWelcome() {
+  chatAdd("a", SCAN ? `Your file has ${fmt(SCAN.posts)} posts. Ask me what you want to know about them.`
+                    : "Load a file on the Overview page first, then ask me about it. I can also explain how any analysis works.");
+  $("#chatsugg").innerHTML = CHAT_SUGG.map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join("");
+}
+function chatLinkify(html) {
+  const ids = new Set((REG?.cards || []).map(c => c.id));
+  return html.replace(/\b([A-Z]{3,7}-\d{1,2})\b/g, (m, id) => ids.has(id) ? `<button class="cid" data-go="c-${id}">${id}</button>` : m);
+}
+function chatMd(t) {
+  let h = esc(t || "");
+  h = h.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/^\s*[-*] (.+)$/gm, "&bull; $1").replace(/\n/g, "<br>");
+  return chatLinkify(h);
+}
+function chatAdd(role, text, extra) {
+  const d = document.createElement("div"); d.className = "m " + (role === "u" ? "u" : "a"); d.dir = "auto";
+  d.innerHTML = role === "u" ? esc(text) : chatMd(text) + (extra || "");
+  $("#chatlog").appendChild(d); $("#chatlog").scrollTop = 1e9; return d;
+}
+async function chatSend(q) {
+  q = (q || "").trim(); if (!q || CHAT.busy) return;
+  $("#chatin").value = ""; $("#chatsugg").innerHTML = "";
+  chatAdd("u", q); CHAT.busy = true; $("#chatsend").disabled = true;
+  try { if (CHAT.mode === "claude" && SAMPLE) await chatClaude(q); else chatLocal(q); }
+  finally { CHAT.busy = false; $("#chatsend").disabled = false; }
+}
+function chatLocal(q) {
+  if (!CH) { chatAdd("a", "The analysis engine is still starting. Try again in a moment."); return; }
+  let r; try { r = JSON.parse(CH.local_answer(q)); } catch (e) { r = {analyses: []}; }
+  if (!r.analyses.length) { chatAdd("a", "I could not match that to an analysis. Try words such as sentiment, accounts, hashtags, spike, frames, offensive or dialect, or browse All analyses."); return; }
+  const parts = r.analyses.map(a => {
+    const nums = a.key_numbers ? Object.entries(a.key_numbers).filter(([k, v]) => v !== null && typeof v !== "object").slice(0, 4)
+      .map(([k, v]) => `${esc(k.replace(/_/g, " "))}: <b>${typeof v === "number" ? fmt(Math.round(v * 10) / 10) : esc(String(v))}</b>`).join(", ") : "";
+    return `<div style="margin-top:8px"><button class="cid" data-go="c-${a.id}">${esc(a.title)}</button> (${a.id}): ${esc(a.what)}${nums ? "<br>" + nums : "<br><i>Open it to see the result.</i>"}</div>`;
+  }).join("");
+  chatAdd("a", "These analyses answer your question:", parts);
+}
+async function chatClaude(q) {
+  const specs = JSON.parse(CH.tool_specs());
+  const used = [];
+  const tools = specs.map(t => ({name: t.name, description: t.description, inputSchema: t.inputSchema,
+    execute: async (input) => { used.push(t.name === "run_analysis" ? (input?.card_id || "") : t.name.replace(/_/g, " "));
+      busy(true, "Looking up results"); await tick(); try { return CH.call(t.name, JSON.stringify(input || {})); } finally { busy(false); } }}));
+  CHAT.history.push({role: "user", content: q});
+  const msgs = CHAT.history.map((m, i) => i === 0 ? {role: "user", content: CH.SYSTEM + "\n\nUser question:\n" + m.content} : m);
+  const box = chatAdd("a", "Thinking…");
+  CHAT.abort = new AbortController();
+  try {
+    const res = await SAMPLE(msgs, {tools, cache: false, modelTier: "default", signal: CHAT.abort.signal,
+      onText: ({text}) => { box.innerHTML = chatMd(text); $("#chatlog").scrollTop = 1e9; }});
+    const text = res?.text || "";
+    box.innerHTML = chatMd(text) + (used.length ? `<div class="tools">Looked up: ${chatLinkify(esc([...new Set(used)].join(", ")))}</div>` : "");
+    CHAT.history.push({role: "assistant", content: text});
+  } catch (e) {
+    CHAT.history.pop();
+    if (e?.code === "not_granted") { CHAT.mode = "local"; chatNote(); box.remove(); chatLocal(q); return; }
+    box.innerHTML = e?.code === "rate_limited" ? "Too many questions in a short time. Please wait a minute and ask again."
+      : "Sorry, I could not answer that (" + esc(e?.message || "error") + ").";
+  }
+}
+$("#chatbtn").onclick = () => chatOpen(!$("#chat").classList.contains("open"));
+$("#chatclose").onclick = () => chatOpen(false);
+$("#chatnew").onclick = () => { CHAT.history = []; $("#chatlog").innerHTML = ""; chatWelcome(); };
+$("#chatform").onsubmit = e => { e.preventDefault(); chatSend($("#chatin").value); };
+$("#chatin").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); chatSend($("#chatin").value); } });
+$("#chatsugg").addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) chatSend(b.dataset.q); });
 </script>
 </body>
 </html>
