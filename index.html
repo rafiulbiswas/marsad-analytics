@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MARSAD Analytics: web dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<!-- No web fonts: the page loads nothing from the internet, so your posts, your address and the fact that you opened
+     it stay on your machine, and the page works offline. Arabic uses the fonts your system already has. -->
 <style>
 :root{--navy:#18354c;--navy2:#254760;--teal:#057c81;--teal-dark:#04666a;--teal-light:#e8f5f3;--bg:#f5f7f9;--white:#fff;--ink:#243543;--muted:#586a77;--border:#dce4e9;--shadow:0 2px 9px rgba(19,45,62,.05);--focus:#f19d3d;--amber:#9a5b00;--amber-bg:#fff4de;--amber-line:#f2dcaf;--grey-bg:#eef1f3;--ok-bg:#e6f4ea;--ok:#1e6b3a}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,"Noto Naskh Arabic",sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.45}
-[dir=rtl],.ar{font-family:"Noto Naskh Arabic",Arial,sans-serif}
+[dir=rtl],.ar{font-family:"Noto Naskh Arabic","Geeza Pro","Segoe UI",Tahoma,Arial,sans-serif}
 button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--teal-dark)}
 button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 h1,h2,h3,p{margin-top:0}
@@ -23,7 +23,7 @@ h1,h2,h3,p{margin-top:0}
 .top-right{display:flex;align-items:center;gap:12px;font-size:14px;color:#dfebf1}
 .pill{border:1px solid rgba(255,255,255,.35);padding:7px 12px;border-radius:18px;white-space:nowrap}
 #engine{max-width:40vw;overflow:hidden;text-overflow:ellipsis}
-#engine.ready{background:#2a9d8f;border-color:#2a9d8f}#engine.err{background:#c0392b;border-color:#c0392b}
+#engine.ready{background:#0f6e64;border-color:#0f6e64;color:#fff}#engine.err{background:#c0392b;border-color:#c0392b}
 .shell{display:grid;grid-template-columns:262px minmax(0,1fr);min-height:calc(100vh - 72px)}
 .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 12px;position:sticky;top:72px;height:calc(100vh - 72px);overflow:auto}
 .nav-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.9px;color:#637786;margin:16px 12px 8px}
@@ -32,8 +32,8 @@ h1,h2,h3,p{margin-top:0}
 .nav-button.active{color:#065f62;background:var(--teal-light);box-shadow:inset 4px 0 0 var(--teal)}
 .nav-button.active .ico{color:var(--teal)}
 .nav-button:hover:not(.active){background:#f4f7f8}
-.nav-desc{font-size:12.5px;color:#7a8a94;display:block;margin-top:2px;font-weight:400}
-.nav-count{margin-left:auto;font-size:12px;color:#6c8190;font-weight:700}
+.nav-desc{font-size:12.5px;color:#4f6371;display:block;margin-top:2px;font-weight:400}
+.nav-count{margin-left:auto;font-size:12px;color:#4f6371;font-weight:700}
 .side-footer{margin:18px 8px 0;padding:14px 6px;border-top:1px solid var(--border);font-size:13px;color:#657783;line-height:1.6}
 .side-footer b{color:var(--ink)}
 .content{padding:24px 34px 60px;max-width:1500px;width:100%;margin:0 auto;min-width:0}
@@ -52,7 +52,7 @@ h1,h2,h3,p{margin-top:0}
 .metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:16px}
 .metric{padding:18px 20px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);min-height:108px}
 .metric-label{font-size:15px;color:#536b7a;margin-bottom:8px}.metric-value{font-size:30px;font-weight:800;color:#1d3f52;line-height:1.1}
-.metric-small{font-size:13.5px;margin-top:6px;color:#6a7f8a}.metric .date-value{font-size:20px}
+.metric-small{font-size:13.5px;margin-top:6px;color:#4f6371}.metric .date-value{font-size:20px}
 .cards-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .panel{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:20px 22px;min-width:0;margin-bottom:18px}
 .cards-2 .panel{margin-bottom:0}
@@ -76,7 +76,7 @@ h1,h2,h3,p{margin-top:0}
 .explore-icon{flex:0 0 48px;height:48px;border-radius:10px;background:#e8f5f4;color:#11787f;display:grid;place-items:center}
 .explore-icon svg{width:26px;height:26px}
 .explore-label{font-size:17px;font-weight:700;color:#274555;margin-bottom:3px}
-.explore-detail{font-size:14px;color:#6c7e88}
+.explore-detail{font-size:14px;color:#4f6371}
 .arrow{color:#49767b;margin-left:auto;font-size:24px}
 /* analysis tiles */
 .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
@@ -133,11 +133,17 @@ details.box>.inner{padding:0 22px 20px}
 .drop.over{background:#e8f5f3;border-color:var(--teal)}
 .drop b{display:block;font-size:19px;margin-bottom:4px;color:#1f4b55}
 .samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.langchip{font-size:11px;padding:1px 6px;border-radius:9px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.explo{margin:0 0 10px;padding:9px 12px;border:1px solid #c9a227;border-left-width:4px;border-radius:6px;background:#fdf8e7;color:#5c4708;font-size:13px;line-height:1.5}
+.explo strong{letter-spacing:.03em;text-transform:uppercase;font-size:11px}
+@media (prefers-color-scheme:dark){.explo{background:#2a2410;color:#e7cd72;border-color:#8a6d12}}
+.langchip.lang-ar{border-color:#c9a227;color:#8a6d12;background:#fdf8e7}
+@media (prefers-color-scheme:dark){.langchip.lang-ar{border-color:#8a6d12;color:#e7cd72;background:#2a2410}}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
 .step{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
 .step .n{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:8px}
 .searchbox{padding:12px 14px;border:1px solid #a9bdc8;border-radius:9px;width:100%;max-width:520px;margin:4px 0 20px;font-size:16px}
-.small-print{font-size:13.5px;color:#617784}
+.small-print{font-size:13.5px;color:#4f6371}
 #busy{position:fixed;inset:0;background:rgba(245,247,249,.6);display:none;align-items:center;justify-content:center;z-index:90}
 #busy.on{display:flex}
 #busy .in{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 24px;box-shadow:0 8px 24px rgba(0,0,0,.08);font-size:16px}
@@ -150,7 +156,70 @@ details.box>.inner{padding:0 22px 20px}
 .modal-head h2{font-size:23px;margin:0 0 8px}
 .close-modal{border:0;background:#f0f4f5;border-radius:8px;width:42px;height:42px;font-size:22px;flex:none}
 .post{border-bottom:1px solid var(--border);padding:12px 0}
-.post .m{font-size:13px;color:#6a7d88;margin-bottom:4px}
+.post .m{font-size:13px;color:#4f6371;margin-bottom:4px}
+.recent-row{display:flex;flex-wrap:wrap;gap:8px}
+.pin-btn{position:absolute;top:12px;right:46px;width:30px;height:30px;border-radius:50%;border:1px solid #d6dde1;background:#fff;color:#8a7a23;font-size:15px;line-height:1;display:grid;place-items:center;padding:0;z-index:2}
+.pin-btn.on{background:#fff6dd;border-color:#e2c67a}
+details.secblock > summary{cursor:pointer;list-style:none}
+details.secblock > summary::-webkit-details-marker{display:none}
+details.secblock > summary::before{content:"▾";margin-inline-end:8px;font-size:13px;color:#55636f}
+details.secblock:not([open]) > summary::before{content:"▸"}
+[dir="rtl"] .pin-btn{right:auto;left:46px}
+pre.code{background:#0f2231;color:#e6f0f5;padding:12px 14px;border-radius:8px;overflow:auto;font-size:13px;line-height:1.5;text-align:left}
+.study-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}.study{display:flex;flex-direction:column;gap:4px;text-align:start;background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;font:inherit}.study:hover{border-color:var(--teal)}.study b{font-size:16px}.study span{font-size:13.5px;color:#55636f}
+ol.steps{display:flex;flex-direction:column;gap:10px;padding-inline-start:26px}ol.steps .tile{max-width:640px}
+/* Arabic right-to-left layout, from the v1.5 Arabic and RTL review. Applied only in Arabic; calculations and chart order are unchanged. */
+[dir="rtl"] body{font-family:"Noto Naskh Arabic","Geeza Pro","Segoe UI",Tahoma,Arial,sans-serif;text-align:start}
+[dir="rtl"] .sidebar{border-right:0;border-left:1px solid var(--border)}
+[dir="rtl"] .nav-button,[dir="rtl"] .tile,[dir="rtl"] .explore-card,[dir="rtl"] .hc-row,[dir="rtl"] .study{text-align:right}
+[dir="rtl"] .nav-button.active{box-shadow:inset -5px 0 0 var(--sec,var(--teal))}
+[dir="rtl"] .nav-count,[dir="rtl"] .arrow{margin-left:0;margin-right:auto}
+[dir="rtl"] .arrow{transform:scaleX(-1)}
+[dir="rtl"] .tile{border-left:1px solid var(--border);border-right:5px solid var(--sec,var(--border))}
+[dir="rtl"] .t-main{padding-inline-end:34px}
+[dir="rtl"] .info-btn{right:auto;left:12px}
+[dir="rtl"] .info-btn.inline{margin-left:0;margin-right:10px}
+[dir="rtl"] .sec-band{border-left:0;border-right:6px solid var(--sec)}
+[dir="rtl"] .secblock .section-heading{border-left:0;border-right:5px solid var(--sec);padding-left:0;padding-right:10px}
+[dir="rtl"] .menu-list{right:auto;left:0}
+[dir="rtl"] .menu-list button{text-align:right}
+[dir="rtl"] .crumbs .backbtn{margin-right:0;margin-left:10px}
+[dir="rtl"] .quick{margin-inline-start:10px}
+[dir="rtl"] .sp-row input,[dir="rtl"] #toolSearch,[dir="rtl"] #hcq{text-align:right}
+[dir="rtl"] .post .t{direction:inherit;text-align:start;unicode-bidi:plaintext}
+[dir="rtl"] .post .m,[dir="rtl"] .tbl td[dir="auto"]{unicode-bidi:plaintext}
+[dir="rtl"] .hc-en-details{direction:rtl;text-align:right}
+[dir="rtl"] .hc-en-details > div{direction:ltr;text-align:left;font-family:Arial,Helvetica,sans-serif}
+[dir="rtl"] .hc-ar-summary{direction:rtl;text-align:right;line-height:1.9}
+[dir="rtl"] .hc-ar-summary h3{margin:12px 0 4px;font-size:16px}
+[dir="rtl"] .hc-ar-note{background:#f4f7f9;padding:9px 12px;border-radius:8px}
+[dir="rtl"] .fig,[dir="rtl"] .js-plotly-plot,[dir="rtl"] #fullfig{direction:ltr}
+[dir="rtl"] .meter{direction:ltr}
+[dir="rtl"] .page-title{letter-spacing:0;line-height:1.5}
+[dir="rtl"] .appbar,[dir="rtl"] .top-right{direction:rtl}
+[dir="rtl"] .basis,[dir="rtl"] .viewnote,[dir="rtl"] .hc-body{line-height:1.8}
+[dir="rtl"] #chat{right:auto;left:0;box-shadow:6px 0 24px rgba(19,45,62,.22);transform:translateX(-105%)}
+[dir="rtl"] #chat.open{transform:translateX(0)}
+[dir="rtl"] pre.code,[dir="rtl"] code{direction:ltr;text-align:left;unicode-bidi:isolate}
+[dir="rtl"] .fchip,[dir="rtl"] .qc{text-align:right}
+[dir="rtl"] .skip{left:auto;right:-9999px}[dir="rtl"] .skip:focus{right:12px;left:auto}
+@media (max-width:760px){[dir="rtl"] .top-right{flex-wrap:wrap;gap:6px}[dir="rtl"] .appbar{height:auto;min-height:72px;flex-wrap:wrap;padding-block:10px}}
+[dir=rtl] .summary-list li > span:last-child,[dir=rtl] .basis,[dir=rtl] .study span,[dir=rtl] main p,[dir=rtl] main li,[dir=rtl] main td,[dir=rtl] main th,[dir=rtl] #modalBody p,[dir=rtl] #modalBody li,[dir=rtl] #modalBody td,[dir=rtl] .small-print,[dir=rtl] .msg{unicode-bidi:plaintext}
+[dir=rtl] .crumbs .sep{transform:scaleX(-1);display:inline-block}
+.filterbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}.fchip{border:1px solid var(--border);background:#fff;border-radius:16px;padding:5px 12px;font:inherit;font-size:13.5px;cursor:pointer}.fchip.on{border-color:var(--teal);background:#e6f4f3}.fchip.reset{border-color:#c98a00;color:#8a5a00}.fon{font-size:13px;font-weight:700;color:#8a5a00}
+.fset{border:1px solid var(--border);border-radius:8px;margin:10px 0;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 16px}.fset legend{font-weight:700;padding:0 4px}
+.basis{font-size:13px;color:#55636f;margin:6px 0 0}.quick{display:inline-flex;gap:8px;align-items:center;margin-inline-start:10px}.qc{font-size:13px;border:1px solid var(--border);background:#fff;border-radius:14px;padding:3px 10px;cursor:pointer}.qc.on{background:#e6f4f3;border-color:var(--teal)}label.qc select{border:0;background:transparent;font:inherit}
+.postbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:6px}.sp-row{display:flex;gap:8px;flex-wrap:wrap}.sp-row input{flex:1;min-width:220px;padding:9px 12px;border:1px solid var(--border);border-radius:10px;font:inherit}
+.searchposts{margin-top:18px}.viewnote{margin-top:14px}.meter{display:inline-block;width:120px;height:8px;background:#e8edf1;border-radius:4px;vertical-align:middle;overflow:hidden}.meter span{display:block;height:100%;background:var(--teal)}
+#fullscr{display:none;position:fixed;inset:0;background:#fff;z-index:60;padding:14px 20px}#fullscr.open{display:flex;flex-direction:column}.fs-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}#fullfig{flex:1;min-height:0}
+@media print{.filterbar{display:none}}
+.t-main{all:unset;display:flex;flex-direction:column;gap:6px;flex:1;cursor:pointer;justify-content:space-between;padding-inline-end:34px}.t-main::after{content:"";position:absolute;inset:0;border-radius:12px}.t-main:focus-visible::after{outline:3px solid var(--focus);outline-offset:2px}.tile .info-btn{z-index:2}.tile:hover{border-color:#9fc5c6}
+.tabset{display:flex;gap:6px;flex-wrap:wrap}
+.skip{position:absolute;left:-9999px;top:8px;z-index:100;background:#fff;color:var(--navy);border:3px solid var(--focus);border-radius:8px;padding:8px 14px;font-weight:700}.skip:focus{left:12px}
+@media(max-width:900px){.branding{flex-shrink:0}.top-right{min-width:0;overflow-x:auto;flex:1;justify-content:flex-start;scrollbar-width:thin}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important;scroll-behavior:auto!important}}
+table.g tr.hit td{background:#eaf6f1;font-weight:600}
+.chk-a{display:flex;gap:14px;margin-top:6px;flex-wrap:wrap}.chk-a select{min-width:160px}
 .post .t{font-size:16px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word}
 .post mark{background:#ffe08a;padding:0 2px;border-radius:2px}
 .report-list{margin:14px 0;padding:0;list-style:none}
@@ -265,9 +334,10 @@ body.bigtext .explore-label{font-size:19px}
 <link rel="stylesheet" href="help.css">
 </head>
 <body>
+<button class="skip" id="skiplink">Skip to content</button>
 <header class="appbar">
   <div class="branding"><div class="brand-mark" aria-hidden="true"></div><div><div class="brand">MARSAD Analytics</div></div></div>
-  <div class="top-right"><span id="filebar"></span><button class="sizebtn chatbtn" id="chatbtn" title="Ask a question about your results">Ask MARSAD</button><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="sizebtn" aria-pressed="false" title="Make the text larger or smaller">A+ Larger text</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
+  <div class="top-right"><span id="filebar"></span><button class="sizebtn chatbtn" id="chatbtn" title="Ask a question about your results">Ask MARSAD</button><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="langbtn" lang="ar" title="Show the menus in Arabic">العربية</button><button class="sizebtn" id="sizebtn" aria-pressed="false" title="Make the text larger or smaller">A+ Larger text</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
 </header>
 <nav class="mobile-nav" id="mobileNav" aria-label="Sections"></nav>
 <div class="shell">
@@ -275,16 +345,18 @@ body.bigtext .explore-label{font-size:19px}
   <main class="content" id="main" tabindex="-1"></main>
 </div>
 <div id="tip" role="tooltip"></div>
-<aside id="chat" aria-label="Ask MARSAD" aria-hidden="true">
+<aside id="chat" aria-label="Ask MARSAD" aria-hidden="true" inert>
   <div class="ch-head"><b>Ask MARSAD</b><button id="chatnew" title="Start a new conversation">New</button><button id="chatclose" aria-label="Close">&#x2715;</button></div>
   <div class="ch-note" id="chatnote">Loading&hellip;</div>
   <div class="ch-log" id="chatlog" aria-live="polite"></div>
   <div class="ch-sugg" id="chatsugg"></div>
   <form id="chatform"><textarea id="chatin" rows="1" placeholder="Ask about your results, in Arabic or English" dir="auto"></textarea><button id="chatsend">Send</button></form>
 </aside>
-<div id="busy"><div class="in"><span class="spin"></span><span id="busytxt">Working</span></div></div>
+<div id="fullscr" role="dialog" aria-modal="true" aria-labelledby="fulltitle"><div class="fs-head"><b id="fulltitle"></b><button class="close-modal" id="fullclose" aria-label="Close">×</button></div><div id="fullfig"></div></div>
+<div id="busy"><div class="in" role="status" aria-live="polite"><span class="spin"></span><span id="busytxt">Working</span></div></div>
 <div class="modal-scrim" id="modal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h2 id="modalTitle"></h2><button aria-label="Close" class="close-modal" id="closeModal">×</button></div><div id="modalBody"></div></section></div>
 <input type="file" id="file" multiple accept=".csv,.tsv,.txt,.xlsx,.xls,.json,.jsonl,.ndjson" hidden>
+<input type="file" id="projfile" accept=".json,.marsad.json" hidden>
 
 <script src="help.js"></script>
 <script>
@@ -301,7 +373,7 @@ body.bigtext .explore-label{font-size:19px}
 
 const SITE = "/home/pyodide/site";
 const PKGS = ["numpy", "pandas", "scipy", "scikit-learn", "regex", "msgpack", "tzdata", "packaging"];
-let CH = null, SAMPLE = null, py = null, W = null, REG = null, PL = null, SCAN = null, LEX = [], dl = null, wordfreq = false;
+let VERSION = "", CH = null, V = null, DR = null, SAMPLE = null, py = null, W = null, REG = null, PL = null, SCAN = null, LEX = [], dl = null, wordfreq = false;
 const files = [], results = {}, params = {}, saved = new Set(), fileSel = {};
 let loadMode = "combine";
 // one colour per section, used on the menu, tiles, page headers and analysis pages
@@ -310,6 +382,27 @@ const secVar = id => `style="--sec:${SECCOL[id] || "#057c81"}"`;
 const COMPARE = () => !!(SCAN && SCAN.mode === "compare" && (SCAN.datasets || []).length > 1);
 const splitKey = id => { const ch = (regCard(id) || {}).param_choices || {}; return Object.keys(ch).find(k => Array.isArray(ch[k]) && ch[k].includes("dataset")) || null; };
 let view = {page: "overview"};
+let POSTSORT = "interactions";
+let VIEWMODE = "simple"; try { VIEWMODE = localStorage.getItem("marsad_view") || "simple"; } catch (e) {}
+// what the person chose to see: a set of analyses, the ones they hid, the ones they pinned, and where they were last
+const CUSTOM = {preset: "all", hidden: [], pinned: [], recent: []};
+try { Object.assign(CUSTOM, JSON.parse(localStorage.getItem("marsad_custom") || "{}")); } catch (e) {}
+const saveCustom = () => { try { localStorage.setItem("marsad_custom", JSON.stringify(CUSTOM)); } catch (e) {} };
+const presetCards = id => { const p = ((REG || {}).packages || {})[id]; return p ? p.cards.slice() : null; };
+function inPreset(cid) {
+  if (CUSTOM.preset === "all" || !REG) return true;
+  const list = presetCards(CUSTOM.preset);
+  return !list || list.includes(cid);
+}
+const isShown = cid => inPreset(cid) && !CUSTOM.hidden.includes(cid);
+function togglePin(cid) {
+  const i = CUSTOM.pinned.indexOf(cid);
+  if (i >= 0) CUSTOM.pinned.splice(i, 1); else CUSTOM.pinned.unshift(cid);
+  CUSTOM.pinned = CUSTOM.pinned.slice(0, 12); saveCustom(); renderSidebar(); render();
+}
+function noteRecent(cid) { CUSTOM.recent = [cid, ...CUSTOM.recent.filter(x => x !== cid)].slice(0, 8); saveCustom(); }
+let PCT = false, SORTED = false;
+let LANG = "en"; try { LANG = localStorage.getItem("marsad_lang") === "ar" ? "ar" : "en"; } catch (e) {}
 const $ = (s, el = document) => el.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
 const fmt = v => typeof v === "number" ? (Number.isInteger(v) ? v.toLocaleString() : (Math.abs(v) >= 100 ? Math.round(v).toLocaleString() : (Math.abs(v) >= 10 ? v.toFixed(1) : (+v.toPrecision(2)).toString()))) : (v === null || v === undefined ? "" : String(v));
@@ -319,7 +412,10 @@ function busy(on, t) { $("#busy").classList.toggle("on", on); if (t) $("#busytxt
 function engine(t, cls) { const e = $("#engine"); e.className = "pill" + (cls ? " " + cls : ""); e.innerHTML = (cls ? "" : '<span class="spin"></span>') + esc(t); }
 function loadScript(src) { return new Promise((ok, bad) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => bad(new Error("could not load " + src)); document.head.appendChild(s); }); }
 async function bytes(url) { const r = await fetch(url); if (!r.ok) throw new Error(url + ": " + r.status); return new Uint8Array(await r.arrayBuffer()); }
-const pyErr = e => { const l = String(e.message || e).trim().split("\n"); return l[l.length - 1]; };
+const pyErr = e => {      // the last line of a Python traceback, without the module path in front of the message
+  const l = String(e.message || e).trim().split("\n"), last = l[l.length - 1];
+  return last.replace(/^(?:[\w.]*\.)?(?:\w*Error|\w*Exception|NoTextColumn):\s*/, "");
+};
 
 // ------------------------------------------------------------------ icons (simple line drawings)
 const ICON = {
@@ -356,10 +452,11 @@ async function boot() {
     for (const z of ["bundle_py.zip", "marsad.zip"]) py.unpackArchive(await bytes(z), "zip", {extractDir: SITE});
     py.FS.writeFile(SITE + "/plotly/package_data/plotly.min.js", await (await fetch("plotly.min.js")).text());
     py.FS.mkdirTree("/data");
-    await py.runPythonAsync(`import sys, warnings\nwarnings.filterwarnings("ignore")\nsys.path.insert(0, "${SITE}")\nfrom marsad_analytics import webapp as W\nfrom marsad_analytics import chat as CH`);
-    W = py.globals.get("W"); CH = py.globals.get("CH");
+    await py.runPythonAsync(`import sys, warnings\nwarnings.filterwarnings("ignore")\nsys.path.insert(0, "${SITE}")\nfrom marsad_analytics import webapp as W\nfrom marsad_analytics import chat as CH\nfrom marsad_analytics import validate as V\nfrom marsad_analytics import draft as DR`);
+    W = py.globals.get("W"); CH = py.globals.get("CH"); VERSION = W.version(); V = py.globals.get("V"); DR = py.globals.get("DR");
     REG = JSON.parse(W.registry_json()); PL = REG.plain;
     engine("Ready", "ready");
+    if (LANG === "ar") setLang("ar");
     try { dl = await window.claude?.use?.("downloads"); } catch (e) { dl = null; }
     chatReady();
     render();
@@ -376,28 +473,50 @@ async function ensureWordfreq() {
 }
 
 // ------------------------------------------------------------------ catalogue helpers
-function sections() { return PL ? PL.sections : []; }
+function glossCatalog() {
+  const en = (PL && PL.gloss) || {};
+  if (LANG !== "ar" || !PL?.ar?.gloss) return en;
+  return Object.fromEntries(Object.entries(en).map(([id, val]) => [id, [PL.ar.gloss[id] || val[0], val[1]]]));
+}
+const trUI = t => LANG === "ar" ? (PL?.ar?.ui?.[t] || t) : t;
+function sections() { if (!PL) return []; if (LANG !== "ar") return PL.sections; const A = PL.ar.sections; return PL.sections.map(x => A[x.id] ? {...x, title: A[x.id][0], question: A[x.id][1], intro: A[x.id][2]} : x); }
 function itemsOf(sec) {
   if (!PL) return [];
   const cards = Object.entries(PL.cards).filter(([, v]) => v.section === sec).map(([id, v]) => ({id, ...v, planned: false}));
   const order = REG.cards.map(c => c.id);
   cards.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
-  return cards.concat(PL.planned.filter(p => p.section === sec).map(p => ({...p, planned: true})));
+  const _out = cards.concat(PL.planned.filter(p => p.section === sec).map(p => ({...p, planned: true})));
+  return LANG === "ar" ? _out.map(withAr) : _out;
 }
 function allItems() { return sections().flatMap(s => itemsOf(s.id)); }
+function withAr(i) {
+  if (LANG !== "ar" || !PL.ar) return i;
+  const names = PL.ar.cards?.[i.id], d = PL.ar.details?.[i.id] || PL.ar.planned?.[i.id];
+  return names ? {...i, title: names[0], short: names[1], ...(d || {})} : (d ? {...i, ...d} : i);
+}
 function regCard(id) { return REG ? REG.cards.find(c => c.id === id) : null; }
-function plainOf(id) { return PL ? (PL.cards[id] || PL.planned.find(p => p.id === id)) : null; }
+function plainOf(id) {
+  const p = PL ? (PL.cards[id] || PL.planned.find(x => x.id === id)) : null;
+  if (!p || LANG !== "ar" || !PL.ar) return p;
+  if (PL.ar.planned?.[id]) return {...p, ...PL.ar.planned[id]};
+  const a = PL.ar.cards?.[id]; if (!a) return p;
+  return {...p, title: a[0], short: a[1], ...(PL.ar.details?.[id] || {})};
+}
 function status(item) {
   if (item.planned) return {cls: "st-soon", label: "Planned", why: item.note, ok: false};
   if (!SCAN) return {cls: "st-wait", label: "Load a file", why: "Load a file on the Overview page.", ok: false};
   const c = regCard(item.id) || {};
   if (c.available) return {cls: "st-ready", label: "Ready", why: "", ok: true};
   if (c.runtime_gap) return {cls: "st-soon", label: /own model or API/.test(c.hint || "") ? "Needs MARSAD service" : "Needs MARSAD server", why: plainGap(c), ok: false};
-  const need = (c.missing || []).map(m => PL.needs[m] || m);
-  return {cls: "st-off", label: "Not for this file", why: need.length ? "Needs " + need.join(" or ") + "." : (c.hint || ""), ok: false};
+  const need = (c.missing || []).map(m => (LANG === "ar" && PL.ar?.needs?.[m]) || PL.needs[m] || m);
+  const why = need.length ? (LANG === "ar" ? "يتطلب " + need.join(" أو ") + "." : "Needs " + need.join(" or ") + ".") : (c.hint || "");
+  return {cls: "st-off", label: "Not for this file", why, ok: false};
 }
 function plainGap(c) {
-  if (/own model or API/.test(c.hint || "")) return "Runs when the MARSAD service for it is connected, or on files that already include these labels.";
+  const api = /own model or API/.test(c.hint || "");
+  if (LANG === "ar") return api ? "يعمل عند ربط خدمة مرصد اللازمة، أو على ملفات تحتوي على هذه التصنيفات مسبقًا."
+                                : "يعمل على خادم مرصد أو في دفتر كولاب، أو هنا على ملفات تحتوي على هذه التصنيفات مسبقًا.";
+  if (api) return "Runs when the MARSAD service for it is connected, or on files that already include these labels.";
   return "Runs on the MARSAD server or in the Colab notebook, or here on files that already include these labels.";
 }
 
@@ -426,14 +545,19 @@ document.addEventListener("focusout", hideTip);
 window.addEventListener("scroll", hideTip, true);
 
 // ------------------------------------------------------------------ navigation
-function go(v) { view = v; hideTip(); render(); window.scrollTo({top: 0}); try { history.replaceState(null, "", "#" + (v.page === "card" ? "c-" + v.id : v.page === "section" ? "s-" + v.section : v.page === "help" ? MarsadHelp.hashFor(v.route || {view: "home"}) : v.page)); } catch (e) {} }
+function go(v) { view = v; hideTip(); if (v.page === "card" && v.id) noteRecent(v.id); try { localStorage.setItem("marsad_last", JSON.stringify(v)); } catch (e) {} render(); window.scrollTo({top: 0}); try { history.replaceState(null, "", "#" + (v.page === "card" ? "c-" + v.id : v.page === "section" ? "s-" + v.section : v.page === "study" ? "q-" + v.id : v.page === "help" ? MarsadHelp.hashFor(v.route || {view: "home"}) : v.page)); } catch (e) {} }
 const helpRoute = k => ({page: "help", route: MarsadHelp.routeFromHash(k)});
 function fromHash() {
   const h = location.hash.slice(1);
   if (h.startsWith("help")) return helpRoute(h);
   if (h.startsWith("c-")) return {page: "card", id: h.slice(2)};
   if (h.startsWith("s-")) return {page: "section", section: h.slice(2)};
+  if (h.startsWith("q-")) return {page: "study", id: h.slice(2)};
   if (["all", "report", "overview", "files"].includes(h)) return {page: h};
+  if (!h) { try {      // come back to the page they left, but never to an analysis page: the file is gone after a reload
+    const last = JSON.parse(localStorage.getItem("marsad_last") || "null");
+    if (last && ["overview", "all", "report", "section", "study", "help"].includes(last.page)) return last;
+  } catch (e) {} }
   return {page: "overview"};
 }
 window.addEventListener("hashchange", () => { const v = fromHash(); if (v.page !== view.page || v.id !== view.id || v.section !== view.section || JSON.stringify(v.route) !== JSON.stringify(view.route)) { view = v; render(); window.scrollTo({top: 0}); } });
@@ -443,7 +567,9 @@ function renderSidebar() {
   const cnt = s => { const it = itemsOf(s.id); return SCAN ? `${it.filter(i => status(i).ok).length}/${it.length}` : ""; };
   const curSec = view.page === "section" ? view.section : (view.page === "card" ? (plainOf(view.id) || {}).section : null);
   const btn = (key, icon, title, active, count = "", sid = "") => `<button class="nav-button ${active ? "active" : ""}" ${sid ? secVar(sid) : ""} data-go="${key}" aria-current="${active ? "page" : "false"}">${ico(icon)}<span>${esc(title)}</span>${count ? `<span class="nav-count" title="Ready for this file">${count}</span>` : ""}</button>`;
+  const pins = CUSTOM.pinned.filter(id => plainOf(id)).slice(0, 8);
   $("#sidebar").innerHTML = `${btn("overview", "home", "Overview", view.page === "overview")}
+    ${pins.length ? `<div class="nav-label">Pinned</div>` + pins.map(id => btn("c-" + id, "all", plainOf(id).title, view.page === "card" && view.id === id, "", (plainOf(id) || {}).section)).join("") : ""}
     <div class="nav-label">Explore</div>${secs.map(s => btn("s-" + s.id, s.icon, s.title, curSec === s.id, cnt(s), s.id)).join("")}
     ${btn("all", "all", "All analyses", view.page === "all")}
     <div class="nav-label">Results</div>${btn("report", "report", "My report" + (saved.size ? ` (${saved.size})` : ""), view.page === "report" || curSec === "report")}
@@ -465,7 +591,7 @@ function renderFilebar() {
 }
 function setBig(on) {
   document.body.classList.toggle("bigtext", on);
-  const b = $("#sizebtn"); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? "A− Normal text" : "A+ Larger text";
+  const b = $("#sizebtn"); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? "A- Smaller text" : "A+ Larger text";
   try { localStorage.setItem("marsad_bigtext", on ? "1" : "0"); } catch (e) {}
   if (view.page === "card" && results[view.id]) setTimeout(() => { const f = $("#cardfig"); if (f && window.Plotly) Plotly.Plots.resize(f); }, 50);
 }
@@ -476,7 +602,7 @@ document.addEventListener("click", e => {
   const a = e.target.closest("[data-act]");
   if (a) { e.preventDefault(); act(a.dataset.act, a); return; }
   const g = e.target.closest("[data-go]");
-  if (g) { e.preventDefault(); const k = g.dataset.go; closeModal(); go(k.startsWith("help") ? helpRoute(k) : k.startsWith("s-") ? {page: "section", section: k.slice(2)} : k.startsWith("c-") ? {page: "card", id: k.slice(2)} : {page: k}); return; }
+  if (g) { e.preventDefault(); const k = g.dataset.go; closeModal(); go(k.startsWith("help") ? helpRoute(k) : k.startsWith("s-") ? {page: "section", section: k.slice(2)} : k.startsWith("c-") ? {page: "card", id: k.slice(2)} : k.startsWith("q-") ? {page: "study", id: k.slice(2)} : {page: k}); return; }
 });
 function act(name, el) {
   if (name === "changefile") go({page: "files"});
@@ -491,6 +617,16 @@ function act(name, el) {
   if (name === "unsave") { saved.delete(el.dataset.id); render(); }
   if (name === "explain") explain(el.dataset.id);
   if (name === "about") about();
+  if (name === "prepare") preparePage();
+  if (name === "pin") togglePin(el.dataset.id);
+  if (name === "customize") customizePage();
+  if (name === "filters") filtersPage();
+  if (name === "resetfilters") { const n = prepOpts(); FKEYS.forEach(k => delete n[k]); applyPrepare(n); }
+  if (name === "viewmode") { VIEWMODE = VIEWMODE === "simple" ? "full" : "simple"; try { localStorage.setItem("marsad_view", VIEWMODE); } catch (e) {} render(); }
+  if (name === "saveproject") saveProject();
+  if (name === "studyreport") { const q = PL.studies.find(x => x.id === el.dataset.id); for (const c of q.cards) if (status({...plainOf(c), id: c}).ok && !saved.has(c)) toggleSave(c); render(); }
+  if (name === "studydraft") { const q = PL.studies.find(x => x.id === el.dataset.id); draftReport(q.cards.filter(c => status({...plainOf(c), id: c}).ok)); }
+  if (name === "openproject") $("#projfile").click();
   if (name === "openposts") showPosts(el.dataset.f, el.dataset.title || "");
 }
 
@@ -504,6 +640,7 @@ function render() {
   else if (view.page === "section") { m.innerHTML = sectionPage(view.section); }
   else if (view.page === "all") { m.innerHTML = allPage(); bindSearch(); }
   else if (view.page === "report") { m.innerHTML = reportPage(); }
+  else if (view.page === "study") { m.innerHTML = studyPage(view.id); }
   else if (view.page === "card") { cardPage(view.id); }
 }
 function head(title, info = "", actions = "", crumbs = "") {
@@ -531,16 +668,17 @@ function startPage() {
   const again = !!SCAN;
   return `${again ? crumbs([["Overview", "overview"], ["Your files", "files"]], ["Overview", "overview"]) : ""}${head(again ? "Your files" : "Analyse a dataset", "Load an export from CrowdTangle, Meltwater, Meta Content Library, X, Reddit or any table with a text column (CSV, Excel, JSON). Files are read inside this page and are not uploaded. Up to about 50,000 posts in total work well.")}
   <div class="panel">
-    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose files"><b>${files.length ? "Add another file" : "Drop files here or click to choose"}</b>CSV, Excel, JSON. You can add several files.</div>
+    <div class="drop" id="drop" tabindex="0" role="button"><b>${files.length ? "Add another file" : "Drop files here or click to choose"}</b>CSV, Excel, JSON. You can add several files.</div>
     <div id="filelist"></div>
     <div class="start-row">
-      <div class="samples"><span class="small-print">Practice files:</span><button class="btn small" data-act="sample" data-file="crowdtangle.csv">CrowdTangle</button><button class="btn small" data-act="sample" data-file="meltwater.csv">Meltwater</button><button class="btn small" data-act="sample" data-file="reddit.jsonl.txt" data-name="reddit.jsonl">Reddit</button><button class="btn small" data-act="sample" data-file="meta.csv">Meta</button><button class="btn small" data-act="trycompare" data-tip="Loads two practice files and compares them.">Try a comparison</button></div>
+      <div class="samples"><span class="small-print">Practice files:</span><button class="btn small" data-act="sample" data-file="crowdtangle.csv">CrowdTangle</button><button class="btn small" data-act="sample" data-file="meltwater.csv">Meltwater</button><button class="btn small" data-act="sample" data-file="reddit.jsonl.txt" data-name="reddit.jsonl">Reddit</button><button class="btn small" data-act="sample" data-file="meta.csv">Meta</button><button class="btn small" data-act="sample" data-file="english_x.csv" data-tip="An English-language file in X (Twitter) export shape, for trying the tool without Arabic.">English (X)</button><button class="btn small" data-act="trycompare" data-tip="Loads two practice files and compares them.">Try a comparison</button><button class="btn small" data-act="openproject" data-tip="Continue a project you saved with Save project (a .marsad.json file).">Open a saved project</button></div>
       <div class="opts"><label>Time zone <select id="tz">${TZ.map(([v, n]) => `<option value="${v}" ${SCAN && SCAN.settings && SCAN.settings.analysis_tz === v ? "selected" : ""}>${n}</option>`).join("")}</select></label>
         <label>Weekend <select id="weekend"><option value="auto">Auto</option><option value="fri-sat">Fri-Sat</option><option value="sat-sun">Sat-Sun</option></select></label>
         <input type="hidden" id="srctz" value="UTC"><input type="hidden" id="platform" value="auto">
         <button class="btn primary" data-act="load" id="loadbtn" ${files.length && W ? "" : "disabled"}>Analyse</button></div>
     </div>
   </div>
+  ${PL && !again ? studiesPanel() : ""}
   ${PL && !again ? `<h2 class="section-heading">What you can explore</h2><div class="explore-grid">${exploreCards()}</div>` : ""}`;
 }
 function bindStart() {
@@ -552,6 +690,7 @@ function bindStart() {
   showFiles();
 }
 $("#file").onchange = e => { addFiles(e.target.files); e.target.value = ""; };
+$("#projfile").onchange = e => { const f = e.target.files[0]; e.target.value = ""; if (f) openProject(f); };
 const stem = n => n.replace(/^practice_/, "").replace(/\.(csv|tsv|txt|xlsx|xls|json|jsonl|ndjson)(\.txt)?$/i, "").replace(/[_-]+/g, " ").trim();
 function addFiles(list) {
   for (const f of list) { const r = new FileReader(); r.onload = () => { files.push({name: f.name, label: stem(f.name), data: new Uint8Array(r.result)}); showFiles(); }; r.readAsArrayBuffer(f); }
@@ -587,14 +726,15 @@ async function loadComparison() {
 }
 function alertMsg(m) { $("#main").insertAdjacentHTML("afterbegin", `<div class="msg err">${esc(m)}</div>`); }
 
-async function loadData() {
+async function loadData(settings) {
   if (!W || !files.length) return;
   busy(true, "Reading your file"); await tick();
   try {
     try { py.FS.readdir("/data").filter(n => !n.startsWith(".")).forEach(n => py.FS.unlink("/data/" + n)); } catch (e) {}
     const paths = files.map((f, i) => { const p = "/data/" + i + "_" + f.name.replace(/[\\/]/g, "_"); py.FS.writeFile(p, f.data); return p; });
     const labels = files.map(f => (f.label || stem(f.name)).trim() || stem(f.name));
-    const st = {analysis_tz: $("#tz")?.value || "Asia/Qatar", source_tz: $("#srctz")?.value || "UTC", weekend: $("#weekend")?.value || "auto"};
+    const st = settings && settings.analysis_tz ? {analysis_tz: settings.analysis_tz, source_tz: settings.source_tz || "UTC", weekend: settings.weekend || "auto"}
+      : {analysis_tz: $("#tz")?.value || "Asia/Qatar", source_tz: $("#srctz")?.value || "UTC", weekend: $("#weekend")?.value || "auto"};
     SCAN = JSON.parse(W.load_files(py.toPy(paths), py.toPy(st), $("#platform")?.value || "auto", py.toPy(labels), files.length > 1 ? loadMode : "combine"));
     REG = JSON.parse(W.registry_json()); PL = REG.plain; LEX = JSON.parse(W.lexicon_names());
     for (const k of Object.keys(results)) delete results[k];
@@ -614,16 +754,16 @@ function runQuiet(id, p, file) {
 function overviewPage() {
   const s = SCAN, main = s.languages[0];
   const bullets = [];
-  if (main) bullets.push(`Main language: <b>${esc(main.name)}</b> (${Math.round(main.share * 100)} %)${s.languages[1] ? `, then ${esc(s.languages[1].name)} (${Math.round(s.languages[1].share * 100)} %)` : ""}`);
-  const t2 = results["TIME-2"]; if (t2?.status === "ok" && t2.summary.peak_hour_posts != null) bullets.push(`Busiest hour: <b>${t2.summary.peak_hour_posts}:00</b>`);
-  const w2 = results["WHO-2"]; if (w2?.status === "ok" && w2.summary["top_10_share_%"] != null && s.accounts) bullets.push(`Top 10 accounts: <b>${Math.round(w2.summary["top_10_share_%"])} %</b> of posts`);
-  const d4 = results["DATA-4"]; if (d4?.status === "ok" && d4.summary["share_in_clusters_%"] != null) bullets.push(`Copied or near-copied posts: <b>${Math.round(d4.summary["share_in_clusters_%"])} %</b>`);
-  bullets.push(`<b>${allItems().filter(i => status(i).ok).length}</b> of ${allItems().length} analyses ready for this file`);
+  if (main) bullets.push(`${trUI("Main language:")} <b>${esc(trUI(main.name))}</b> (${Math.round(main.share * 100)} %)${s.languages[1] ? `, ${trUI("then")} ${esc(trUI(s.languages[1].name))} (${Math.round(s.languages[1].share * 100)} %)` : ""}`);
+  const t2 = results["TIME-2"]; if (t2?.status === "ok" && t2.summary.peak_hour_posts != null) bullets.push(`${trUI("Busiest hour:")} <b>${t2.summary.peak_hour_posts}:00</b>`);
+  const w2 = results["WHO-2"]; if (w2?.status === "ok" && w2.summary["top_10_share_%"] != null && s.accounts) bullets.push(`${trUI("Top 10 accounts:")} <b>${Math.round(w2.summary["top_10_share_%"])} %</b> ${trUI("of posts")}`);
+  const d4 = results["DATA-4"]; if (d4?.status === "ok" && d4.summary["share_in_clusters_%"] != null) bullets.push(`${trUI("Copied or near-copied posts:")} <b>${Math.round(d4.summary["share_in_clusters_%"])} %</b>`);
+  bullets.push(`<b>${allItems().filter(i => status(i).ok).length}</b> ${trUI("of")} ${allItems().length} ${trUI("analyses")} ${trUI("ready for this file")}`);
   const same = s.date_from && s.date_from.slice(0, 10) === s.date_to.slice(0, 10);
   const dateV = s.date_from ? (same ? s.date_from.slice(0, 10) : `${s.date_from.slice(0, 10)}`) : "-";
   const dateS = s.date_from ? (same ? `${s.date_from.slice(11)} to ${s.date_to.slice(11)}` : `to ${s.date_to.slice(0, 10)}`) : "no dates in file";
   const panel = (id, title, body) => `<article class="panel"><div class="panel-head"><h3 class="panel-title">${esc(title)}${iMark(plainOf(id).what)}</h3><div class="tools"><button class="iconbtn" data-go="c-${id}" title="Open">Open</button>${saveBtn(id)}</div></div>${body}</article>`;
-  return `${compareBar()}${head("Overview", "", `<button class="btn" data-act="about">File details</button>`)}
+  return `${filterBar()}${compareBar()}${head("Overview", "", `<button class="btn" data-act="customize" data-tip="Choose which analyses appear, and pin the ones you use most.">Customize</button><button class="btn" data-act="prepare" data-tip="Work on a random sample, count each account at most a few times, or split the posts into two periods to compare.">Prepare posts</button><button class="btn" data-act="saveproject" data-tip="Save your settings, options, report list, checks and notes in one file to continue later or share.">Save project</button><button class="btn" data-act="about">File details</button>`)}
    <div class="metric-grid">
      <div class="metric"><div class="metric-label">Posts${iMark("Posts after cleaning: deleted, empty and repeated rows are removed.")}</div><div class="metric-value">${fmt(s.posts)}</div><div class="metric-small">${esc(PLATFORMS[s.platform] || "")}</div></div>
      <div class="metric"><div class="metric-label">Accounts</div><div class="metric-value">${s.accounts != null ? fmt(s.accounts) : "-"}</div></div>
@@ -631,6 +771,7 @@ function overviewPage() {
      <div class="metric"><div class="metric-label">Dates${iMark("First and last post, in the time zone you chose.")}</div><div class="metric-value date-value">${esc(dateV)}</div><div class="metric-small">${esc(dateS)}</div></div>
    </div>
    ${noticesPanel()}
+   ${searchPostsPanel()}
    ${filesPanel()}
    <div class="cards-2" style="margin-top:18px">
      <article class="panel"><h3 class="panel-title">Key facts</h3><ul class="summary-list">${bullets.map(b => `<li><span class="dot"></span><span>${b}</span></li>`).join("")}</ul></article>
@@ -638,11 +779,13 @@ function overviewPage() {
      ${panel("WORDS-1", "Most used words", `<div id="ov-words"></div>`)}
      ${panel("WHO-2", "Few voices or many?", `<div id="ov-voices"></div>`)}
    </div>
+   ${recentPanel()}
+   ${studiesPanel()}
    <h2 class="section-heading">Explore</h2><div class="explore-grid">${exploreCards()}</div>`;
 }
 function noticesPanel() {
   const n = SCAN.notices || []; if (!n.length) return "";
-  return `<article class="panel" style="margin-top:18px;border-left:5px solid #c98a00;background:#fff8e6"><h3 class="panel-title">Read before using the numbers</h3><ul class="summary-list">${n.map(t => `<li><span class="dot" style="background:#c98a00"></span><span>${esc(t)}</span></li>`).join("")}</ul></article>`;
+  return `<article class="panel" style="margin-top:18px;border-left:5px solid #c98a00;background:#fff8e6"><h2 class="panel-title">Read before using the numbers</h2><ul class="summary-list">${n.map(t => `<li><span class="dot" style="background:#c98a00"></span><span>${esc(t)}</span></li>`).join("")}</ul></article>`;
 }
 function filesPanel() {
   const ds = SCAN.datasets || []; if (ds.length < 2) return "";
@@ -662,6 +805,7 @@ function exploreCards() {
   }).join("");
 }
 function bindOverview() {
+  bindSearchPosts();
   const t1 = results["TIME-1"];
   if (t1?.status === "ok" && t1.figure) plot($("#ov-time"), t1.figure, {height: COMPARE() ? 290 : 250, compact: true, legend: COMPARE()});
   else $("#ov-time").innerHTML = `<div class="msg grey">No dates in this file.</div>`;
@@ -674,37 +818,52 @@ function bindOverview() {
   const v = results["WHO-2"];
   if (v?.status === "ok" && SCAN.accounts) {
     const p10 = v.summary["top_10_share_%"], p1 = v.summary["top_1pct_share_%"];
-    $("#ov-voices").innerHTML = `<div style="font-size:44px;font-weight:800;color:#194255">${Math.round(p10)} %</div><div class="bar-track" style="height:22px;margin:10px 0"><div class="bar-fill" style="width:${p10}%"></div></div><p style="font-size:15px;color:#3f5966;margin:0">of posts came from the 10 most active accounts. Top 1 % of accounts: ${Math.round(p1)} %.</p>`;
+    $("#ov-voices").innerHTML = `<div style="font-size:44px;font-weight:800;color:#194255">${Math.round(p10)} %</div><div class="bar-track" style="height:22px;margin:10px 0"><div class="bar-fill" style="width:${p10}%"></div></div><p style="font-size:15px;color:#3f5966;margin:0">${trUI("of posts came from the 10 most active accounts.")} ${trUI("Top 1 % of accounts:")} ${Math.round(p1)} %.</p>`;
   } else $("#ov-voices").innerHTML = `<div class="msg grey">This file has no account names.</div>`;
 }
 
 const iMark = text => `<span class="info-mini" tabindex="0" role="img" aria-label="${esc(text)}" data-tip="${esc(text)}">i</span>`;
 function tileHTML(it) {
   const st = status(it);
-  return `<div class="tile ${st.ok ? "" : "off"}" ${secVar(it.section)} role="button" tabindex="0" data-go="c-${it.id}" aria-label="${esc(it.title)}. ${esc(st.label)}">
+  const pinned = CUSTOM.pinned.includes(it.id);
+  return `<div class="tile ${st.ok ? "" : "off"}" ${secVar(it.section)}>
     <button class="info-btn" data-act="explain" data-id="${it.id}" data-tip-card="${it.id}" aria-label="About ${esc(it.title)}">i</button>
-    <div class="t-title">${esc(it.title)}</div><div class="t-foot"><span class="status ${st.cls}">${esc(st.label)}</span></div></div>`;
+    <button class="pin-btn ${pinned ? "on" : ""}" data-act="pin" data-id="${it.id}" aria-pressed="${pinned}" aria-label="${pinned ? "Unpin" : "Pin"} ${esc(it.title)}" data-tip="${pinned ? "Removes it from Pinned in the menu." : "Keeps this analysis in the menu under Pinned."}">${pinned ? "★" : "☆"}</button>
+    <button class="t-main" data-go="c-${it.id}"><span class="t-title">${esc(it.title)}</span><span class="t-foot"><span class="status ${st.cls}">${esc(st.label)}</span>${langChip(it.id)}</span></button></div>`;
 }
 document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.classList?.contains("tile")) { e.preventDefault(); e.target.click(); } });
-function langTag(c) { return {any: "Any language", spaced: "Most languages", lexicon: "Arabic and English", model: "Model languages", arabic: "Arabic"}[c.language_scope] || ""; }
+function langTag(c) { return trUI({any: "Any language", spaced: "Most languages", lexicon: "Arabic and English", model: "Model languages", arabic: "Arabic"}[c.language_scope] || ""); }
+// A chip on the tile for every analysis that is not "any language", so the limit is visible before you open it.
+function langChip(id) {
+  const c = regCard(id); if (!c || !c.language_scope || c.language_scope === "any") return "";
+  const lbl = langTag(c), cls = c.language_scope === "arabic" ? "lang-ar" : "";
+  return `<span class="langchip ${cls}" data-tip="${esc(c.languages || "")}">${esc(lbl)}</span>`;
+}
 
 function sectionPage(id) {
   const s = sections().find(x => x.id === id); if (!s) return "";
-  return `${crumbs([["Overview", "overview"], [s.title, "s-" + s.id]], ["Overview", "overview"])}${compareBar()}
+  return `${filterBar()}${crumbs([["Overview", "overview"], [s.title, "s-" + s.id]], ["Overview", "overview"])}${compareBar()}
     <div class="sec-band" ${secVar(s.id)}><span class="sec-ico">${ico(s.icon, "")}</span><div><h1 class="page-title">${esc(s.title)}${s.intro ? iMark(s.intro) : ""}</h1>${s.question ? `<div class="sec-q">${esc(s.question)}</div>` : ""}</div></div>
-    <div class="tiles">${itemsOf(id).map(tileHTML).join("")}</div>`;
+    <div class="tiles">${shownItems(itemsOf(id)).map(tileHTML).join("")}</div>${viewToggle(itemsOf(id))}`;
 }
 function allPage() {
-  return `${crumbs([["Overview", "overview"], ["All analyses", "all"]], ["Overview", "overview"])}${head("All analyses")}<input class="searchbox" id="toolSearch" placeholder="Search" aria-label="Search analyses">
-    ${sections().filter(s => s.id !== "overview").map(s => `<div class="secblock" ${secVar(s.id)}><h2 class="section-heading">${esc(s.title)}</h2><div class="tiles">${itemsOf(s.id).map(i => tileHTML(i).replace('class="tile', `data-q="${esc((i.title + " " + i.short + " " + i.what + " " + i.id).toLowerCase())}" class="tile`)).join("")}</div></div>`).join("")}`;
+  return `${crumbs([["Overview", "overview"], ["All analyses", "all"]], ["Overview", "overview"])}${head("All analyses")}<input class="searchbox" id="toolSearch" placeholder="Search" aria-label="Search analyses">${viewToggle(allItems())}
+    ${sections().filter(s => s.id !== "overview").map(s => `<details class="secblock" ${secVar(s.id)} data-sec="${s.id}" ${closedSections().includes(s.id) ? "" : "open"}><summary class="section-heading">${esc(s.title)}</summary><div class="tiles">${shownItems(itemsOf(s.id)).map(i => tileHTML(i).replace('class="tile', `data-q="${esc((i.title + " " + i.short + " " + i.what + " " + i.id).toLowerCase())}" class="tile`)).join("")}</div></details>`).join("")}`;
 }
+function closedSections() { try { return JSON.parse(localStorage.getItem("marsad_closed") || "[]"); } catch (e) { return []; } }
 function bindSearch() {
+  document.querySelectorAll("details.secblock").forEach(d => d.ontoggle = () => {
+    const closed = new Set(closedSections());
+    d.open ? closed.delete(d.dataset.sec) : closed.add(d.dataset.sec);
+    try { localStorage.setItem("marsad_closed", JSON.stringify([...closed])); } catch (e) {}
+  });
   const s = $("#toolSearch"); if (!s) return;
   s.oninput = () => { const q = s.value.toLowerCase().trim(); document.querySelectorAll("[data-q]").forEach(t => t.style.display = !q || t.dataset.q.includes(q) ? "" : "none"); document.querySelectorAll(".secblock").forEach(b => b.style.display = [...b.querySelectorAll("[data-q]")].some(t => t.style.display !== "none") ? "" : "none"); };
 }
 
 // ------------------------------------------------------------------ one analysis
 async function cardPage(id) {
+  SORTED = false;
   const it = plainOf(id), m = $("#main");
   if (!it) { m.innerHTML = head("Not found"); return; }
   const sec = sections().find(s => s.id === it.section);
@@ -715,7 +874,7 @@ async function cardPage(id) {
     + head(it.title, "", guideBtn(id) + (st.ok ? saveBtn(id).replace("iconbtn", "btn") : ""), "")
     .replace(`${esc(it.title)}</h1>`, `${esc(it.title)}<button class="info-btn inline" data-act="explain" data-id="${id}" data-tip-card="${id}" aria-label="About ${esc(it.title)}">i</button></h1>`);
   if (!st.ok) { m.innerHTML = top + `<div class="msg ${st.cls === "st-soon" ? "" : "grey"}"><b>${esc(st.label)}</b>${esc(st.why)}</div>` + pager(id); return; }
-  m.innerHTML = top + (st.ok ? compareBar(id) : "") + `<div id="cardbody"><div class="panel"><span class="spin"></span>Running</div></div>` + pager(id);
+  m.innerHTML = filterBar() + top + (st.ok ? compareBar(id) : "") + `<div id="cardbody"><div class="panel"><span class="spin"></span>Running</div></div>` + pager(id);
   let r = results[id];
   const file = COMPARE() && !splitKey(id) ? (fileSel[id] || "") : "";
   if (r && (r.file || "") !== file) r = null;
@@ -734,7 +893,7 @@ async function cardPage(id) {
 function compareTable(id) {
   const box = $("#cmptable"); if (!box) return;
   let d; try { d = JSON.parse(W.compare_summary(id, py.toPy(params[id] || {}))); } catch (e) { box.innerHTML = ""; return; }
-  const G = PL.gloss || {}, hide = PL.hide_summary || [];
+  const G = glossCatalog(), hide = PL.hide_summary || [];
   const rows = d.rows.filter(r => !hide.includes(r.key)).slice(0, 8);
   if (!rows.length) { box.innerHTML = ""; return; }
   const val = (k, v) => v == null ? "-" : (k === "peak_hour_posts" ? v + ":00" : fmt(v));
@@ -749,7 +908,7 @@ const NEEDS_INPUT = ["WORDS-4", "WORDS-5", "WORDS-6", "WORDS-7", "FRAME-6", "TIM
 function resultHTML(id, r) {
   if (r.status !== "ok") return `<div class="msg ${r.status === "error" ? "err" : "grey"}"><b>${r.status === "error" ? "Something went wrong" : "No result for this file"}</b>${esc((regCard(id) || {}).runtime_gap ? plainGap(regCard(id)) : r.message)}</div>` + optionsBox(id, true);
   const ex = r.explain || {};
-  const G = PL.gloss || {};
+  const G = glossCatalog();
   const chips = Object.entries(r.summary || {}).filter(([k, v]) => v !== null && v !== "" && typeof v !== "object" && !(PL.hide_summary || []).includes(k) && !(typeof v === "string" && v.length > 24)).slice(0, 6)
     .map(([k, v]) => { const g = G[k] || [human(k), ex["summary." + k] || ""]; const val = k === "peak_hour_posts" ? v + ":00" : fmt(v);
       return `<div class="chip"><b>${esc(val)}</b><span>${esc(g[0])}${g[1] ? iMark(g[1]) : ""}</span></div>`; }).join("");
@@ -758,21 +917,39 @@ function resultHTML(id, r) {
   const notes = (r.caveats || []).filter(Boolean);
   return `${optionsBox(id, NEEDS_INPUT.includes(id))}${chips ? `<div class="chips">${chips}</div>` : ""}
     <article class="panel">
-      <div class="panel-head"><div class="viewtabs" role="tablist">${views}<span id="viewinfo"></span></div>
-        <div class="tools">${notes.length ? `<button class="iconbtn" id="notesbtn" title="Notes about this result">Notes (${notes.length})</button>` : ""}<button class="iconbtn" id="optbtn" title="Change options">Options</button>
+      <div class="panel-head"><div class="viewtabs"><div class="tabset" role="tablist" aria-label="Views">${views}</div><span id="viewinfo"></span>${quickControls(id, r)}</div>
+        <div class="tools">${notes.length ? `<button class="iconbtn" id="notesbtn" title="Notes about this result">Notes (${notes.length})</button>` : ""}<button class="iconbtn" id="optbtn" title="Change options">Options</button>${COMPARE() && hasDrill(r) ? `<button class="iconbtn" id="testbtn" title="Is the difference between the files or periods real and large enough to matter?">Test the difference</button>` : ""}${hasDrill(r) ? `<button class="iconbtn" id="checkbtn" title="Mark a sample of posts as right or wrong to see how accurate this result is on your data">Check on my data</button>` : ""}
           <div class="menu"><button class="iconbtn" id="dlbtn" aria-haspopup="true" title="Download">Download ▾</button><div class="menu-list" id="dlmenu" hidden>
-            <button data-dl="xlsx">Excel (all tables)</button><button data-dl="csv">CSV (zip)</button>${figs.length ? `<button data-dl="png">Chart as PNG</button><button data-dl="svg">Chart as SVG</button>` : ""}${id === "WHO-4" ? `<button data-dl="graphml">Network for Gephi</button><button data-dl="explorer">Network explorer page</button>` : ""}</div></div></div></div>
+            <button data-dl="xlsx">Excel (all tables)</button><button data-dl="csv">CSV (zip)</button>${figs.length ? `<button data-dl="png">Chart as PNG</button><button data-dl="svg">Chart as SVG</button>` : ""}${id === "WHO-4" ? `<button data-dl="graphml">Network for Gephi</button><button data-dl="explorer">Network explorer page</button>` : ""}</div></div>
+          <div class="menu"><button class="iconbtn" id="morebtn" aria-haspopup="true" title="More actions">More ▾</button><div class="menu-list" id="moremenu" hidden>
+            ${figs.length ? `<button data-more="full">Full screen chart</button><button data-more="sort">Sort bars by value</button><button data-more="image">Copy chart image</button>` : ""}<button data-more="copy">Copy key numbers</button><button data-more="problem">Report a problem</button></div></div></div></div>
+      ${exploratoryBanner(r)}
       <div id="figwrap"><div class="fig" id="cardfig"></div></div>
       <div id="tblwrap" hidden><div class="viewtabs sub">${tables.map(n => `<button data-tbl="${esc(n)}">${esc(human(n))}</button>`).join("")}</div><div class="tbl" id="tblbox"></div></div>
+      ${r.base ? basisLine(r.base) : ""}
       <div class="small-print" id="dlmsg"></div>
     </article>`;
+}
+// A result built on word lists nobody has checked against posts is exploratory. The reader sees that above the
+// chart, not three clicks away in Notes, because the number looks like a measurement either way.
+function exploratoryBanner(r) {
+  const sm = r.summary || {};
+  if (sm.evidence_status !== "exploratory") return "";
+  const lead = (r.caveats || []).find(c => String(c).startsWith("EXPLORATORY")) || "";
+  const body = lead.replace(/^EXPLORATORY:\s*/, "");
+  return `<p class="explo" role="note"><strong>${esc(trUI("Exploratory"))}</strong> ${esc(trUI(body))}</p>`;
+}
+function basisLine(b) {
+  const what = b.what && b.what !== "posts" ? ` (${esc(trUI(b.what))})` : "";
+  if (LANG === "ar") return `<p class="basis">استنادًا إلى <b>${fmt(b.used)}</b> منشورًا من ${fmt(b.total)}${what}${filtersOn() ? " · المرشحات مفعّلة" : ""}.</p>`;
+  return `<p class="basis">Based on <b>${fmt(b.used)}</b> of ${fmt(b.total)} posts${what}${filtersOn() ? " · filters on" : ""}.</p>`;
 }
 function optionsBox(id, open) {
   const c = regCard(id); if (!c) return "";
   const p = c.params || {}, ch = c.param_choices || {}, cur = params[id] || (results[id] && results[id].params) || {};
   const keys = Object.keys(p).filter(k => !["run_if_missing", "rerun", "examples", "path", "predictor"].includes(k));
   if (!keys.length) return "";
-  const lab = k => esc(PL.params[k] || human(k));
+  const lab = k => esc((LANG === "ar" && PL.ar?.params?.[k]) || PL.params[k] || human(k));
   const f = k => {
     const sm = (results[id] && results[id].summary) || {};
     const v = (k in cur && cur[k] !== null && cur[k] !== "") ? cur[k] : (sm[k] !== undefined && typeof sm[k] !== "object" ? sm[k] : p[k]), fid = `p-${k}`;
@@ -780,7 +957,7 @@ function optionsBox(id, open) {
     if (["lex_a", "lex_b", "lexicon"].includes(k)) return `<label for="${fid}">${lab(k)}</label><select id="${fid}" data-k="${k}" data-t="str">${LEX.map(n => `<option ${n === v ? "selected" : ""}>${esc(n)}</option>`).join("")}</select>`;
     if (ch[k]) {
       if (ch[k].some(o => typeof o === "string" && o.includes("<"))) return `<label for="${fid}">${lab(k)}</label><input type="text" id="${fid}" data-k="${k}" data-t="str" list="${fid}-l" value="${esc(v ?? "")}"><datalist id="${fid}-l">${ch[k].map(o => `<option value="${esc(o)}">`).join("")}</datalist>`;
-      return `<label for="${fid}">${lab(k)}</label><select id="${fid}" data-k="${k}" data-t="json">${ch[k].map(o => `<option value='${esc(JSON.stringify(o))}' ${JSON.stringify(o) === JSON.stringify(v) ? "selected" : ""}>${esc(o === "none" ? "nothing" : o === true ? "yes" : o === false ? "no" : String(o).replace(/_/g, " "))}</option>`).join("")}</select>`;
+      return `<label for="${fid}">${lab(k)}</label><select id="${fid}" data-k="${k}" data-t="json">${ch[k].map(o => `<option value='${esc(JSON.stringify(o))}' ${JSON.stringify(o) === JSON.stringify(v) ? "selected" : ""}>${esc(trUI(o === "none" ? "nothing" : o === true ? "yes" : o === false ? "no" : String(o).replace(/_/g, " ")))}</option>`).join("")}</select>`;
     }
     if (typeof v === "boolean") return `<label class="cb"><input type="checkbox" id="${fid}" data-k="${k}" data-t="bool" ${v ? "checked" : ""}> ${lab(k)}</label>`;
     if (typeof v === "number") return `<label for="${fid}">${lab(k)}</label><input type="number" step="any" id="${fid}" data-k="${k}" data-t="num" value="${v}">`;
@@ -817,33 +994,42 @@ function plot(el, fig, opt = {}) {
   delete layout.width;
   for (const ax of Object.keys(layout).filter(k => /^[xy]axis\d*$/.test(k))) {
     const a = layout[ax] = Object.assign({}, layout[ax]); const tt = a.title && (a.title.text ?? a.title);
-    if (typeof tt === "string" && AXIS[tt]) a.title = Object.assign({}, typeof a.title === "object" ? a.title : {}, {text: AXIS[tt]});
+    if (typeof tt === "string") { const label = trUI(AXIS[tt] || tt); if (label !== tt) a.title = Object.assign({}, typeof a.title === "object" ? a.title : {}, {text: label}); }
   }
+  const data = LANG === "ar" ? (fig.data || []).map(t => (t.name ? {...t, name: trUI(t.name)} : t)) : fig.data;
   if (opt.compact) { layout.height = opt.height || 250; layout.margin = {l: 40, r: 10, t: 10, b: 40}; layout.title = undefined; layout.showlegend = !!opt.legend; if (opt.legend) { layout.legend = {orientation: "h", y: -0.25, title: {text: ""}}; layout.margin.b = 70; } }
-  return Plotly.newPlot(el, fig.data, layout, {responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "sendDataToCloud", "lasso2d", "select2d"]}).then(() => {
-    el.on("plotly_click", ev => { const p = ev.points && ev.points[0]; if (!p) return; let c = p.customdata; if (Array.isArray(c)) c = c[0]; if (typeof c === "string" && c.startsWith("{")) showPosts(c, String(p.text || p.label || p.y || p.x || "")); });
+  return Plotly.newPlot(el, data, layout, {responsive: true, displaylogo: false, modeBarButtonsToRemove: ["toImage", "sendDataToCloud", "lasso2d", "select2d"]}).then(() => {
+    el.on("plotly_click", ev => { const p = ev.points && ev.points[0]; if (!p) return; let c = p.customdata; if (Array.isArray(c)) c = c[0]; if (typeof c !== "string" || !c.startsWith("{")) return;
+      const tr = p.data || {}, bar = tr.type === "bar", lab = bar ? (tr.orientation === "h" ? p.y : p.x) : (p.text ?? p.label ?? p.x ?? p.y);
+      showPosts(c, String(lab ?? "")); });
   });
 }
 let figIdx = 0;
 function bindResult(id, r) {
   const ex = r.explain || {}, figs = figList(r), tables = Object.keys(r.tables || {});
   const setView = v => {
-    document.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("on", b.dataset.view === v));
+    document.querySelectorAll("[data-view]").forEach(b => { b.classList.toggle("on", b.dataset.view === v); b.setAttribute("aria-selected", b.dataset.view === v ? "true" : "false"); });
     const isTable = v === "table";
     $("#figwrap").hidden = isTable; $("#tblwrap").hidden = !isTable;
     let info = "";
-    if (isTable) { info = "Click a row to see its posts. Hover over the i in a column name for its meaning."; }
+    if (isTable) { info = LANG === "ar" ? "انقر على صف لعرض منشوراته، واضغط علامة المعلومات في اسم العمود لشرحه."
+                                        : "Click a row to see its posts. Hover over the i in a column name for its meaning."; }
     else {
       figIdx = +v.slice(1); const [key, , f] = figs[figIdx];
-      plot($("#cardfig"), f);
-      info = (ex[key] || "") + ((f.data || []).some(t => t.customdata) ? " Click any bar, point or word to see its posts." : "");
+      plot($("#cardfig"), shownFig(f, r));
+      const cf = $("#cardfig"), ft = (f.layout && f.layout.title && (f.layout.title.text ?? f.layout.title)) || figs[figIdx][1];
+      cf.setAttribute("role", "figure"); cf.setAttribute("aria-label", `${String(ft).replace(/<[^>]+>/g, "")}. Chart. The Table view lists the same numbers, and each row opens its posts.`);
+      const pb = $("#pctbtn"); if (pb) pb.hidden = !pctAxis(f);
+      const clickable = (f.data || []).some(t => t.customdata);
+      info = LANG === "ar" ? (clickable ? "انقر على أي عمود أو نقطة أو كلمة لعرض المنشورات التي خلفها." : "")
+                           : ((ex[key] || "") + (clickable ? " Click any bar, point or word to see its posts." : ""));
     }
     $("#viewinfo").innerHTML = info ? iMark(info.trim()) : "";
   };
   const showTable = name => {
     const t = r.tables[name], drill = (r.table_drill || {})[name] || [];
     const keep = t.columns.map((c, j) => HIDE_COLS.includes(c) ? -1 : j).filter(j => j >= 0);
-    $("#tblbox").innerHTML = `<table class="g"><thead><tr>${keep.map(j => t.columns[j]).map(c => `<th>${esc(COLNAMES[c] || (PL.gloss[c] || [])[0] || human(c))}${((PL.gloss[c] || [])[1] || ex[name + "." + c]) && !COLNAMES[c] ? iMark((PL.gloss[c] || [])[1] || ex[name + "." + c]) : ""}</th>`).join("")}</tr></thead><tbody>${t.rows.map((row, i) => `<tr ${drill[i] ? `class="click" tabindex="0" data-f="${esc(drill[i])}"` : ""}>${keep.map(j => row[j]).map(v => `<td dir="auto">${esc(fmt(v)).slice(0, 400)}</td>`).join("")}</tr>`).join("")}</tbody></table>${t.n_rows > t.rows.length ? `<p class="small-print">First ${t.rows.length} of ${fmt(t.n_rows)} rows. Download for all.</p>` : ""}`;
+    $("#tblbox").innerHTML = `<table class="g"><thead><tr>${keep.map(j => t.columns[j]).map(c => `<th>${esc(trUI(COLNAMES[c] || (glossCatalog()[c] || [])[0] || human(c)))}${((PL.gloss[c] || [])[1] || ex[name + "." + c]) && !COLNAMES[c] ? iMark((PL.gloss[c] || [])[1] || ex[name + "." + c]) : ""}</th>`).join("")}</tr></thead><tbody>${t.rows.map((row, i) => `<tr ${drill[i] ? `class="click" tabindex="0" data-f="${esc(drill[i])}"` : ""}>${keep.map(j => row[j]).map(v => `<td dir="auto">${esc(fmt(v)).slice(0, 400)}</td>`).join("")}</tr>`).join("")}</tbody></table>${t.n_rows > t.rows.length ? `<p class="small-print">First ${t.rows.length} of ${fmt(t.n_rows)} rows. Download for all.</p>` : ""}`;
     document.querySelectorAll("#tblbox tr[data-f]").forEach(tr => { tr.onclick = () => showPosts(tr.dataset.f, tr.cells[0].textContent); tr.onkeydown = e => { if (e.key === "Enter") tr.click(); }; });
     document.querySelectorAll("[data-tbl]").forEach(b => b.classList.toggle("on", b.dataset.tbl === name));
   };
@@ -853,20 +1039,541 @@ function bindResult(id, r) {
   setView(figs.length && !TABLE_FIRST.includes(id) ? "f0" : (tables.length ? "table" : "f0"));
   const ob = $("#optbtn"); if (ob) ob.onclick = () => { const o = $("#optbox"); if (o) o.hidden = !o.hidden; };
   const nb = $("#notesbtn"); if (nb) nb.onclick = () => modal("Notes about this result", `<ul class="notes">${(r.caveats || []).filter(Boolean).map(n => `<li>${esc(n)}</li>`).join("")}</ul>`);
+  const cb = $("#checkbtn"); if (cb) cb.onclick = () => checkStart(id, r);
+  const pb = $("#pctbtn"); if (pb) pb.onclick = () => { PCT = !PCT; pb.classList.toggle("on", PCT); pb.textContent = PCT ? "Show counts" : "Show %"; const v = document.querySelector("[data-view].on"); if (v && v.dataset.view !== "table") setView(v.dataset.view); };
+  const tn = $("#topn"); if (tn) tn.onchange = async () => { params[id] = {...(params[id] || {}), top: +tn.value}; results[id] = null; await cardPage(id); };
+  const mb = $("#morebtn"), mm = $("#moremenu");
+  if (mb) { mb.onclick = e => { e.stopPropagation(); mm.hidden = !mm.hidden; }; document.addEventListener("click", () => { if (mm) mm.hidden = true; }, {once: true}); }
+  document.querySelectorAll("[data-more]").forEach(b => b.onclick = () => { mm.hidden = true; moreAction(b.dataset.more, id, r, figs); });
+  const tb = $("#testbtn"); if (tb) tb.onclick = () => testDiff(id);
   const db = $("#dlbtn"), dm = $("#dlmenu");
   if (db) { db.onclick = e => { e.stopPropagation(); dm.hidden = !dm.hidden; }; document.addEventListener("click", () => { if (dm) dm.hidden = true; }, {once: true}); }
   const rr = $("#rerun"); if (rr) rr.onclick = async () => { params[id] = readParams(); results[id] = null; await cardPage(id); };
   document.querySelectorAll("[data-dl]").forEach(b => b.onclick = () => { dm.hidden = true; download(id, r, b.dataset.dl, figs); });
 }
 
+
+
+
+
+
+// ------------------------------------------------------------------ chart controls: %, top N, sort, full screen, copy, report a problem
+const COUNT_AXES = ["posts", "n_posts", "count", "number of posts"];
+function axisTitle(a) { const t = a && a.title; return String((t && (t.text ?? t)) || "").toLowerCase(); }
+function pctAxis(f) {
+  const L = f.layout || {}, h = (f.data || []).some(t => t.orientation === "h");
+  const ax = axisTitle(h ? L.xaxis : L.yaxis);
+  return COUNT_AXES.includes(ax) && (f.data || []).every(t => ["bar", "scatter", undefined].includes(t.type)) ? (h ? "x" : "y") : null;
+}
+function numArr(v) {
+  if (Array.isArray(v)) return v;
+  if (v && typeof v === "object" && v.bdata) {
+    const raw = atob(v.bdata), u = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) u[i] = raw.charCodeAt(i);
+    const T = {f8: Float64Array, f4: Float32Array, i4: Int32Array, u4: Uint32Array, i2: Int16Array, u2: Uint16Array, i1: Int8Array, u1: Uint8Array, i8: BigInt64Array, u8: BigUint64Array}[v.dtype];
+    if (!T) return null;
+    return Array.from(new T(u.buffer), x => Number(x));
+  }
+  return null;
+}
+// A figure's own denominator for the Show % toggle, or null when there is none it can be trusted with.
+// A figure may state its base in layout.meta; otherwise the result's base is tried and only accepted if every
+// value fits inside it. A chart counting word matches, hashtags or reactions can exceed the number of posts,
+// and dividing by posts there would print a percentage of nothing.
+function pctBase(f, r) {
+  const meta = (f.layout || {}).meta || {};
+  if (meta.pct_base != null) return {n: meta.pct_base, unit: meta.pct_unit || "posts", declared: true};
+  const n = r.base && r.base.used;
+  if (!n) return null;
+  const ax = pctAxis(f);
+  if (!ax) return null;
+  let worst = 0;
+  for (const t of f.data || []) {
+    for (const v of numArr(t[ax]) || []) {
+      if (v == null || Number.isNaN(v)) continue;
+      if (v < 0) return null;                        // signed values are not a share of anything
+      worst = Math.max(worst, v);
+    }
+  }
+  const stacked = ((f.layout || {}).barmode === "stack") && (f.data || []).length > 1;
+  const ceiling = stacked ? n * 1.005 : n * 1.005;
+  if (worst > ceiling) return null;                  // the result's base is not this figure's denominator
+  if (stacked) {
+    // a stacked bar must add up to the base at each position, or the base is the wrong one
+    const sums = {};
+    for (const t of f.data || []) {
+      const vals = numArr(t[ax]) || [], other = numArr(t[ax === "x" ? "y" : "x"]) || [];
+      vals.forEach((v, i) => { const k = String(other[i] ?? i); sums[k] = (sums[k] || 0) + (v || 0); });
+    }
+    if (Object.values(sums).some(v => v > n * 1.005)) return null;
+  }
+  return {n, unit: (r.base.what || "posts").replace(/^posts with /, "posts with "), declared: false};
+}
+function shownFig(f, r) {
+  let g = f;
+  const ax = pctAxis(f);
+  const pb = PCT && ax ? pctBase(f, r) : null;
+  if (pb) {
+    const n = pb.n;
+    g = {...f, data: f.data.map(t => ({...t, [ax]: (numArr(t[ax]) || []).map(v => v == null || Number.isNaN(v) ? v : Math.round(v / n * 1000) / 10),
+      hovertemplate: undefined})), layout: {...f.layout, [ax + "axis"]: {...(f.layout[ax + "axis"] || {}), title: {text: `% of ${fmt(n)} ${pb.unit}`}}}};
+  } else if (PCT && ax && (f.layout || {}).meta && (f.layout || {}).meta.pct_base === null) {
+    g = {...f, layout: {...f.layout, title: {...(f.layout.title || {}),
+      text: ((f.layout.title || {}).text || "") + " " + trUI("(counts: a share would need a denominator this chart does not have)")}}};
+  }
+  if (SORTED && (g.data || []).some(t => t.type === "bar")) {
+    const h = g.data.some(t => t.orientation === "h");
+    const ya = (g.layout || {}).yaxis || {}, rev = ya.autorange === "reversed";
+    g = {...g, layout: {...g.layout, [h ? "yaxis" : "xaxis"]: {...(g.layout[h ? "yaxis" : "xaxis"] || {}), categoryorder: h ? (rev ? "total descending" : "total ascending") : "total descending"}}};
+  }
+  return g;
+}
+function quickControls(id, r) {
+  const c = regCard(id) || {}, figs = figList(r);
+  const top = (c.params || {}).top;
+  const cur = (params[id] && params[id].top) || (r.params && r.params.top) || top;
+  const opts = [5, 10, 20, 40, 100];
+  const topSel = top != null ? `<label class="qc">Show top <select id="topn">${[...new Set([...opts, +cur])].sort((a, b) => a - b).map(v => `<option ${v === +cur ? "selected" : ""}>${v}</option>`).join("")}</select></label>` : "";
+  const canPct = figs.some(f => pctAxis(f[2]) && pctBase(f[2], r));
+  const pct = canPct ? `<button class="qc ${PCT ? "on" : ""}" id="pctbtn" title="Show the bars as a share of the posts this chart is based on. Charts whose counts are not posts stay as counts.">${PCT ? "Show counts" : "Show %"}</button>` : "";
+  return topSel || pct ? `<span class="quick">${topSel}${pct}</span>` : "";
+}
+function moreAction(what, id, r, figs) {
+  if (what === "full") {
+    const f = figs[figIdx] || figs[0]; if (!f) return;
+    $("#fullscr").classList.add("open"); $("#fulltitle").textContent = (plainOf(id) || {}).title || id;
+    const el = $("#fullfig"); el.innerHTML = ""; const g = shownFig(f[2], r); plot(el, {...g, layout: {...g.layout, height: Math.max(400, window.innerHeight - 90)}}).then(() => Plotly.Plots.resize(el));
+  } else if (what === "sort") {
+    SORTED = !SORTED; const v = document.querySelector("[data-view].on"); if (v && v.dataset.view !== "table") { const f = figs[+v.dataset.view.slice(1)]; plot($("#cardfig"), shownFig(f[2], r)); }
+    const b = document.querySelector('[data-more="sort"]'); if (b) b.textContent = SORTED ? "Original order" : "Sort bars by value";
+  } else if (what === "image") {
+    copyChartImage();
+  } else if (what === "copy") {
+    copyText(keyNumbersText(id, r), "Key numbers");
+  } else if (what === "problem") {
+    reportProblem(id, r);
+  }
+}
+async function copyChartImage() {
+  const el = $("#cardfig"), msg = $("#dlmsg");
+  if (!el || !window.Plotly) return;
+  try {
+    const url = await Plotly.toImage(el, {format: "png", width: 1200, height: 700, scale: 2});
+    const blob = await (await fetch(url)).blob();
+    if (navigator.clipboard && window.ClipboardItem) {
+      await navigator.clipboard.write([new ClipboardItem({"image/png": blob})]);
+      if (msg) msg.textContent = "Chart image copied.";
+    } else { throw new Error("no clipboard"); }
+  } catch (e) {
+    try {
+      const url = await Plotly.toImage(el, {format: "png", width: 1200, height: 700, scale: 2});
+      await save(`${(plainOf(view.id)?.title || view.id).replace(/[^\w\- ]+/g, "").trim().replace(/ +/g, "_")}.png`, b64(url.split(",")[1]), msg);
+      if (msg) msg.textContent = "Copying images is blocked here, so the chart was downloaded instead.";
+    } catch (e2) { if (msg) msg.textContent = "Could not copy the chart image."; }
+  }
+}
+function keyNumbersText(id, r) {
+  const it = plainOf(id) || {}, G = PL.gloss || {};
+  const lines = [`${it.title || id} (${id}), MARSAD Analytics ${VERSION}`];
+  if (r.base) lines.push(`Based on ${fmt(r.base.used)} of ${fmt(r.base.total)} posts${r.base.what && r.base.what !== "posts" ? " (" + r.base.what + ")" : ""}${filtersOn() ? ", filters on: " + filterSummary() : ""}.`);
+  for (const [k, v] of Object.entries(r.summary || {})) if (v !== null && v !== "" && typeof v !== "object" && !(PL.hide_summary || []).includes(k) && !(typeof v === "string" && v.length > 40)) lines.push(`${(G[k] || [human(k)])[0]}: ${fmt(v)}`);
+  const cav = (r.caveats || []).filter(Boolean).slice(0, 3);
+  if (cav.length) lines.push("Notes: " + cav.join(" "));
+  return lines.join("\n");
+}
+function copyText(t, what) {
+  const done = () => { const m = $("#dlmsg"); if (m) m.textContent = what + " copied."; };
+  const fallback = () => modal(what, `<p class="small-print">Copying is blocked here. Select the text and copy it.</p><textarea style="width:100%;min-height:220px" readonly data-notr>${esc(t)}</textarea>`);
+  try { navigator.clipboard.writeText(t).then(done, fallback); } catch (e) { fallback(); }
+}
+function reportProblem(id, r) {
+  const it = plainOf(id) || {};
+  const body = `What is wrong:\n\n\nWhat I expected:\n\n\n---\nAnalysis: ${it.title || id} (${id})\nOptions: ${JSON.stringify(params[id] || r.params || {})}\nPosts: ${SCAN ? SCAN.posts : "?"} (${SCAN ? PLATFORMS[SCAN.platform] || SCAN.platform || "" : ""})${filtersOn() ? "\nFilters: " + filterSummary() : ""}\nMARSAD version: ${VERSION}\nPage: ${location.href.split("#")[0]}`;
+  const gh = location.hostname.endsWith("github.io") ? (() => { const user = location.hostname.split(".")[0], repo = location.pathname.split("/").filter(Boolean)[0] || (user + ".github.io");
+    return `https://github.com/${user}/${repo}/issues/new?title=${encodeURIComponent("Problem with " + id)}&body=${encodeURIComponent(body)}`; })() : null;
+  modal("Report a problem", `<p>Say what looks wrong. The details below tell us which analysis, options and data size you used. Your posts are not included.</p>
+    <textarea id="rp-text" style="width:100%;min-height:220px" data-notr>${esc(body)}</textarea>
+    <div class="opt-actions" style="gap:8px">${gh ? `<a class="btn primary" target="_blank" rel="noopener" href="${esc(gh)}">Open an issue on GitHub</a>` : ""}<button class="btn" id="rp-copy">Copy</button><button class="btn" id="rp-dl">Download as text</button></div><div class="small-print" id="rp-msg">${gh ? "" : "Send it to the MARSAD team by email or on the project's GitHub page."}</div>`);
+  $("#rp-copy").onclick = () => { try { navigator.clipboard.writeText($("#rp-text").value).then(() => $("#rp-msg").textContent = "Copied.", () => $("#rp-msg").textContent = "Copying is blocked here: select the text and copy it."); } catch (e) { $("#rp-msg").textContent = "Copying is blocked here: select the text and copy it."; } };
+  $("#rp-dl").onclick = () => save(`marsad_problem_${id}.txt`, $("#rp-text").value, $("#rp-msg"));
+}
+
+// ------------------------------------------------------------------ filters (every analysis uses the filtered posts)
+function prepOpts() { return Object.assign({}, (SCAN && SCAN.prepared && SCAN.prepared.options) || {}); }
+const FKEYS = ["date_from", "date_to", "platforms", "languages", "dialects", "files", "min_interactions", "only_with_links"];
+function filtersOn() { const o = prepOpts(); return FKEYS.some(k => Array.isArray(o[k]) ? o[k].length : o[k]); }
+function filterSummary() {
+  const o = prepOpts(), F = (SCAN && SCAN.filter_options) || {}, parts = [];
+  if (o.date_from || o.date_to) parts.push(`${o.date_from || F.date_min || "…"} to ${o.date_to || F.date_max || "…"}`);
+  const lab = (list, v) => ((list || []).find(x => x.value === v) || {}).label || v;
+  if ((o.platforms || []).length) parts.push(o.platforms.join(", "));
+  if ((o.languages || []).length) parts.push(o.languages.map(v => lab(F.languages, v)).join(", "));
+  if ((o.dialects || []).length) parts.push(o.dialects.join(", "));
+  if ((o.files || []).length) parts.push(o.files.join(", "));
+  if (o.min_interactions) parts.push("engagement ≥ " + fmt(o.min_interactions));
+  if (o.only_with_links) parts.push("with a link");
+  return parts.join(" · ");
+}
+function filterBar() {
+  if (!SCAN || !SCAN.filter_options) return "";
+  const F = SCAN.filter_options, o = prepOpts(), on = filtersOn();
+  const chip = (label, val, active) => `<button class="fchip ${active ? "on" : ""}" data-act="filters">${esc(label)}: <b>${esc(val)}</b></button>`;
+  const lab = (list, v) => ((list || []).find(x => x.value === v) || {}).label || v;
+  const many = (list, key, all) => (o[key] || []).length ? (o[key].length > 2 ? o[key].length + " chosen" : o[key].map(v => lab(list, v)).join(", ")) : all;
+  return `<div class="filterbar" role="region" aria-label="Filters">${chip("Dates", o.date_from || o.date_to ? `${o.date_from || F.date_min} to ${o.date_to || F.date_max}` : "All dates", o.date_from || o.date_to)}
+    ${F.platforms.length > 1 ? chip("Platform", many(F.platforms, "platforms", "All"), (o.platforms || []).length) : ""}
+    ${F.languages.length > 1 ? chip("Language", many(F.languages, "languages", "All"), (o.languages || []).length) : ""}
+    ${F.dialects.length > 1 ? chip("Dialect", many(F.dialects, "dialects", "All"), (o.dialects || []).length) : ""}
+    ${F.files.length > 1 ? chip("File", many(F.files, "files", "All"), (o.files || []).length) : ""}
+    <button class="fchip" data-act="filters">More filters</button>${on ? `<span class="fon">Filters on: ${fmt(SCAN.posts)} of ${fmt(SCAN.posts_loaded)} posts</span><button class="fchip reset" data-act="resetfilters">Reset</button>` : ""}</div>`;
+}
+function filtersPage() {
+  const F = SCAN.filter_options, o = prepOpts();
+  const boxes = (list, key, title) => list.length > 1 ? `<fieldset class="fset"><legend>${esc(title)}</legend>${list.map(x => `<label class="cb"><input type="checkbox" data-fk="${key}" value="${esc(x.value)}" ${(o[key] || []).includes(x.value) ? "checked" : ""}> ${esc(x.label || x.value)} <span class="small-print">${fmt(x.posts)}</span></label>`).join("")}</fieldset>` : "";
+  modal("Filters", `<p>Every analysis, chart, download, chat answer and draft report will use only the posts that match. Nothing is deleted: Reset brings all posts back. Leave a group unticked to keep all its values.</p>
+    <div class="pgrid"><div><label for="ff-from">From</label><input type="date" id="ff-from" value="${esc(o.date_from || "")}" min="${esc(F.date_min || "")}" max="${esc(F.date_max || "")}"></div>
+      <div><label for="ff-to">To</label><input type="date" id="ff-to" value="${esc(o.date_to || "")}" min="${esc(F.date_min || "")}" max="${esc(F.date_max || "")}"></div></div>
+    ${F.engagement ? `<div class="pgrid"><div><label for="ff-eng">At least this much engagement${iMark("Keeps posts with at least this many likes, comments and shares (or the stand-in your file uses). Median here: " + fmt(Math.round(F.engagement.median)) + "; top 10% start at " + fmt(Math.round(F.engagement.p90)) + ".")}</label><input type="number" id="ff-eng" min="0" step="10" value="${esc(o.min_interactions || "")}" placeholder="any"></div>
+      ${F.has_links ? `<div><label class="cb" style="margin-top:22px"><input type="checkbox" id="ff-links" ${o.only_with_links ? "checked" : ""}> Only posts with a link</label></div>` : ""}</div>` : ""}
+    ${boxes(F.platforms, "platforms", "Platform")}${boxes(F.languages, "languages", "Language")}${boxes(F.dialects, "dialects", "Dialect")}${boxes(F.files, "files", "File")}
+    <p class="small-print">Sampling, the limit per account and splitting by date are under Prepare posts on the Overview page.</p>
+    <div class="opt-actions" style="gap:8px"><button class="btn" id="ff-reset">Reset</button><button class="btn primary" id="ff-go">Apply</button></div><div class="small-print" id="pp-msg"></div>`);
+  $("#ff-go").onclick = () => {
+    const n = {...prepOpts(), date_from: $("#ff-from").value || null, date_to: $("#ff-to").value || null,
+               min_interactions: ($("#ff-eng") && +$("#ff-eng").value) || null, only_with_links: !!($("#ff-links") && $("#ff-links").checked)};
+    for (const k of ["platforms", "languages", "dialects", "files"]) n[k] = [...document.querySelectorAll(`[data-fk="${k}"]:checked`)].map(x => x.value);
+    applyPrepare(n);
+  };
+  $("#ff-reset").onclick = () => { const n = prepOpts(); FKEYS.forEach(k => delete n[k]); applyPrepare(n); };
+}
+async function applyPrepare(o) {
+  const back = view.page === "card" ? {...view} : view;
+  busy(true, "Preparing posts"); await tick();
+  try {
+    SCAN = JSON.parse(W.prepare(py.toPy(o)));
+    REG = JSON.parse(W.registry_json()); PL = REG.plain;
+    for (const k of Object.keys(results)) delete results[k];
+    for (const k of Object.keys(fileSel)) delete fileSel[k];
+    for (const id of ["TIME-1", "TIME-2", "WORDS-1", "WHO-2", "DATA-4"]) if (regCard(id)?.available) runQuiet(id, COMPARE() && id === "TIME-1" ? (params[id] = {split: "dataset"}) : undefined);
+    busy(false); closeModal(); renderSidebar(); go(back.page ? back : {page: "overview"});
+  } catch (e) { busy(false); const m = $("#pp-msg"); if (m) m.textContent = pyErr(e); else alertMsg(pyErr(e)); }
+}
+
+// ------------------------------------------------------------------ customize: which analyses appear
+function customizePage() {
+  const packs = REG.packages || {};
+  const presets = [["all", "All analyses", "Everything MARSAD has"]].concat(
+    Object.entries(packs).filter(([id]) => !id.startsWith("preset:")).map(([id, p]) => [id, p.name, p.for]));
+  const sections_ = sections().filter(x => x.id !== "overview");
+  modal("Customize", `<p>Choose which analyses appear in the menus and section pages. Nothing is deleted, and nothing is calculated until you open an analysis, so this only changes what you see.</p>
+    <label for="cz-p">Start from a set</label>
+    <select id="cz-p">${presets.map(([id, name, why]) => `<option value="${esc(id)}" ${CUSTOM.preset === id ? "selected" : ""}>${esc(name)}${why ? " - " + esc(why) : ""}</option>`).join("")}</select>
+    <p class="small-print">Untick an analysis to hide it. Pinned analyses stay in the sidebar.</p>
+    <div id="cz-list">${sections_.map(sec => {
+      const items = itemsOf(sec.id).filter(i => !i.planned);
+      if (!items.length) return "";
+      return `<fieldset class="fset"><legend>${esc(sec.title)} <button type="button" class="lnk" data-cz-all="${esc(sec.id)}">all</button> / <button type="button" class="lnk" data-cz-none="${esc(sec.id)}">none</button></legend>${items.map(i => `<label class="cb"><input type="checkbox" data-cz="${esc(i.id)}" data-sec="${esc(sec.id)}" ${isShown(i.id) ? "checked" : ""}> ${esc(i.title)}</label>`).join("")}</fieldset>`;
+    }).join("")}</div>
+    <div class="opt-actions" style="gap:8px"><button class="btn" id="cz-reset">Show everything</button><button class="btn primary" id="cz-go">Apply</button></div>`);
+  const apply = p => {
+    CUSTOM.preset = p;
+    document.querySelectorAll("[data-cz]").forEach(b => { b.checked = p === "all" || (presetCards(p) || []).includes(b.dataset.cz); });
+  };
+  $("#cz-p").onchange = () => apply($("#cz-p").value);
+  document.querySelectorAll("[data-cz-all]").forEach(b => b.onclick = () => document.querySelectorAll(`[data-sec="${b.dataset.czAll}"]`).forEach(x => x.checked = true));
+  document.querySelectorAll("[data-cz-none]").forEach(b => b.onclick = () => document.querySelectorAll(`[data-sec="${b.dataset.czNone}"]`).forEach(x => x.checked = false));
+  $("#cz-reset").onclick = () => { CUSTOM.preset = "all"; CUSTOM.hidden = []; saveCustom(); closeModal(); renderSidebar(); render(); };
+  $("#cz-go").onclick = () => {
+    CUSTOM.preset = $("#cz-p").value;
+    const off = [...document.querySelectorAll("[data-cz]")].filter(b => !b.checked).map(b => b.dataset.cz);
+    // keep the preset, and remember only what the person unticked inside it
+    CUSTOM.hidden = off.filter(id => inPreset(id));
+    saveCustom(); closeModal(); renderSidebar(); render();
+  };
+}
+
+// ------------------------------------------------------------------ simple or full view
+function shownItems(list) {
+  const picked = list.filter(i => isShown(i.id));
+  return !SCAN || VIEWMODE === "full" ? picked : picked.filter(i => status(i).ok);
+}
+function viewToggle(list) {
+  if (!SCAN) return "";
+  const off = list.filter(i => !isShown(i.id)).length;
+  const hidden = list.length - shownItems(list).length - off;
+  if (VIEWMODE === "simple" && !hidden && !off) return "";
+  const a = VIEWMODE === "simple" && hidden ? `${hidden} ${hidden === 1 ? "analysis that cannot" : "analyses that cannot"} run on this file ${hidden === 1 ? "is" : "are"} hidden.`
+          : (VIEWMODE === "full" ? "Showing every analysis, including those that cannot run on this file." : "");
+  const b = off ? ` ${off} ${off === 1 ? "analysis is" : "analyses are"} switched off in Customize.` : "";
+  return `<p class="small-print viewnote">${a}${b} <button class="lnk" data-act="viewmode">${VIEWMODE === "simple" ? "Show all" : "Show only those that can run"}</button> <button class="lnk" data-act="customize">Customize</button></p>`;
+}
+
+// ------------------------------------------------------------------ search posts
+function searchPostsPanel() {
+  return `<article class="panel searchposts"><h3 class="panel-title">Search the posts${iMark("Finds posts that contain a word or phrase (Arabic spelling variants count as the same word). For every sentence a word appears in, open Find a word in the posts.")}</h3>
+    <form id="sp-form" class="sp-row"><input type="search" id="sp-q" dir="auto" placeholder="A word or phrase, e.g. غزة" aria-label="Search the posts"><button class="btn primary">Search</button><button type="button" class="btn" data-go="c-WORDS-4">Every sentence (Find a word)</button></form></article>`;
+}
+function bindSearchPosts() {
+  const f = $("#sp-form"); if (!f) return;
+  f.onsubmit = e => { e.preventDefault(); const q = $("#sp-q").value.trim(); if (q) showPosts(JSON.stringify({term: q}), q); };
+}
+
+// ------------------------------------------------------------------ start from the research question
+function studyTitle(q) { return LANG === "ar" ? q.ar : q.title; }
+function recentPanel() {
+  const list = CUSTOM.recent.filter(id => plainOf(id) && isShown(id)).slice(0, 6);
+  if (!list.length) return "";
+  return `<h2 class="section-heading">Where you were</h2><div class="recent-row">${list.map(id => `<button class="btn small" data-go="c-${id}">${esc(plainOf(id).title)}</button>`).join("")}</div>`;
+}
+function studiesPanel() {
+  const Q = PL.studies || []; if (!Q.length) return "";
+  return `<h2 class="section-heading">Start from your research question</h2><div class="study-grid">${Q.map(q => `<button class="study" data-go="q-${q.id}"><b>${esc(studyTitle(q))}</b><span>${esc(LANG === "ar" ? q.title : q.about)}</span></button>`).join("")}</div>`;
+}
+function studyPage(id) {
+  const q = (PL.studies || []).find(x => x.id === id); if (!q) return "";
+  const items = q.cards.map(c => plainOf(c)).filter(Boolean).map((it, i) => ({...it, id: q.cards[i]}));
+  const ok = q.cards.filter(c => status({...plainOf(c), id: c}).ok);
+  return `${crumbs([["Overview", "overview"], [studyTitle(q), "q-" + q.id]], ["Overview", "overview"])}${head(studyTitle(q), q.about, SCAN ? `<button class="btn" data-act="studyreport" data-id="${q.id}" data-tip="Adds every analysis of this study that can run on your file to My report.">Add all to My report</button><button class="btn primary" data-act="studydraft" data-id="${q.id}">Write a draft from these</button>` : "")}
+    <article class="panel" style="border-left:5px solid var(--teal)"><h3 class="panel-title">What to report</h3><p style="margin:0">${esc(q.report)}</p></article>
+    <h2 class="section-heading">Steps</h2>
+    <ol class="steps">${q.cards.map(c => { const it = plainOf(c), st = status({...it, id: c}); return `<li><div class="tile ${st.ok ? "" : "off"}" ${secVar(it.section)}><button class="info-btn" data-act="explain" data-id="${c}" data-tip-card="${c}" aria-label="About ${esc(it.title)}">i</button><button class="t-main" data-go="c-${c}"><span class="t-title">${esc(it.title)}</span><span class="small-print">${esc(it.short || "")}</span><span class="t-foot"><span class="status ${st.cls}">${esc(st.label)}</span></span></button></div></li>`; }).join("")}</ol>
+    ${SCAN ? `<p class="small-print">${ok.length} of ${q.cards.length} steps can run on this file.</p>` : `<p class="small-print">Load a file to run these steps.</p>`}`;
+}
+
+// ------------------------------------------------------------------ Arabic interface
+// #chatlog is skipped so that the user's own words and the posts quoted back to them are never rewritten.
+// The note and the preset questions sit outside the log and do translate.
+const TR_SKIP = ".post .t, .post .m, #chatlog, .tbl tbody, .js-plotly-plot, .hc-en-details, pre.code, textarea, [data-notr]";
+const TR_DONE = [];
+function trText(t) {
+  if (!PL || !PL.ar) return null;
+  const k = t.trim(); if (!k) return null;
+  const U = PL.ar.ui; if (U[k]) return t.replace(k, U[k]);
+  for (const [re, out] of PL.ar.patterns) { const m = k.match(new RegExp(re)); if (m) { const g = m.slice(1).map(x => U[x] || x); return t.replace(k, out.replace(/\{(\d)\}/g, (_, i) => g[+i])); } }
+  return null;
+}
+function trNode(root) {
+  if (LANG !== "ar" || !PL) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+  let n = root;
+  while (n) {
+    if (n.nodeType === 1) {
+      if (n.matches && n.matches(TR_SKIP)) { n = skipSub(w, n); continue; }
+      for (const a of ["title", "placeholder", "aria-label", "data-tip"]) { const v = n.getAttribute && n.getAttribute(a); if (v) { const t = trText(v); if (t && t !== v) { TR_DONE.push([n, a, v]); n.setAttribute(a, t); } } }
+    } else if (n.nodeType === 3) { const t = trText(n.nodeValue); if (t && t !== n.nodeValue) { TR_DONE.push([n, null, n.nodeValue]); n.nodeValue = t; } }
+    n = w.nextNode();
+  }
+}
+function skipSub(w, el) { let x = el; while (x && !x.nextSibling && x !== document.body) x = x.parentNode; if (!x || x === document.body) return null; w.currentNode = x.nextSibling; return x.nextSibling; }
+const TR_OBS = new MutationObserver(ms => { if (LANG !== "ar") return; for (const m of ms) for (const n of m.addedNodes) if (n.nodeType === 1 || n.nodeType === 3) { if (n.nodeType === 1 && n.closest && n.closest(TR_SKIP)) continue; if (n.nodeType === 3 && n.parentElement && n.parentElement.closest(TR_SKIP)) continue; trNode(n); } });
+function setLang(l) {
+  LANG = l; try { localStorage.setItem("marsad_lang", l); } catch (e) {}
+  document.documentElement.lang = l === "ar" ? "ar" : "en"; document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+  const b = $("#langbtn"); b.textContent = l === "ar" ? "English" : "العربية"; b.lang = l === "ar" ? "en" : "ar"; b.title = l === "ar" ? "Show the menus in English" : "Show the menus in Arabic";
+  if (l === "ar") { TR_OBS.observe(document.body, {childList: true, subtree: true}); }
+  else { TR_OBS.disconnect(); for (const [n, a, v] of TR_DONE.splice(0)) { if (a) n.setAttribute(a, v); else n.nodeValue = v; } }
+  if (PL) { renderSidebar(); render(); } if (l === "ar") trNode(document.body);
+}
+$("#langbtn").onclick = () => setLang(LANG === "ar" ? "en" : "ar");
+
+
+// ------------------------------------------------------------------ draft report
+async function draftReport(ids) {
+  if (!SCAN) return;
+  busy(true, "Writing a draft from your results"); await tick();
+  let d; try { d = JSON.parse(DR.draft(JSON.stringify(ids || [...saved]))); } catch (e) { busy(false); $("#repmsg").textContent = "Could not write the draft: " + pyErr(e); return; }
+  busy(false);
+  const useClaude = !!SAMPLE;
+  modal("Draft report", `<p>The draft has ${d.facts.findings.length} findings, built only from MARSAD's numbers. ${useClaude ? "Claude can also write a short paragraph for each finding from the same numbers. Paragraphs that use a number not in the results are left out." : ""}</p>
+    <div class="opt-actions" style="gap:8px">${useClaude ? `<button class="btn primary" id="dr-claude">Add paragraphs by Claude</button>` : ""}<button class="btn ${useClaude ? "" : "primary"}" id="dr-html">Download (web page)</button><button class="btn" id="dr-md">Download (Markdown)</button><button class="btn" id="dr-print">Print or save as PDF</button></div><div class="small-print" id="dr-msg"></div>`);
+  let html = d.html;
+  const dm = $("#repmsg"); if (dm) dm.textContent = "";
+  $("#dr-html").onclick = () => save("marsad_draft_report.html", html, $("#dr-msg"));
+  $("#dr-md").onclick = () => save("marsad_draft_report.md", d.markdown, $("#dr-msg"));
+  $("#dr-print").onclick = () => printHTML(html, $("#dr-msg"));
+  const cb = $("#dr-claude"); if (cb) cb.onclick = async () => {
+    $("#dr-msg").textContent = "Claude is writing…"; cb.disabled = true;
+    const facts = d.facts.findings.map(f => ({id: f.id, title: f.title, question: f.question, numbers: f.numbers, check: f.check, table: f.table, caveats: f.caveats}));
+    const prompt = `You write the findings section of a research report on social media posts. For each finding below, write one short paragraph (2 to 4 sentences) in plain English that says what the numbers show. Rules: use only numbers that appear in that finding, written exactly as given; add no new numbers, causes or claims; mention the main limit if one is given; no em dashes; do not use the words "delve", "notably" or "crucial". Answer with JSON only: {"<id>": "<paragraph>", ...}.\n\nData: ${JSON.stringify(d.facts.data)}\n\nFindings: ${JSON.stringify(facts)}`;
+    try {
+      const res = await SAMPLE([{role: "user", content: prompt}], {cache: false, modelTier: "default"});
+      const t = (res?.text || "").replace(/^```(json)?/m, "").replace(/```\s*$/m, "");
+      const pr = JSON.parse(t.slice(t.indexOf("{"), t.lastIndexOf("}") + 1));
+      const o = JSON.parse(DR.with_prose(JSON.stringify(d.facts), JSON.stringify(pr)));
+      html = o.html;
+      $("#dr-msg").textContent = `Claude wrote ${o.kept.length} paragraphs.` + (o.dropped.length ? ` ${o.dropped.length} left out because they used a number not in the results.` : "") + " Download the web page to read them.";
+    } catch (e) { $("#dr-msg").textContent = "Claude could not write the paragraphs (" + (e?.message || e?.code || "error") + "). The draft without them is ready to download."; }
+    cb.disabled = false;
+  };
+}
+
+function printHTML(html, msgEl) {
+  try {
+    const fr = document.createElement("iframe"); fr.style.cssText = "position:fixed;right:0;bottom:0;width:0;height:0;border:0"; document.body.appendChild(fr);
+    fr.onload = () => { try { fr.contentWindow.focus(); fr.contentWindow.print(); } catch (e) { if (msgEl) msgEl.textContent = "Printing is blocked here. Download the web page, open it and use its Print or save as PDF button."; } setTimeout(() => fr.remove(), 60000); };
+    fr.srcdoc = html;
+  } catch (e) { if (msgEl) msgEl.textContent = "Printing is blocked here. Download the web page, open it and use its Print or save as PDF button."; }
+}
+// ------------------------------------------------------------------ save and open a project
+const PROJECT_DATA_LIMIT = 25e6;
+function u8b64(u) { let s = ""; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+function saveProject() {
+  const size = files.reduce((a, f) => a + f.data.length, 0);
+  modal("Save project", `<p>Saves your settings, prepared posts options, analysis options, My report list, checks on your data and your notes in one .marsad.json file. Open it later on the Your files page to continue.</p>
+    <label for="pj-notes">Notes</label><textarea id="pj-notes" rows="4" style="width:100%">${esc(PROJECT.notes || "")}</textarea>
+    <label class="cb"><input type="checkbox" id="pj-data" ${size <= PROJECT_DATA_LIMIT ? "checked" : "disabled"}> Include the data files (${(size / 1e6).toFixed(1)} MB)${size > PROJECT_DATA_LIMIT ? ": too large, the project will ask for the files when opened" : ""}</label>
+    <p class="small-print">Anyone you send a project with data can read every post in it.</p>
+    <div class="opt-actions"><button class="btn primary" id="pj-go">Save</button></div><div class="small-print" id="pj-msg"></div>`);
+  $("#pj-go").onclick = () => {
+    PROJECT.notes = $("#pj-notes").value;
+    const withData = $("#pj-data").checked;
+    const p = {marsad_project: 1, version: VERSION, saved_at: new Date().toISOString(), notes: PROJECT.notes,
+      settings: SCAN ? SCAN.settings : {}, load_mode: loadMode, prepared: (SCAN && SCAN.prepared && SCAN.prepared.options) || {},
+      params, report: [...saved], custom: {preset: CUSTOM.preset, hidden: CUSTOM.hidden, pinned: CUSTOM.pinned}, checks: Object.fromEntries(Object.entries(CHK).filter(([, c]) => c.judged && c.judged.length).map(([k, c]) => [k, {file: c.file, judged: c.judged.map(j => ({...j, post_id: CHKPID(j.row, c.file)}))}])),
+      files: files.map(f => ({name: f.name, label: f.label, size: f.data.length, ...(withData ? {data: u8b64(f.data)} : {})}))};
+    save(`marsad_project_${new Date().toISOString().slice(0, 10)}.marsad.json`, JSON.stringify(p), $("#pj-msg"));
+  };
+}
+function CHKPID(row, file) { try { return JSON.parse(V.post_ids(JSON.stringify([row]), file || ""))[0]; } catch (e) { return null; } }
+const PROJECT = {notes: ""};
+async function openProject(file) {
+  let p; try { p = JSON.parse(await file.text()); } catch (e) { alertMsg("This is not a MARSAD project file."); return; }
+  if (!p.marsad_project) { alertMsg("This is not a MARSAD project file."); return; }
+  PROJECT.notes = p.notes || "";
+  const missing = (p.files || []).filter(f => !f.data && !files.some(x => x.name === f.name));
+  if (missing.length) { PROJECT.pending = p; go({page: "files"}); alertMsg(`This project was saved without its data. Add ${missing.map(f => f.name).join(", ")} below, then open the project again.`); return; }
+  const keep = files.filter(x => (p.files || []).some(f => f.name === x.name && !f.data));
+  files.length = 0; files.push(...keep);
+  for (const f of p.files || []) { if (f.data) files.push({name: f.name, label: f.label, data: b64(f.data)}); }
+  loadMode = p.load_mode || "combine";
+  await loadData(p.settings);
+  try {
+    if (p.prepared && Object.keys(p.prepared).length) { SCAN = JSON.parse(W.prepare(py.toPy(p.prepared))); REG = JSON.parse(W.registry_json()); PL = REG.plain; for (const k of Object.keys(results)) delete results[k]; }
+    Object.assign(params, p.params || {});
+    if (p.custom) { Object.assign(CUSTOM, p.custom); saveCustom(); }
+    for (const id of p.report || []) if (regCard(id)) { saved.add(id); }
+    for (const [id, c] of Object.entries(p.checks || {})) {
+      runQuiet(id, params[id], c.file);
+      const rows = JSON.parse(V.rows_for(JSON.stringify(c.judged.map(j => j.post_id)), c.file || ""));
+      const J = c.judged.map((j, i) => ({...j, row: rows[i] ?? j.row})).filter(j => j.row != null);
+      V.score(id, JSON.stringify(J), c.file || ""); CHK[id] = {file: c.file, judged: J}; results[id] = null;
+    }
+  } catch (e) { alertMsg("The project opened, but some settings could not be restored: " + pyErr(e)); }
+  go({page: "overview"});
+}
+
+// ------------------------------------------------------------------ prepare posts, test a difference
+function preparePage() {
+  const p = (SCAN.prepared || {}).options || {}, n = SCAN.posts_loaded || SCAN.posts;
+  modal("Prepare posts", `<p>These options change which posts every analysis uses. They always start from all ${fmt(n)} loaded posts, so you can change or clear them at any time.</p>
+    <div class="pgrid">
+      <div><label for="pp-s">Random sample of this many posts${iMark("For very large files. Shares and rankings from a random sample of 20,000 to 50,000 posts are close to those of the whole file. Counts are not: report shares.")}</label><input type="number" id="pp-s" min="0" step="1000" value="${p.sample_n || (SCAN.large ? 50000 : "")}" placeholder="all posts"></div>
+      <div><label for="pp-c">At most this many posts per account${iMark("Each account counts at most this many times (posts picked at random). If a result changes a lot, a few very active accounts were driving it. Try 5 or 10.")}</label><input type="number" id="pp-c" min="0" step="1" value="${p.cap_per_account || ""}" placeholder="no limit"></div>
+      <div><label for="pp-d">Split into two periods at this date${iMark("Posts before this day and posts from this day on become two groups, compared like two files. Use the date of an event to see what changed.")}</label><input type="date" id="pp-d" value="${esc(p.split_date || "")}" min="${esc((SCAN.date_from || "").slice(0, 10))}" max="${esc((SCAN.date_to || "").slice(0, 10))}"></div>
+      <div><label for="pp-r">Random seed${iMark("The same seed gives the same sample again, so others can repeat your work.")}</label><input type="number" id="pp-r" value="${p.seed || 7}"></div>
+    </div>
+    <div class="opt-actions" style="gap:8px"><button class="btn" id="pp-clear">No sample, limit or split</button><button class="btn primary" id="pp-go">Apply</button></div><div class="small-print" id="pp-msg"></div>`);
+  const apply = async o => {
+    busy(true, "Preparing posts"); await tick();
+    try {
+      SCAN = JSON.parse(W.prepare(py.toPy(o)));
+      REG = JSON.parse(W.registry_json()); PL = REG.plain;
+      for (const k of Object.keys(results)) delete results[k];
+      for (const k of Object.keys(fileSel)) delete fileSel[k];
+      for (const id of ["TIME-1", "TIME-2", "WORDS-1", "WHO-2", "DATA-4"]) if (regCard(id)?.available) runQuiet(id, COMPARE() && id === "TIME-1" ? (params[id] = {split: "dataset"}) : undefined);
+      busy(false); closeModal(); go({page: "overview"});
+    } catch (e) { busy(false); $("#pp-msg").textContent = pyErr(e); }
+  };
+  const keepF = () => { const o = prepOpts(), k = {}; FKEYS.forEach(x => { if (o[x] != null) k[x] = o[x]; }); return k; };
+  $("#pp-go").onclick = () => apply({...keepF(), sample_n: +$("#pp-s").value || null, cap_per_account: +$("#pp-c").value || null, split_date: $("#pp-d").value || null, seed: +$("#pp-r").value || 7});
+  $("#pp-clear").onclick = () => apply(keepF());
+}
+function testDiff(id, a, b) {
+  let o; busy(true, "Testing the difference");
+  try { o = JSON.parse(W.compare_test(id, py.toPy(params[id] || {}), a || "", b || "")); } catch (e) { o = {error: pyErr(e)}; } finally { busy(false); }
+  if (o.error) { modal("Test the difference", `<div class="msg grey">${esc(o.error)}</div>`); return; }
+  const pick = (v, nm) => `<select id="td-${nm}">${o.files.map(f => `<option ${f === v ? "selected" : ""}>${esc(f)}</option>`).join("")}</select>`;
+  const rows = o.rows.map(x => `<tr class="${x.clear_difference ? "hit" : ""}"><td dir="auto">${esc(x.part)}</td><td>${fmt(x["share_" + o.a + "_%"])}%</td><td>${fmt(x["share_" + o.b + "_%"])}%</td><td>${x.difference_points > 0 ? "+" : ""}${fmt(x.difference_points)} (${fmt(x.low)} to ${fmt(x.high)})</td><td>${x.p_holm < 0.001 ? "< 0.001" : fmt(x.p_holm)}</td><td>${esc(x.effect_size)} (${fmt(x.effect_h)})</td><td>${x.clear_difference ? "Yes" : "No"}</td></tr>`).join("");
+  const clear = o.rows.filter(x => x.clear_difference).length;
+  modal("Test the difference", `${o.files.length > 2 ? `<p>Compare ${pick(o.a, "a")} with ${pick(o.b, "b")} <button class="btn small" id="td-go">Compare</button></p>` : ""}
+    <p><b>${clear ? clear + " of " + o.rows.length + " parts show a clear difference" : "No part shows a clear difference"}</b> between ${esc(o.a)} (${fmt(o.posts_a)} posts) and ${esc(o.b)} (${fmt(o.posts_b)} posts).</p>
+    <div class="tbl"><table class="g"><thead><tr><th>Part</th><th>${esc(o.a)}</th><th>${esc(o.b)}</th><th>Difference, points (range)</th><th>p (corrected)</th><th>Effect size</th><th>Clear difference</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="small-print">${esc(o.note)}</p>
+    <div class="opt-actions"><button class="btn" id="td-csv">Download (CSV)</button></div><div class="small-print" id="td-msg"></div>`);
+  const g = $("#td-go"); if (g) g.onclick = () => testDiff(id, $("#td-a").value, $("#td-b").value);
+  $("#td-csv").onclick = () => { const cols = Object.keys(o.rows[0] || {}); save(`marsad_test_${id}.csv`, [cols.join(","), ...o.rows.map(r => cols.map(c => JSON.stringify(r[c] ?? "")).join(","))].join("\n"), $("#td-msg")); };
+}
+
+// ------------------------------------------------------------------ check on your data
+function hasDrill(r) { return figList(r).some(f => (f[2].data || []).some(t => t.customdata)); }
+const CHK = {};
+function checkStart(id, r) {
+  let t; try { t = JSON.parse(V.targets(id, r.file || "")); } catch (e) { modal("Check on my data", `<div class="msg err">${esc(pyErr(e))}</div>`); return; }
+  if (!t.targets.length && !t.label_task) { modal("Check on my data", `<p>This result has nothing that opens posts, so it cannot be checked this way.</p>`); return; }
+  CHK[id] = {file: r.file || "", task: t.label_task, labels: t.labels, judged: []};
+  const opts = (t.label_task ? [`<option value="">All labels (equal numbers of each predicted label)</option>`] : [])
+    .concat(t.targets.map(x => `<option value="${esc(x.filter)}">${esc(x.name)}</option>`)).join("");
+  modal("Check on my data", `<p>MARSAD picks posts at random from the part of the result you choose. You read each one and say whether MARSAD got it right. The share it got right, with a range, tells you how far to trust this result on your own posts.</p>
+    ${t.label_task ? `<p class="small-print">For labels you can also give the right label. MARSAD then estimates the corrected share of each label in your whole file.</p>` : ""}
+    <div class="pgrid"><div><label for="chk-t">What to check</label><select id="chk-t">${opts}</select></div>
+    <div><label for="chk-n">Number of posts</label><input type="number" id="chk-n" value="30" min="5" max="200" step="5"></div></div>
+    <p class="small-print">30 posts give a range of about plus or minus 15 points. 100 posts give about plus or minus 9.</p>
+    <div class="opt-actions"><button class="btn primary" id="chk-go">Show posts</button></div>`);
+  $("#chk-go").onclick = () => checkSample(id, $("#chk-t").value, $("#chk-t").selectedOptions[0].textContent, +$("#chk-n").value || 30);
+}
+function checkSample(id, filter, name, n) {
+  const c = CHK[id];
+  let d; try { d = JSON.parse(V.sample(id, filter, Math.min(200, Math.max(5, n)), 7, c.file)); } catch (e) { $("#modalBody").innerHTML = `<div class="msg err">${esc(pyErr(e))}</div>`; return; }
+  c.posts = d.posts; c.target = filter ? name : "";
+  if (!d.posts.length) { $("#modalBody").innerHTML = `<p>No posts found for this part of the result.</p>`; return; }
+  const lab = !!(c.task && c.labels.length);
+  const q = lab ? "What is the right label for each post? Choose Unsure if you cannot tell." : `Does each post really belong to <b dir="auto">${esc(name)}</b>?`;
+  const row = (p, i) => `<div class="post chk" data-i="${i}"><div class="m">${esc([p.author, lab && p.label ? "MARSAD says: " + p.label : ""].filter(Boolean).join(" · "))}</div><div class="t" dir="auto">${esc(p.text)}</div>
+    <div class="chk-a">${lab ? `<select data-i="${i}" aria-label="Right label for post ${i + 1}">${c.labels.map(l => `<option ${l === p.label ? "selected" : ""}>${esc(l)}</option>`).join("")}<option value="__unsure">Unsure</option></select>`
+      : `<label><input type="radio" name="v${i}" value="yes"> Yes</label><label><input type="radio" name="v${i}" value="no"> No</label><label><input type="radio" name="v${i}" value="unsure" checked> Unsure</label>`}</div></div>`;
+  $("#modalTitle").textContent = `Check: ${d.posts.length} posts`;
+  $("#modalBody").innerHTML = `<p>${q}</p>${d.posts.map(row).join("")}<div class="opt-actions" style="gap:8px"><button class="btn primary" id="chk-score">Score my answers</button></div>`;
+  $("#chk-score").onclick = () => checkScore(id);
+}
+function checkScore(id) {
+  const c = CHK[id], lab = !!(c.task && c.labels.length);
+  const J = c.posts.map((p, i) => {
+    const base = {row: p.row, target: c.target || p.label || "all", label: p.label ?? null};
+    if (lab) { const v = document.querySelector(`select[data-i="${i}"]`).value; return v === "__unsure" ? {...base, verdict: "unsure"} : {...base, verdict: v === p.label ? "yes" : "no", true_label: v}; }
+    const v = (document.querySelector(`input[name="v${i}"]:checked`) || {}).value || "unsure"; return {...base, verdict: v};
+  });
+  c.judged = J;
+  let o; try { o = JSON.parse(V.score(id, JSON.stringify(J), c.file)); } catch (e) { $("#modalBody").innerHTML = `<div class="msg err">${esc(pyErr(e))}</div>`; return; }
+  const ov = o.overall;
+  const tr = o.targets.map(t => `<tr><td dir="auto">${esc(t.target)}</td><td>${t.checked}</td><td>${t.right}</td><td>${t["precision_%"]}%</td><td>${t["low_%"]} to ${t["high_%"]}%</td></tr>`).join("");
+  const cr = o.corrected ? `<h3 class="mh">Corrected share of each label in your whole file</h3><table class="g"><thead><tr><th>Label</th><th>MARSAD's share</th><th>Corrected share</th><th>Range</th></tr></thead><tbody>${o.corrected.rows.map(x => `<tr><td dir="auto">${esc(x.label)}</td><td>${x["observed_%"]}%</td><td>${x["corrected_%"]}%</td><td>${x["low_%"]} to ${x["high_%"]}%</td></tr>`).join("")}</tbody></table>
+    <p class="small-print">${esc(o.corrected.method)}${o.corrected.labels_not_checked.length ? " Labels with no checked posts are taken as right: " + esc(o.corrected.labels_not_checked.join(", ")) + "." : ""}</p>` : "";
+  $("#modalTitle").textContent = "Your check";
+  $("#modalBody").innerHTML = ov ? `<p>You marked <b>${ov.checked}</b> posts (Unsure answers are left out). MARSAD was right on <b>${ov.right}</b>: <b>${ov["precision_%"]}%</b>, likely between ${ov["low_%"]}% and ${ov["high_%"]}% for all such posts in your file.</p>
+    ${o.targets.length > 1 ? `<table class="g"><thead><tr><th>Part</th><th>Checked</th><th>Right</th><th>Share right</th><th>Range</th></tr></thead><tbody>${tr}</tbody></table>` : ""}${cr}
+    <p class="small-print">A share right below about 70% means this result should be reported with care, or not at all, for these posts.${o.corrected ? " The corrected shares now also appear in the result's table." : ""}</p>
+    <div class="opt-actions" style="gap:8px"><button class="btn" id="chk-csv">Download my answers (CSV)</button><button class="btn" id="chk-more">Check more posts</button><button class="btn primary" id="chk-done">Done</button></div><div class="small-print" id="chk-msg"></div>`
+    : `<p>All answers were Unsure, so there is nothing to score.</p><div class="opt-actions"><button class="btn" id="chk-more">Try again</button></div>`;
+  const cv = $("#chk-csv"); if (cv) cv.onclick = () => save(`marsad_check_${id}.csv`, V.judgments_csv(JSON.stringify(J), c.file), $("#chk-msg"));
+  $("#chk-more").onclick = () => checkStart(id, results[id]);
+  const dn = $("#chk-done"); if (dn) dn.onclick = async () => { closeModal(); if (o.corrected) { results[id] = null; await cardPage(id); } };
+}
+
 // ------------------------------------------------------------------ posts, explanations, report
-function showPosts(filter, title) {
+function showPosts(filter, title, sort, seed) {
+  sort = sort || POSTSORT; POSTSORT = sort;
   let ex;
   const file = view.page === "card" && results[view.id] ? (results[view.id].file || null) : null;
-  try { ex = JSON.parse(W.examples(filter, 20, "interactions", file)); } catch (e) { ex = {n_matching: 0, posts: [], error: pyErr(e)}; }
+  try { ex = JSON.parse(W.examples(filter, 20, sort, file, seed || 0)); } catch (e) { ex = {n_matching: 0, posts: [], error: pyErr(e)}; }
+  const SORTS = [["interactions", "Most engagement"], ["random", "Random"], ["recent", "Newest"], ["oldest", "Oldest"]];
+  const what = {interactions: "by engagement", random: "at random", recent: "newest first", oldest: "oldest first"}[sort];
   modal(`${fmt(ex.n_matching)} posts${title ? ": " + title : ""}`, (ex.error ? `<div class="msg err">${esc(ex.error)}</div>` : "") +
-    (ex.n_matching > ex.posts.length ? `<p class="small-print">Top ${ex.posts.length} by engagement</p>` : "") +
-    (ex.posts.length ? ex.posts.map(p => `<div class="post"><div class="m">${[p.author, p.created_local, p.platform, p.interactions != null ? fmt(p.interactions) + " engagement" : ""].filter(Boolean).map(esc).join(" · ")}${p.url ? ` · <a href="${esc(p.url)}" target="_blank" rel="noopener">open</a>` : ""}</div><div class="t" dir="${p.dir || "auto"}">${p.text_html || esc(p.text)}</div></div>`).join("") : `<p>No posts behind this point.</p>`));
+    `<div class="postbar"><label>Order <select id="ps-sort">${SORTS.map(([v, l]) => `<option value="${v}" ${v === sort ? "selected" : ""}>${l}</option>`).join("")}</select></label>${sort === "random" ? `<button class="btn small" id="ps-again">Another random set</button>` : ""}${ex.n_matching ? `<button class="btn small" id="ps-csv">Download all ${fmt(ex.n_matching)} (CSV)</button>` : ""}<span class="small-print" id="ps-msg"></span></div>` +
+    (ex.n_matching > ex.posts.length ? `<p class="small-print">${ex.posts.length} of ${fmt(ex.n_matching)}, ${what}. Repeated texts are shown once.${sort === "interactions" ? " The most engaged posts are not typical posts: choose Random to see typical ones." : ""}</p>` : "") +
+    (ex.posts.length ? ex.posts.map((p, i) => `<div class="post"><div class="m">${[p.author, p.created_local, p.platform, p.interactions != null ? fmt(p.interactions) + " engagement" : ""].filter(Boolean).map(esc).join(" · ")}${p.url ? ` · <a href="${esc(p.url)}" target="_blank" rel="noopener">open</a>` : ""} · <button class="text-button" data-copy="${i}">copy</button></div><div class="t" dir="${p.dir || "auto"}">${p.text_html || esc(p.text)}</div></div>`).join("") : `<p>No posts behind this point.</p>`));
+  $("#ps-sort").onchange = () => showPosts(filter, title, $("#ps-sort").value, Math.floor(Math.random() * 1e6));
+  const ag = $("#ps-again"); if (ag) ag.onclick = () => showPosts(filter, title, "random", Math.floor(Math.random() * 1e6));
+  const cs = $("#ps-csv"); if (cs) cs.onclick = () => { try { save("marsad_posts.csv", W.posts_csv(filter, file), $("#ps-msg")); } catch (e) { $("#ps-msg").textContent = pyErr(e); } };
+  document.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => { const t = ex.posts[+b.dataset.copy].text; try { navigator.clipboard.writeText(t).then(() => b.textContent = "copied", () => b.textContent = "copy blocked"); } catch (e) { b.textContent = "copy blocked"; } });
 }
 function explain(id) {
   const it = plainOf(id); if (!it) return;
@@ -886,6 +1593,7 @@ function about() {
     <tr><td>Time zone</td><td>${esc(s.info.timezone_note || s.settings.analysis_tz)}</td></tr><tr><td>Weekend</td><td>${esc(s.info.weekend_note || s.settings.weekend)}</td></tr>
     <tr><td>Information found</td><td>${Object.entries(s.capabilities).filter(([, v]) => v).map(([k]) => esc(PL.needs[k] || k)).join(", ")}</td></tr>
     <tr><td>Not in this file</td><td>${Object.entries(s.capabilities).filter(([, v]) => !v).map(([k]) => esc(PL.needs[k] || k)).filter(x => !x.startsWith("has_")).join(", ")}</td></tr></table>
+    ${(s.completeness || []).length ? `<h3 class="mh">How complete is each field?${iMark("Share of the loaded posts that have a value. Analyses that need a field use only the posts that have it.")}</h3><table class="g"><tr><th>Field</th><th>Posts with a value</th></tr>${s.completeness.map(c => `<tr><td>${esc(c.field)}</td><td>${c.in_file ? `<span class="meter"><span style="width:${c["present_%"]}%"></span></span> ${c["present_%"]}%` : "not in the file"}</td></tr>`).join("")}</table>` : ""}
 `);
 }
 function toggleSave(id) {
@@ -896,7 +1604,7 @@ function toggleSave(id) {
 }
 function reportPage() {
   const items = [...saved];
-  return `${crumbs([["Overview", "overview"], ["My report", "report"]], ["Overview", "overview"])}${head("My report", "Add analyses with + Report, then download them as one interactive web page.", items.length ? `<button class="btn primary" onclick="makeReport()">Download report</button>` : "")}
+  return `${crumbs([["Overview", "overview"], ["My report", "report"]], ["Overview", "overview"])}${head("My report", "Add analyses with + Report, then download them as one interactive web page. Or get a written draft of the main findings in one click.", `<button class="btn" onclick="draftReport()" data-tip="A written draft with your data, the key numbers of each analysis, their limits and the methods. Uses the analyses in My report, or a core set if it is empty.">Write a draft report</button><button class="btn" data-act="saveproject" data-tip="Save your settings, options, report list, checks and notes in one file to continue later or share.">Save project</button>` + (items.length ? `<button class="btn primary" onclick="makeReport()">Download report</button>` : ""))}
     <article class="panel">${items.length ? `<ul class="report-list">${items.map(id => `<li><a href="#c-${id}" data-go="c-${id}">${esc(plainOf(id)?.title || id)}</a><button class="text-button" data-act="unsave" data-id="${id}">Remove</button></li>`).join("")}</ul>` : `<p class="small-print" style="margin:0">No analyses added yet.</p>`}<div class="small-print" id="repmsg"></div></article>
     <h2 class="section-heading">For papers</h2><div class="tiles">${itemsOf("report").filter(i => i.id !== "PAPER-1").map(tileHTML).join("")}</div>`;
 }
@@ -905,11 +1613,21 @@ async function makeReport() {
   try { for (const id of saved) if (!results[id]) runQuiet(id, params[id]); const d = JSON.parse(W.report(py.toPy([...saved]))); busy(false); await save(d.filename, b64(d.data), $("#repmsg")); }
   catch (e) { busy(false); $("#repmsg").textContent = "Could not build the report: " + pyErr(e); }
 }
-function modal(title, body) { $("#modalTitle").textContent = title; $("#modalBody").innerHTML = body; $("#modal").classList.add("open"); hideTip(); $("#closeModal").focus(); }
-function closeModal() { $("#modal").classList.remove("open"); }
+let MODAL_OPENER = null;
+function modal(title, body) { if (!$("#modal").classList.contains("open")) MODAL_OPENER = document.activeElement; $("#modalTitle").textContent = title; $("#modalBody").innerHTML = body; $("#modal").classList.add("open"); $("#main").inert = true; $("#sidebar").inert = true; hideTip(); $("#closeModal").focus(); }
+function closeModal() { const was = $("#modal").classList.contains("open"); $("#modal").classList.remove("open"); $("#main").inert = false; $("#sidebar").inert = false; if (was && MODAL_OPENER && document.contains(MODAL_OPENER)) { try { MODAL_OPENER.focus(); } catch (e) {} } MODAL_OPENER = null; }
+$("#modal").addEventListener("keydown", e => {
+  if (e.key !== "Tab") return;
+  const f = [...$("#modal").querySelectorAll('button,a[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(x => !x.disabled && x.offsetParent !== null);
+  if (!f.length) return;
+  if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+});
 $("#closeModal").onclick = closeModal;
+$("#skiplink").onclick = () => { const m = $("#main"); m.focus(); m.scrollIntoView(); };
+$("#fullclose").onclick = () => { $("#fullscr").classList.remove("open"); Plotly.purge($("#fullfig")); };
 $("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); hideTip(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); hideTip(); const fs = $("#fullscr"); if (fs.classList.contains("open")) $("#fullclose").click(); } });
 
 // ------------------------------------------------------------------ downloads
 function b64(s) { const x = atob(s), u = new Uint8Array(x.length); for (let i = 0; i < x.length; i++) u[i] = x.charCodeAt(i); return u; }
@@ -958,7 +1676,7 @@ const CHAT = {history: [], busy: false, abort: null, mode: "local"};
 const CHAT_SUGG = ["What are the main findings?", "Who are the most active accounts?", "Why was there a spike?",
                    "Is the sentiment positive or negative?", "Which news frames dominate?", "ما أكثر الكلمات استخداما؟"];
 function chatOpen(on) {
-  const c = $("#chat"); c.classList.toggle("open", on); c.setAttribute("aria-hidden", on ? "false" : "true");
+  const c = $("#chat"); c.classList.toggle("open", on); c.setAttribute("aria-hidden", on ? "false" : "true"); c.inert = !on; if (!on) $("#chatbtn").focus();
   if (on) { chatNote(); if (!CHAT.history.length) chatWelcome(); setTimeout(() => $("#chatin").focus(), 50); }
 }
 async function chatReady() {
