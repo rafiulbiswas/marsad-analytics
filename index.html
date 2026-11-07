@@ -21,7 +21,7 @@ h1,h2,h3,p{margin-top:0}
 .brand-mark:before{top:2px;left:3px}.brand-mark:after{right:2px;bottom:3px}
 .brand{font-size:22px;font-weight:800}.brand-sub{color:#c6d9e5;font-size:13px;margin-top:2px}
 .top-right{display:flex;align-items:center;gap:12px;font-size:14px;color:#dfebf1}
-.pill{border:1px solid rgba(255,255,255,.35);padding:7px 12px;border-radius:18px;white-space:nowrap}
+.pill{border:1px solid rgba(255,255,255,.35);background:var(--navy);color:#eef6fa;padding:7px 12px;border-radius:18px;white-space:nowrap}
 #engine{max-width:40vw;overflow:hidden;text-overflow:ellipsis}
 #engine.ready{background:#0f6e64;border-color:#0f6e64;color:#fff}#engine.err{background:#c0392b;border-color:#c0392b}
 .shell{display:grid;grid-template-columns:262px minmax(0,1fr);min-height:calc(100vh - 72px)}
@@ -134,6 +134,10 @@ details.box>.inner{padding:0 22px 20px}
 .drop b{display:block;font-size:19px;margin-bottom:4px;color:#1f4b55}
 .samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .langchip{font-size:11px;padding:1px 6px;border-radius:9px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.notices{margin:0 0 18px;border-left:5px solid #c98a00;background:#fff8e6}
+.notices .nbadge{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:#c98a00;color:#fff;font-size:12px;text-align:center;vertical-align:middle}
+.notice-go{margin-inline-start:6px;vertical-align:baseline}
+@media (prefers-color-scheme:dark){.notices{background:#2a2410;color:#e7cd72}.notices .nbadge{background:#8a6d12}}
 .explo{margin:0 0 10px;padding:9px 12px;border:1px solid #c9a227;border-left-width:4px;border-radius:6px;background:#fdf8e7;color:#5c4708;font-size:13px;line-height:1.5}
 .explo strong{letter-spacing:.03em;text-transform:uppercase;font-size:11px}
 @media (prefers-color-scheme:dark){.explo{background:#2a2410;color:#e7cd72;border-color:#8a6d12}}
@@ -307,6 +311,47 @@ body.bigtext .btn,body.bigtext .iconbtn,body.bigtext .viewtabs button,body.bigte
 body.bigtext .chip span,body.bigtext .metric-label,body.bigtext .small-print,body.bigtext table.g,body.bigtext .cmpbar{font-size:16.5px}
 body.bigtext #tip{font-size:17px;max-width:560px}
 body.bigtext .crumbs{font-size:18px}
+#modal #modesel{min-height:44px;border:1px solid #a7bbc5;border-radius:9px;padding:8px 12px;background:#fff;font-weight:700;color:#31566a;margin-inline-start:8px}
+#modal label[for=modesel]{font-weight:700}
+#modal #modewhy{margin-top:8px;margin-bottom:14px}
+#modal .lnk{padding:4px 6px}
+
+/* Easy read: presentation only. Nothing here reaches the analysis code, so no number, denominator or
+   caveat differs from the other modes. */
+body.easyread{font-size:18.5px;line-height:1.7}
+body.easyread .page-title{font-size:34px;line-height:1.3}
+body.easyread .tile .t-title{font-size:20px;line-height:1.4}
+body.easyread .nav-button,body.easyread .crumbs{font-size:17.5px}
+body.easyread .btn,body.easyread .iconbtn,body.easyread .viewtabs button,body.easyread .filechips button{font-size:16.5px}
+body.easyread .chip span,body.easyread .metric-label,body.easyread .small-print,body.easyread table.g,body.easyread .cmpbar{font-size:16.5px}
+body.easyread #tip{font-size:17px;max-width:560px}
+/* fewer things across the screen, more room around each */
+body.easyread .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+body.easyread .card-grid,body.easyread .tiles{grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:22px}
+body.easyread .tile{padding:22px 22px 20px;gap:12px;min-height:170px}
+body.easyread .panel{padding:22px}
+body.easyread p,body.easyread li{max-width:70ch}
+/* every control reachable by finger or trembling hand */
+body.easyread .btn,body.easyread .sizebtn,body.easyread .iconbtn,body.easyread .info-btn,
+body.easyread .lnk,body.easyread select,body.easyread input,body.easyread .chip,body.easyread .fchip,
+body.easyread .backbtn,body.easyread .pin-btn,body.easyread .filebtn,body.easyread #modal button,
+body.easyread .viewtabs button,body.easyread .filechips button,
+body.easyread .ch-head button{min-height:44px;min-width:44px}
+body.easyread .lnk{display:inline-flex;align-items:center;padding:0 8px}
+body.easyread button:focus-visible,body.easyread select:focus-visible,body.easyread input:focus-visible,
+body.easyread [tabindex]:focus-visible{outline:4px solid var(--focus);outline-offset:3px}
+@media (max-width:760px){body.easyread .metric-grid{grid-template-columns:1fr}
+  body.easyread .card-grid,body.easyread .tiles{grid-template-columns:1fr}}
+
+/* High contrast: a separate control, available in every mode, as the accessibility settings are not a mode */
+body.hicontrast{--ink:#000;--muted:#2b2b2b;--bg:#fff;--border:#595959;--teal-dark:#004d51;--amber:#6b3d00}
+body.hicontrast .tile,body.hicontrast .panel,body.hicontrast .metric{border-width:2px;box-shadow:none}
+body.hicontrast a,body.hicontrast .lnk{text-decoration:underline}
+body.hicontrast .small-print{color:#2b2b2b}
+body.hicontrast button:focus-visible,body.hicontrast select:focus-visible,body.hicontrast input:focus-visible,
+body.hicontrast [tabindex]:focus-visible{outline:4px solid #000;outline-offset:3px;box-shadow:0 0 0 7px var(--focus)}
+body.hicontrast .appbar{background:#06283d}
+body.hicontrast .sizebtn{border-color:#fff}
 body.bigtext .post .t{font-size:18.5px}
 body.bigtext .explore-label{font-size:19px}
 @media(max-width:900px){.filebtn .fn{display:none}.modes{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.sizebtn{padding:5px 9px}}
@@ -337,7 +382,7 @@ body.bigtext .explore-label{font-size:19px}
 <button class="skip" id="skiplink">Skip to content</button>
 <header class="appbar">
   <div class="branding"><div class="brand-mark" aria-hidden="true"></div><div><div class="brand">MARSAD Analytics</div></div></div>
-  <div class="top-right"><span id="filebar"></span><button class="sizebtn chatbtn" id="chatbtn" title="Ask a question about your results">Ask MARSAD</button><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="langbtn" lang="ar" title="Show the menus in Arabic">العربية</button><button class="sizebtn" id="sizebtn" aria-pressed="false" title="Make the text larger or smaller">A+ Larger text</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
+  <div class="top-right"><span id="filebar"></span><button class="sizebtn chatbtn" id="chatbtn" title="Ask a question about your results">Ask MARSAD</button><button class="sizebtn" id="helpbtn" title="Guides for every analysis, questions and answers">? Help</button><button class="sizebtn" id="langbtn" lang="ar" title="Show the menus in Arabic">العربية</button><button class="sizebtn" id="lookbtn" data-act="appearance" title="How much is on show, text size and contrast">Appearance</button><span class="pill hide-sm" title="Files are read inside this page and never uploaded">&#x2713; Runs on your device</span><span class="pill" id="engine"><span class="spin"></span>Starting</span></div>
 </header>
 <nav class="mobile-nav" id="mobileNav" aria-label="Sections"></nav>
 <div class="shell">
@@ -384,6 +429,14 @@ const splitKey = id => { const ch = (regCard(id) || {}).param_choices || {}; ret
 let view = {page: "overview"};
 let POSTSORT = "interactions";
 let VIEWMODE = "simple"; try { VIEWMODE = localStorage.getItem("marsad_view") || "simple"; } catch (e) {}
+// How much of the tool is on show. Presentation only: it never reaches the analysis code, and no number,
+// denominator or caveat changes with it. VIEWMODE is a different question (can an analysis run on this file).
+const MODES = ["simple", "easy", "expert"];
+let MODE = "simple"; try { const m = localStorage.getItem("marsad_mode"); if (MODES.includes(m)) MODE = m; } catch (e) {}
+const CORE_FALLBACK = ["DATA-1", "TIME-1", "TIME-2", "WORDS-1", "WHO-1", "FRAME-15"];
+const coreIds = () => ((REG && REG.core && REG.core.length) ? REG.core : CORE_FALLBACK);
+const isCore = id => coreIds().includes(id);
+let COREONLY = true;          // Simple and Easy Read open on the core set; "More analyses" turns this off
 // what the person chose to see: a set of analyses, the ones they hid, the ones they pinned, and where they were last
 const CUSTOM = {preset: "all", hidden: [], pinned: [], recent: []};
 try { Object.assign(CUSTOM, JSON.parse(localStorage.getItem("marsad_custom") || "{}")); } catch (e) {}
@@ -591,12 +644,66 @@ function renderFilebar() {
 }
 function setBig(on) {
   document.body.classList.toggle("bigtext", on);
-  const b = $("#sizebtn"); b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? "A- Smaller text" : "A+ Larger text";
+  const b = $("#sizebtn");
+  if (b) { b.setAttribute("aria-pressed", on ? "true" : "false"); b.textContent = on ? "A- Smaller text" : "A+ Larger text"; }
   try { localStorage.setItem("marsad_bigtext", on ? "1" : "0"); } catch (e) {}
   if (view.page === "card" && results[view.id]) setTimeout(() => { const f = $("#cardfig"); if (f && window.Plotly) Plotly.Plots.resize(f); }, 50);
 }
-$("#sizebtn").onclick = () => setBig(!document.body.classList.contains("bigtext"));
+
+function appearancePage() {
+  const big = document.body.classList.contains("bigtext");
+  const hc = document.body.classList.contains("hicontrast");
+  modal(LANG === "ar" ? "\u0627\u0644\u0639\u0631\u0636" : "Appearance", `
+    <p>These change what you see. No number, denominator or caveat changes with them.</p>
+    <label for="modesel">How much to show</label>
+    <select id="modesel"></select>
+    <p class="small-print" id="modewhy"></p>
+    <p><button class="btn" id="sizebtn" aria-pressed="${big}">${big ? "A- Smaller text" : "A+ Larger text"}</button>
+       <button class="btn" id="contrastbtn" aria-pressed="${hc}">${hc ? "Normal contrast" : "High contrast"}</button></p>
+    <p class="small-print">Text size and contrast work in every mode, on their own.
+      <button class="lnk" data-act="resetlook">Reset appearance</button></p>`);
+  renderModeSel();
+  const why = {simple: "A starting selection of analyses, with plain explanations. More analyses are one click away.",
+               easy: "The same selection, with larger text, more space and bigger controls.",
+               expert: "Every analysis this file supports, with the methods and the numbers behind each one."};
+  const setWhy = () => { const e = $("#modewhy"); if (e) e.textContent = why[MODE] || ""; };
+  setWhy();
+  $("#modesel").onchange = e => { setMode(e.target.value); setWhy(); };
+  $("#sizebtn").onclick = () => { const on = !document.body.classList.contains("bigtext"); setBig(on); };
+  $("#contrastbtn").onclick = () => { const on = !document.body.classList.contains("hicontrast"); setContrast(on); };
+}
+function setMode(m, remember = true) {
+  if (!MODES.includes(m)) m = "simple";
+  MODE = m;
+  COREONLY = m !== "expert";
+  document.body.classList.toggle("easyread", m === "easy");
+  document.body.classList.toggle("expertmode", m === "expert");
+  if (remember) { try { localStorage.setItem("marsad_mode", m); } catch (e) {} }
+  const sel = $("#modesel"); if (sel && sel.value !== m) sel.value = m;
+  renderSidebar(); render();
+  if (view.page === "card" && results[view.id]) setTimeout(() => { const f = $("#cardfig"); if (f && window.Plotly) Plotly.Plots.resize(f); }, 50);
+}
+function modeLabel(m) {
+  const en = {simple: "Simple", easy: "Easy read", expert: "Expert"};
+  const ar = {simple: "\u0627\u0644\u0648\u0636\u0639 \u0627\u0644\u0645\u0628\u0633\u0651\u0637", easy: "\u0648\u0636\u0639 \u0627\u0644\u0642\u0631\u0627\u0621\u0629 \u0627\u0644\u0645\u064a\u0633\u0651\u0631\u0629", expert: "\u0648\u0636\u0639 \u0627\u0644\u062e\u0628\u0631\u0627\u0621"};
+  return LANG === "ar" ? ar[m] : en[m];
+}
+function renderModeSel() {
+  const sel = $("#modesel"); if (!sel) return;
+  sel.innerHTML = MODES.map(m => `<option value="${m}"${m === MODE ? " selected" : ""}>${esc(modeLabel(m))}</option>`).join("");
+  sel.setAttribute("aria-label", LANG === "ar" ? "\u0637\u0631\u064a\u0642\u0629 \u0627\u0644\u0639\u0631\u0636" : "How much to show");
+}
+function setContrast(on) {
+  document.body.classList.toggle("hicontrast", on);
+  const cb = $("#contrastbtn");
+  if (cb) { cb.setAttribute("aria-pressed", on ? "true" : "false"); cb.textContent = on ? "Normal contrast" : "High contrast"; }
+  try { localStorage.setItem("marsad_contrast", on ? "1" : "0"); } catch (e) {}
+}
+try { if (localStorage.getItem("marsad_contrast") === "1") setContrast(true); } catch (e) {}
 try { if (localStorage.getItem("marsad_bigtext") === "1") setBig(true); } catch (e) {}
+document.body.classList.toggle("easyread", MODE === "easy");
+document.body.classList.toggle("expertmode", MODE === "expert");
+COREONLY = MODE !== "expert";
 
 document.addEventListener("click", e => {
   const a = e.target.closest("[data-act]");
@@ -619,9 +726,15 @@ function act(name, el) {
   if (name === "about") about();
   if (name === "prepare") preparePage();
   if (name === "pin") togglePin(el.dataset.id);
+  if (name === "appearance") appearancePage();
   if (name === "customize") customizePage();
   if (name === "filters") filtersPage();
   if (name === "resetfilters") { const n = prepOpts(); FKEYS.forEach(k => delete n[k]); applyPrepare(n); }
+  if (name === "resetlook") {
+    setBig(false); setContrast(false); setMode("simple");
+    return;
+  }
+  if (name === "moreanalyses") { COREONLY = false; renderSidebar(); render(); return; }
   if (name === "viewmode") { VIEWMODE = VIEWMODE === "simple" ? "full" : "simple"; try { localStorage.setItem("marsad_view", VIEWMODE); } catch (e) {} render(); }
   if (name === "saveproject") saveProject();
   if (name === "studyreport") { const q = PL.studies.find(x => x.id === el.dataset.id); for (const c of q.cards) if (status({...plainOf(c), id: c}).ok && !saved.has(c)) toggleSave(c); render(); }
@@ -764,13 +877,13 @@ function overviewPage() {
   const dateS = s.date_from ? (same ? `${s.date_from.slice(11)} to ${s.date_to.slice(11)}` : `to ${s.date_to.slice(0, 10)}`) : "no dates in file";
   const panel = (id, title, body) => `<article class="panel"><div class="panel-head"><h3 class="panel-title">${esc(title)}${iMark(plainOf(id).what)}</h3><div class="tools"><button class="iconbtn" data-go="c-${id}" title="Open">Open</button>${saveBtn(id)}</div></div>${body}</article>`;
   return `${filterBar()}${compareBar()}${head("Overview", "", `<button class="btn" data-act="customize" data-tip="Choose which analyses appear, and pin the ones you use most.">Customize</button><button class="btn" data-act="prepare" data-tip="Work on a random sample, count each account at most a few times, or split the posts into two periods to compare.">Prepare posts</button><button class="btn" data-act="saveproject" data-tip="Save your settings, options, report list, checks and notes in one file to continue later or share.">Save project</button><button class="btn" data-act="about">File details</button>`)}
+   ${noticesPanel()}
    <div class="metric-grid">
      <div class="metric"><div class="metric-label">Posts${iMark("Posts after cleaning: deleted, empty and repeated rows are removed.")}</div><div class="metric-value">${fmt(s.posts)}</div><div class="metric-small">${esc(PLATFORMS[s.platform] || "")}</div></div>
      <div class="metric"><div class="metric-label">Accounts</div><div class="metric-value">${s.accounts != null ? fmt(s.accounts) : "-"}</div></div>
      <div class="metric"><div class="metric-label">Main language${iMark("Guessed for each post from its letters and common short words.")}</div><div class="metric-value">${main ? Math.round(main.share * 100) + " %" : "-"}</div><div class="metric-small">${main ? esc(main.name) : ""}</div></div>
      <div class="metric"><div class="metric-label">Dates${iMark("First and last post, in the time zone you chose.")}</div><div class="metric-value date-value">${esc(dateV)}</div><div class="metric-small">${esc(dateS)}</div></div>
    </div>
-   ${noticesPanel()}
    ${searchPostsPanel()}
    ${filesPanel()}
    <div class="cards-2" style="margin-top:18px">
@@ -783,9 +896,17 @@ function overviewPage() {
    ${studiesPanel()}
    <h2 class="section-heading">Explore</h2><div class="explore-grid">${exploreCards()}</div>`;
 }
+// Above the numbers, not below them: a notice that arrives after the reader has taken the figures in has
+// already failed. A notice may carry the analysis that shows the detail, which becomes a button.
 function noticesPanel() {
   const n = SCAN.notices || []; if (!n.length) return "";
-  return `<article class="panel" style="margin-top:18px;border-left:5px solid #c98a00;background:#fff8e6"><h2 class="panel-title">Read before using the numbers</h2><ul class="summary-list">${n.map(t => `<li><span class="dot" style="background:#c98a00"></span><span>${esc(t)}</span></li>`).join("")}</ul></article>`;
+  const row = x => {
+    const text = typeof x === "string" ? x : (x.text || "");
+    const act = (typeof x === "object" && x.card && regCard(x.card))
+      ? ` <button class="qc notice-go" data-go="c-${esc(x.card)}">${esc(trUI(x.action || "Open"))} ›</button>` : "";
+    return `<li><span class="dot" style="background:#c98a00"></span><span>${esc(trUI(text))}${act}</span></li>`;
+  };
+  return `<article class="panel notices"><h2 class="panel-title">${esc(trUI("Read before using the numbers"))} <span class="nbadge">${n.length}</span></h2><ul class="summary-list">${n.map(row).join("")}</ul></article>`;
 }
 function filesPanel() {
   const ds = SCAN.datasets || []; if (ds.length < 2) return "";
@@ -1265,6 +1386,7 @@ function customizePage() {
     Object.entries(packs).filter(([id]) => !id.startsWith("preset:")).map(([id, p]) => [id, p.name, p.for]));
   const sections_ = sections().filter(x => x.id !== "overview");
   modal("Customize", `<p>Choose which analyses appear in the menus and section pages. Nothing is deleted, and nothing is calculated until you open an analysis, so this only changes what you see.</p>
+    <p class="small-print">Appearance: ${esc(modeLabel(MODE))}${document.body.classList.contains("bigtext") ? ", larger text" : ""}${document.body.classList.contains("hicontrast") ? ", high contrast" : ""}. <button class="lnk" data-act="resetlook">Reset appearance</button></p>
     <label for="cz-p">Start from a set</label>
     <select id="cz-p">${presets.map(([id, name, why]) => `<option value="${esc(id)}" ${CUSTOM.preset === id ? "selected" : ""}>${esc(name)}${why ? " - " + esc(why) : ""}</option>`).join("")}</select>
     <p class="small-print">Untick an analysis to hide it. Pinned analyses stay in the sidebar.</p>
@@ -1294,17 +1416,32 @@ function customizePage() {
 // ------------------------------------------------------------------ simple or full view
 function shownItems(list) {
   const picked = list.filter(i => isShown(i.id));
-  return !SCAN || VIEWMODE === "full" ? picked : picked.filter(i => status(i).ok);
+  const runnable = !SCAN || VIEWMODE === "full" ? picked : picked.filter(i => status(i).ok);
+  // Simple and Easy Read open on the core set. Nothing is removed: "More analyses" shows the rest, and
+  // Expert never applies this filter.
+  if (!COREONLY || !SCAN) return runnable;
+  const core = runnable.filter(i => isCore(i.id));
+  return core.length ? core : runnable;
+}
+function coreHiddenCount(list) {
+  if (!COREONLY || !SCAN) return 0;
+  const runnable = list.filter(i => isShown(i.id)).filter(i => VIEWMODE === "full" || status(i).ok);
+  const core = runnable.filter(i => isCore(i.id));
+  return core.length ? runnable.length - core.length : 0;
 }
 function viewToggle(list) {
   if (!SCAN) return "";
   const off = list.filter(i => !isShown(i.id)).length;
-  const hidden = list.length - shownItems(list).length - off;
-  if (VIEWMODE === "simple" && !hidden && !off) return "";
+  const more = coreHiddenCount(list);
+  const hidden = list.length - shownItems(list).length - off - more;
+  if (VIEWMODE === "simple" && !hidden && !off && !more) return "";
+  // a selection is an editorial choice, so it is stated rather than left for the user to notice
+  const c = more ? `${trUI("Showing a starting selection of")} ${shownItems(list).length}. ${more} ${trUI(more === 1 ? "more analysis runs on this file" : "more analyses run on this file")}. ` : "";
   const a = VIEWMODE === "simple" && hidden ? `${hidden} ${hidden === 1 ? "analysis that cannot" : "analyses that cannot"} run on this file ${hidden === 1 ? "is" : "are"} hidden.`
           : (VIEWMODE === "full" ? "Showing every analysis, including those that cannot run on this file." : "");
   const b = off ? ` ${off} ${off === 1 ? "analysis is" : "analyses are"} switched off in Customize.` : "";
-  return `<p class="small-print viewnote">${a}${b} <button class="lnk" data-act="viewmode">${VIEWMODE === "simple" ? "Show all" : "Show only those that can run"}</button> <button class="lnk" data-act="customize">Customize</button></p>`;
+  const m = more ? `<button class="lnk" data-act="moreanalyses">${trUI("More analyses")}</button> ` : "";
+  return `<p class="small-print viewnote">${c}${a}${b} ${m}<button class="lnk" data-act="viewmode">${VIEWMODE === "simple" ? "Show all" : "Show only those that can run"}</button> <button class="lnk" data-act="customize">Customize</button></p>`;
 }
 
 // ------------------------------------------------------------------ search posts
@@ -1369,6 +1506,7 @@ function setLang(l) {
   LANG = l; try { localStorage.setItem("marsad_lang", l); } catch (e) {}
   document.documentElement.lang = l === "ar" ? "ar" : "en"; document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
   const b = $("#langbtn"); b.textContent = l === "ar" ? "English" : "العربية"; b.lang = l === "ar" ? "en" : "ar"; b.title = l === "ar" ? "Show the menus in English" : "Show the menus in Arabic";
+  renderModeSel();
   if (l === "ar") { TR_OBS.observe(document.body, {childList: true, subtree: true}); }
   else { TR_OBS.disconnect(); for (const [n, a, v] of TR_DONE.splice(0)) { if (a) n.setAttribute(a, v); else n.nodeValue = v; } }
   if (PL) { renderSidebar(); render(); } if (l === "ar") trNode(document.body);
